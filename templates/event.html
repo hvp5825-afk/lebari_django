@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Page Title Section Two -->
+    <section class="page-title-section-two">
+		<div class="pattern-layer-one" style="background-image: url({% static 'images/icons/icon-5.png' %})"></div>
+		<div class="pattern-layer-two" style="background-image: url({% static 'images/icons/icon-6.png' %})"></div>
+		<div class="pattern-layer-three" style="background-image: url({% static 'images/icons/icon-4.png' %})"></div>
+		<div class="pattern-layer-four" style="background-image: url(images2/icons/icon-29.png)"></div>
+		<div class="auto-container">
+			<!-- Page Breadcrumb -->
+			<ul class="page-breadcrumb">
+				<li><a href="{% url 'index' %}">Home</a></li>
+				<li>Event List</li>
+			</ul>
+			<div class="content-box">
+				<h2>Event List</h2>
+			</div>
+		</div>
+	</section>
+	<!-- End Page Title Section Two -->
+	
+	<!-- Event Page Section -->
+    <section class="event-page-section">
+		<div class="pattern-layer-three" style="background-image: url({% static 'images/icons/icon-8.png' %})"></div>
+		<div class="auto-container">
+			<div class="row clearfix">
+				
+				
+					{% for event in events %}
+					<!-- Event Block Two -->
+					<div class="event-block-two col-lg-4 col-md-6 col-sm-12">
+						<div class="inner-box">
+							<div class="image">
+								<a href="{% url 'event_detail' event.slug %}"><img src="{% if event.image %}{{ event.image.url }}{% else %}{% static 'images/resource/event-1.jpg' %}{% endif %}" alt="" /></a>
+								<div class="post-date">{{ event.date|date:"d M, Y" }}</div>
+							</div>
+							<div class="lower-content">
+								<div class="category">{{ event.location }}</div>
+								<h4><a href="{% url 'event_detail' event.slug %}">{{ event.title }}</a></h4>
+								<div class="clearfix">
+									<div class="pull-left">
+										<div class="post-date">{{ event.time_start|time:"g:i A" }}</div>
+									</div>
+									<div class="pull-right">
+										<a href="{% url 'event_detail' event.slug %}" class="attend-link">Attend</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+			</div>
+		</div>
+	</section>
+	<!-- End Event Page Section -->
+	
+	{% endblock %}

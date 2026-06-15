@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+	
+	<!-- Sidebar Cart Item -->
+	<div class="xs-sidebar-group info-group">
+		<div class="xs-overlay xs-bg-black"></div>
+		<div class="xs-sidebar-widget">
+			<div class="sidebar-widget-container">
+				<div class="widget-heading">
+					<a href="#" class="close-side-widget">
+						X
+					</a>
+				</div>
+				<div class="sidebar-textwidget">
+					
+					<!-- Sidebar Info Content -->
+					<div class="sidebar-info-contents">
+						<div class="content-inner">
+							<div class="logo">
+								<a href="{% url 'index' %}"><img src="{% static 'images/logo-2.png' %}" alt="" /></a>
+							</div>
+							<div class="content-box">
+								<h2>About Us</h2>
+								<p class="text">The argument in favor of using filler text goes something like this: If you use real content in the Consulting Process, anytime you reach a review point you’ll end up reviewing and negotiating the content itself and not the design.</p>
+								<a href="#" class="theme-btn btn-style-two"><span class="txt">Consultation</span></a>
+							</div>
+							<div class="contact-info">
+								<h2>Contact Info</h2>
+								<ul class="list-style-two">
+									<li><span class="icon fa fa-location-arrow"></span>Chicago 12, Melborne City, USA</li>
+									<li><span class="icon fa fa-phone"></span>(111) 111-111-1111</li>
+									<li><span class="icon fa fa-envelope"></span>lebari@gmail.com</li>
+									<li><span class="icon fa fa-clock-o"></span>Week Days: 09.00 to 18.00 Sunday: Closed</li>
+								</ul>
+							</div>
+							<!-- Social Box -->
+							<ul class="social-box">
+								<li class="facebook"><a href="#" class="fa fa-facebook-f"></a></li>
+								<li class="twitter"><a href="#" class="fa fa-twitter"></a></li>
+								<li class="linkedin"><a href="#" class="fa fa-linkedin"></a></li>
+								<li class="instagram"><a href="#" class="fa fa-instagram"></a></li>
+								<li class="youtube"><a href="#" class="fa fa-youtube"></a></li>
+							</ul>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END sidebar widget item -->
+	
+	<!-- Blog Detail Section -->
+    <section class="blog-page-section">
+		<div class="pattern-layer-one" style="background-image: url({% static 'images/icons/icon-5.png' %})"></div>
+		<div class="pattern-layer-two" style="background-image: url({% static 'images/icons/icon-6.png' %})"></div>
+		<div class="pattern-layer-three" style="background-image: url({% static 'images/icons/icon-4.png' %})"></div>
+		<div class="auto-container">
+			<!-- Page Breadcrumb -->
+			<ul class="page-breadcrumb">
+				<li><a href="{% url 'index' %}">Home</a></li>
+				<li>Blog default</li>
+			</ul>
+			<div class="content-box">
+				<h2>Latest articles & news</h2>
+				<div class="text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Duis aute irure dolor in reprehenderit in </div>
+			</div>
+		</div>
+		<div class="outer-container">
+			<div class="row clearfix">
+				{% for post in posts %}
+				<!-- News Block / Style Two -->
+				<div class="news-block style-two col-lg-4 col-md-6 col-sm-12">
+					<div class="inner-box">
+						<div class="image">
+							<a href="{{ post.get_absolute_url }}">
+								{% if post.image %}
+								<img src="{{ post.image.url }}" alt="{{ post.title }}" />
+								{% else %}
+								<img src="{% static 'images/resource/news-6.jpg' %}" alt="{{ post.title }}" />
+								{% endif %}
+							</a>
+						</div>
+						<div class="lower-content">
+							<div class="border-layer"></div>
+							<ul class="post-info">
+								<li>{{ post.category.name }}</li>
+								<li>Updated {{ post.updated_at|date:"M d, Y" }}</li>
+							</ul>
+							<h4><a href="{{ post.get_absolute_url }}">{{ post.title|truncatechars:50 }}</a></h4>
+							<a href="{{ post.get_absolute_url }}" class="more">More <span class="fa fa-angle-double-right"></span></a>
+						</div>
+					</div>
+				</div>
+				{% empty %}
+				<div class="col-12"><p>No posts available at the moment.</p></div>
+				{% endfor %}
+			</div>
+			
+			<!-- Button Box -->
+			<div class="btn-box text-center">
+				<a href="#" class="theme-btn btn-style-five">View More Artical</a>
+			</div>
+			
+		</div>
+	</section>
+	<!-- End Cource Detail Banner Section -->
+	
+	
+{% endblock %}

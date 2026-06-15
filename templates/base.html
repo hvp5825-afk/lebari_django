@@ -1,0 +1,358 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>LeBari Education HTML-5 Template | Homepage 01</title>
+<!-- Stylesheets -->
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+<link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+<link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+
+<!-- Responsive -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+<!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script><![endif]-->
+<!--[if lt IE 9]><script src="{% static 'js/respond.js' %}"></script><![endif]-->
+</head>
+
+<body class="hidden-bar-wrapper">
+
+<div class="page-wrapper">
+ 	
+    <!-- Preloader -->
+    <div class="preloader"></div>
+ 	
+ 	<!-- Main Header-->
+    <header class="main-header">
+    	
+		<!--Header-Upper-->
+        <div class="header-upper">
+        	<div class="outer-container clearfix">
+            	
+				<div class="pull-left logo-box">
+					<div class="logo"><a href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}" alt="" title=""></a></div>
+				</div>
+				
+				<div class="nav-outer clearfix">
+					<!--Mobile Navigation Toggler-->
+					<div class="mobile-nav-toggler"><span class="icon flaticon-menu"></span></div>
+					<!-- Main Menu -->
+					<nav class="main-menu navbar-expand-md">
+						<div class="navbar-header">
+							<!-- Toggle Button -->    	
+							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+						</div>
+						
+						<div class="navbar-collapse collapse clearfix" id="navbarSupportedContent">
+							<ul class="navigation clearfix">
+								<li class="dropdown has-mega-menu"><a href="#"><span>Courses <i class="fa fa-arrow-down"></i></span></a>
+									<div class="mega-menu">
+										<!-- Upper Box -->
+										<div class="upper-box">
+											<div class="page-links-box">
+												<a href="{% url 'course_list' %}" class="link"><span class="icon flaticon-bullhorn"></span>Marketing</a>
+												<a href="{% url 'course_list' %}" class="link"><span class="icon flaticon-cyclist"></span>Lifestyle</a>
+												<a href="{% url 'course_list' %}" class="link"><span class="icon flaticon-bar-chart"></span>Business</a>
+												<a href="{% url 'course_list' %}" class="link"><span class="icon flaticon-software"></span>Software</a>
+												<a href="{% url 'course_list' %}" class="link"><span class="icon flaticon-atom"></span>Science</a>
+												<a href="{% url 'course_list' %}" class="link"><span class="icon flaticon-webpage"></span>IT Management</a>
+												<a href="{% url 'course_list' %}" class="link"><span class="icon flaticon-language"></span>Language</a>
+												<a href="{% url 'course_list' %}" class="link"><span class="icon flaticon-team"></span>Human Resources</a>
+												<a href="{% url 'course_list' %}" class="link"><span class="icon flaticon-healthcare"></span>Health Care</a>
+											</div>
+										</div>
+										<!-- Lower Box -->
+										<div class="lower-box">
+											<h3>Become an Instructor</h3>
+											<div class="text">Top instructors from around the Neque convallis a cras semper auctor. <br> Libero id faucibus nisl tincidunt egetnvallis </div>
+											<div class="btn-box">
+												<a href="#" class="theme-btn btn-style-five">Start teaching today</a>
+											</div>
+											<div class="side-icon">
+												<img src="{% static 'images/resource/mega-menu-icon.png' %}" alt="" />
+											</div>
+										</div>
+									</div>
+								</li>
+								<li class="current dropdown"><a href="#">Home</a>
+									<ul>
+										<li><a href="{% url 'index' %}">online course 1</a></li>
+										<li><a href="{% url 'index' %}">online course 2</a></li>
+										<li><a href="{% url 'index' %}">Coaching</a></li>
+										<li><a href="{% url 'index' %}">Kindergarten</a></li>
+										<li><a href="{% url 'index' %}">University <span class="new-page">New</span></a></li>
+										<li class="dropdown"><a href="#">Header styles</a>
+											<ul>
+												<li><a href="{% url 'index' %}">Header Style 01</a></li>
+												<li><a href="{% url 'index' %}">Header Style 02</a></li>
+												<li><a href="{% url 'index' %}">Header Style 03</a></li>
+												<li><a href="{% url 'index' %}">Header Style 04</a></li>
+												<li><a href="{% url 'index' %}">Header Style 05 <span class="new-page">New</span></a></li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown"><a href="#">About</a>
+									<ul>
+										<li><a href="{% url 'about' %}">About Us</a></li>
+										<li><a href="{% url 'faq' %}">Faq</a></li>
+										<li><a href="{% url 'teacher' %}">Teacher</a></li>
+										<li><a href="{% url 'profile' %}">User Profile</a></li>
+										<li><a href="{% url 'membership' %}">Membership</a></li>
+										<li class="dropdown"><a href="#">Events</a>
+											<ul>
+												<li><a href="{% url 'event_list' %}">Events</a></li>
+												<li><a href="{% url 'event_list' %}">Events Detail</a></li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown"><a href="#">Courses</a>
+									<ul>
+										<li><a href="{% url 'course_list' %}">Courses</a></li>
+										<li><a href="{% url 'course_list' %}">Courses 02</a></li>
+										<li><a href="{% url 'course_list' %}">Courses 03</a></li>
+										<li><a href="{% url 'course_list' %}">Courses 04</a></li>
+										<li><a href="{% url 'course_list' %}">Courses Detail</a></li>
+									</ul>
+								</li>
+								<li class="dropdown"><a href="#">Blog</a>
+									<ul>
+										<li><a href="{% url 'blog_list' %}">Our Blog</a></li>
+										<li><a href="{% url 'blog_list' %}">Blog List</a></li>
+										<li><a href="{% url 'blog_list' %}">Blog Detail</a></li>
+										<li><a href="{% url 'not_found' %}">Not Found</a></li>
+									</ul>
+								</li>
+								<li><a href="{% url 'contact' %}">Contact</a></li>
+								<li><a href="{% url 'donation' %}">Donation</a></li>
+							</ul>
+						</div>
+					</nav>
+					
+					<!-- Main Menu End-->
+					<div class="outer-box clearfix">
+						
+						<!-- Search -->
+						<div class="search-box">
+							<form method="post" action="{% url 'contact' %}">
+{% csrf_token %}
+								<div class="form-group">
+									<input type="search" name="search-field" value="" placeholder="What do we want learn" required>
+									<button type="submit"><span class="icon fa fa-search"></span></button>
+								</div>
+							</form>
+						</div>
+						
+						<!-- Social Box -->
+						<ul class="social-box">
+							<li class="instagram"><a target="_blank" href="http://instagram.com/" class="fa fa-instagram"></a></li>
+							<li class="facebook"><a target="_blank" href="http://facebook.com/" class="fa fa-facebook-f"></a></li>
+							<li class="twitter"><a target="_blank" href="http://twitter.com/" class="fa fa-twitter"></a></li>
+							<li class="pinterest"><a target="_blank" href="http://pinterest.com/" class="fa fa-pinterest-p"></a></li>
+						</ul>
+							
+					</div>
+				</div>
+				
+            </div>
+        </div>
+        <!--End Header Upper-->
+        
+		<!-- Sticky Header  -->
+        <div class="sticky-header">
+            <div class="auto-container clearfix">
+                <!--Logo-->
+                <div class="logo pull-left">
+                    <a href="{% url 'index' %}" title=""><img src="{% static 'images/logo.png' %}" alt="" title=""></a>
+                </div>
+                <!--Right Col-->
+                <div class="pull-right">
+                    <!-- Main Menu -->
+                    <nav class="main-menu">
+                        <!--Keep This Empty / Menu will come through Javascript-->
+                    </nav>
+					<!-- Main Menu End-->
+					
+					<!-- Main Menu End-->
+					<div class="outer-box clearfix">
+						
+					</div>
+					
+                </div>
+            </div>
+        </div>
+		<!-- End Sticky Menu -->
+    
+		<!-- Mobile Menu  -->
+        <div class="mobile-menu">
+            <div class="menu-backdrop"></div>
+            <div class="close-btn"><span class="icon flaticon-multiply"></span></div>
+            
+            <nav class="menu-box">
+                <div class="nav-logo"><a href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}" alt="" title=""></a></div>
+                <div class="menu-outer"><!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header--></div>
+            </nav>
+        </div><!-- End Mobile Menu -->
+	
+    </header>
+    <!-- End Main Header -->
+{% block content %}
+{% endblock %}
+<!-- Main Footer -->
+    <footer class="main-footer">
+		<div class="circle-layer"></div>
+		<div class="pattern-layer-one" style="background-image: url({% static 'images/background/pattern-12.png' %})"></div>
+		<div class="pattern-layer-two" style="background-image: url({% static 'images/background/pattern-13.png' %})"></div>
+		<div class="pattern-layer-three" style="background-image: url({% static 'images/background/pattern-14.png' %})"></div>
+		<div class="pattern-layer-four" style="background-image: url({% static 'images/background/pattern-13.png' %})"></div>
+    	<div class="auto-container">
+        	<!--Widgets Section-->
+            <div class="widgets-section">
+            	<div class="row clearfix">
+                	
+					<!-- Footer Column -->
+					<div class="footer-column col-lg-5 col-md-12 col-sm-12">
+						<div class="footer-widget logo-widget">
+							<div class="logo">
+								<a href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}" alt="" /></a>
+							</div>
+							<ul class="info-list">
+								<li>Tel:<a href="tel:+0845-371-02-02"> 0845 371 02 02</a></li>
+								<li>Email:<a href="mailto:info@yoursite.co.uk"> info@yoursite.co.uk</a></li>
+							</ul>
+							<!-- Social Box -->
+							<ul class="social-box">
+								<li class="twitter"><a target="_blank" href="http://twitter.com/" class="fa fa-twitter"></a></li>
+								<li class="pinterest"><a target="_blank" href="http://pinterest.com/" class="fa fa-pinterest-p"></a></li>
+								<li class="facebook"><a target="_blank" href="http://facebook.com/" class="fa fa-facebook-f"></a></li>
+								<li class="dribbble"><a target="_blank" href="http://dribbble.com/" class="fa fa-dribbble"></a></li>
+							</ul>
+							<div class="text">Get started now and take advantage of <br> our 30 day free trial today.</div>
+						</div>
+					</div>
+					
+					<!-- Footer Column -->
+					<div class="footer-column col-lg-7 col-md-12 col-sm-12">
+						<div class="row clearfix">
+							<!-- Column -->
+							<div class="column col-lg-4 col-md-4 col-sm-12">
+								<h5>About</h5>
+								<ul class="list">
+									<li><a href="#">About</a></li>
+									<li><a href="#">News</a></li>
+									<li><a href="#">Impact</a></li>
+									<li><a href="#">Our team</a></li>
+									<li><a href="#">Our interns</a></li>
+								</ul>
+							</div>
+							<!-- Column -->
+							<div class="column col-lg-4 col-md-4 col-sm-12">
+								<h5>Need some help?</h5>
+								<ul class="list">
+									<li><a href="#">FAQs</a></li>
+									<li><a href="#">Child safety</a></li>
+									<li><a href="#">Help Centre</a></li>
+									<li><a href="#">Contact</a></li>
+									<li><a href="#">Academy</a></li>
+								</ul>
+							</div>
+							<!-- Column -->
+							<div class="column col-lg-4 col-md-4 col-sm-12">
+								<h5>Courses</h5>
+								<ul class="list">
+									<li><a href="#">Khan Kids app</a></li>
+									<li><a href="#">Science & engineering</a></li>
+									<li><a href="#">Computing</a></li>
+									<li><a href="#">Arts & humanities</a></li>
+									<li><a href="#">Economics & finance</a></li>
+								</ul>
+							</div>
+							
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			
+			<!-- Lower Box -->
+            <div class="lower-box">
+            	<div class="row clearfix">
+					<div class="col-lg-6 col-lg-6 col-sm-12">
+						<!-- Subscribe Form -->
+						<div class="subscribe-form">
+							<h6>Newsletter</h6>
+							<form method="post" action="{% url 'contact' %}">
+{% csrf_token %}
+								<div class="form-group">
+									<input type="email" name="email" value="" placeholder="Your email" required>
+									<button type="submit" class="submit-btn"><span class="icon flaticon-right-arrow-2"></span></button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="col-lg-6 col-lg-6 col-sm-12">
+						<div class="text">Need to train your team? We offer flexible, cost-effective <br> group memberships for your business, school,</div>
+						<a href="#" class="singup">Free Singup</a>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Footer Bottom -->
+			<div class="footer-bottom">
+				<div class="row clearfix">
+					
+					<!-- Copyright Column -->
+					<div class="copyright-column col-lg-6 col-md-12 col-sm-12">
+						<div class="copyright">Copyright 2020, All Right Reserved</div>
+					</div>
+					
+					<!-- Nav Column -->
+					<div class="nav-column col-lg-6 col-md-12 col-sm-12">
+						<ul>
+							<li><a href="{% url 'about' %}">SiteMap</a></li>
+							<li><a href="{% url 'about' %}">Privacy Policy</a></li>
+						</ul>
+					</div>
+					
+				</div>
+			</div>
+			
+		</div>
+	</footer>
+	
+</div>
+<!--End pagewrapper-->
+
+<!--Scroll to top-->
+<div class="scroll-to-top scroll-to-target" data-target="html"><span class="fa fa-arrow-up"></span></div>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+<script src="{% static 'js/jquery.fancybox.js' %}"></script>
+<script src="{% static 'js/appear.js' %}"></script>
+<script src="{% static 'js/parallax.min.js' %}"></script>
+<script src="{% static 'js/tilt.jquery.min.js' %}"></script>
+<script src="{% static 'js/jquery.paroller.min.js' %}"></script>
+<script src="{% static 'js/owl.js' %}"></script>
+<script src="{% static 'js/wow.js' %}"></script>
+<script src="{% static 'js/nav-tool.js' %}"></script>
+<script src="{% static 'js/jquery-ui.js' %}"></script>
+<script src="{% static 'js/validate.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+
+</body>
+</html>

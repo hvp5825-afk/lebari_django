@@ -1,0 +1,456 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+	
+	<!-- Sidebar Cart Item -->
+	<div class="xs-sidebar-group info-group">
+		<div class="xs-overlay xs-bg-black"></div>
+		<div class="xs-sidebar-widget">
+			<div class="sidebar-widget-container">
+				<div class="widget-heading">
+					<a href="#" class="close-side-widget">
+						X
+					</a>
+				</div>
+				<div class="sidebar-textwidget">
+					
+					<!-- Sidebar Info Content -->
+					<div class="sidebar-info-contents">
+						<div class="content-inner">
+							<div class="logo">
+								<a href="{% url 'index' %}"><img src="{% static 'images/logo-2.png' %}" alt="" /></a>
+							</div>
+							<div class="content-box">
+								<h2>About Us</h2>
+								<p class="text">The argument in favor of using filler text goes something like this: If you use real content in the Consulting Process, anytime you reach a review point you’ll end up reviewing and negotiating the content itself and not the design.</p>
+								<a href="#" class="theme-btn btn-style-two"><span class="txt">Consultation</span></a>
+							</div>
+							<div class="contact-info">
+								<h2>Contact Info</h2>
+								<ul class="list-style-two">
+									<li><span class="icon fa fa-location-arrow"></span>Chicago 12, Melborne City, USA</li>
+									<li><span class="icon fa fa-phone"></span>(111) 111-111-1111</li>
+									<li><span class="icon fa fa-envelope"></span>lebari@gmail.com</li>
+									<li><span class="icon fa fa-clock-o"></span>Week Days: 09.00 to 18.00 Sunday: Closed</li>
+								</ul>
+							</div>
+							<!-- Social Box -->
+							<ul class="social-box">
+								<li class="facebook"><a href="#" class="fa fa-facebook-f"></a></li>
+								<li class="twitter"><a href="#" class="fa fa-twitter"></a></li>
+								<li class="linkedin"><a href="#" class="fa fa-linkedin"></a></li>
+								<li class="instagram"><a href="#" class="fa fa-instagram"></a></li>
+								<li class="youtube"><a href="#" class="fa fa-youtube"></a></li>
+							</ul>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END sidebar widget item -->
+	
+	<!-- Cource Detail Banner Section -->
+    <section class="cource-detail-banner-section">
+		<div class="pattern-layer-one" style="background-image: url({% static 'images/icons/icon-5.png' %})"></div>
+		<div class="pattern-layer-two" style="background-image: url({% static 'images/icons/icon-6.png' %})"></div>
+		<div class="pattern-layer-three" style="background-image: url({% static 'images/icons/icon-4.png' %})"></div>
+		<div class="pattern-layer-four" style="background-image: url({% static 'images/icons/icon-8.png' %})"></div>
+		<div class="auto-container">
+			<!-- Page Breadcrumb -->
+			<ul class="page-breadcrumb">
+				<li><a href="{% url 'index' %}">Home</a></li>
+				<li>Courses Single</li>
+			</ul>
+			<div class="content-box">
+				<div class="title">5 day left at this price!</div>
+				<h2>{{ course.title|safe }}</h2>
+				<ul class="course-info">
+					<li><span class="icon fa fa-clock-o"></span>Last Update : {{ course.updated_at|date:"M d, Y" }}</li>
+					<li><span class="icon fa fa-language"></span>English</li>
+					<li><span class="icon fa fa-user"></span>749 students</li>
+				</ul>
+				<div class="development">{{ course.category.name }}</div>
+				<div class="rating">
+					<span class="fa fa-star"></span>
+					<span class="fa fa-star"></span>
+					<span class="fa fa-star"></span>
+					<span class="fa fa-star"></span>
+					<span class="fa fa-star-o"></span>
+					<strong>4.9</strong>
+					<i>(70 Review)</i>
+				</div>
+				<div class="hovers">{{ course.duration }} . {{ course.level }}</div>
+				
+				<!-- Social Box -->
+				<ul class="social-box">
+					<span class="fa fa-share-alt"></span>
+					<li class="twitter"><a target="_blank" href="http://twitter.com/" class="fa fa-twitter"></a></li>
+					<li class="pinterest"><a target="_blank" href="http://pinterest.com/" class="fa fa-pinterest-p"></a></li>
+					<li class="facebook"><a target="_blank" href="http://facebook.com/" class="fa fa-facebook-f"></a></li>
+					<li class="dribbble"><a target="_blank" href="http://dribbble.com/" class="fa fa-dribbble"></a></li>
+				</ul>
+				
+			</div>
+		</div>
+	</section>
+	<!-- End Cource Detail Banner Section -->
+	
+	<!-- Course Detail Section -->
+	<section class="course-detail-section">
+		<div class="auto-container">
+			<div class="row clearfix">
+				
+				<!-- Content Column -->
+				<div class="content-column col-lg-8 col-md-12 col-sm-12">
+					<div class="inner-column">
+						<h5>Courses Description</h5>
+						{{ course.description|safe }}
+						<div class="learn-box">
+							<h5>What you'll learn</h5>
+							<ul class="learn-list">
+								<li>JavaScript fundamentals: variables, if/else, operators, boolean logic, functions, arrays, objects, loops, strings, etc.</li>
+								<li>Become job-ready by understanding how JavaScript really works behind the scenes</li>
+								<li>Modern ES6+ from the beginning: arrow functions, destructuring, spread operator, optional chaining (ES2020), etc.</li>
+								<li>Modern tools for 2020 and beyond: NPM, Parcel, Babel and ES6 modules</li>
+								<li>Modern ES6+ from the beginning: arrow functions, destructuring, spread operator, optional chaining (ES2020), etc.</li>
+								<li>Modern ES6+ from the beginning: arrow functions, destructuring, spread operator, optional chaining (ES2020), etc.</li>
+							</ul>
+						</div>
+						<h5>Requirements</h5>
+						<ul class="learn-list-two">
+							<li>Sed consequat justo non mauris pretium at tempor justo sodales. Quisque tincidunt laoreet malesuada Cum sociis natoque penatibus et magnis </li>
+							<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</li>
+							<li>JavaScript fundamentals: variables, if/else, operators, boolean logic, functions, arrays, objects, loops, strings, etc.</li>
+						</ul>
+						<h5>Course content</h5>
+						<div class="total-lectures">20 sections • 101 lectures • 30h 48m total length</div>
+						
+						<!-- Accordion Box Two -->
+						<ul class="accordion-box-two">
+						
+							<!-- Block -->
+							<li class="accordion block">
+								<div class="acc-btn">javascript formula <span class="side-text">5 lectures . 5 video </span> <div class="icon fa fa-angle-down"></div></div>
+								<div class="acc-content">
+									<div class="content">
+										<ul class="accordion-list">
+											<li><a href="#"><span class="list-icon fa fa-file-o"></span>Course Assignments <span class="time">05:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Section Intro <span class="time">10:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>A Brief Introduction to JavaScript <span class="time">15:12</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Linking a JavaScript File <span class="time">20:30</span></a></li>
+											<li><a href="#"><span class="list-icon fa fa-file-word-o"></span>Data Types <span class="time">10:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Taking Decisions: if / else Statements <span class="time">11:22</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Truthy and Falsy Values <span class="time">18:44</span></a></li>
+										</ul>
+									</div>
+								</div>
+							</li>
+							
+							<!--Block-->
+							<li class="accordion block active-block">
+								<div class="acc-btn active">JavaScript Fundamentals – Part 2 <span class="side-text">5 lectures . 5 video </span> <div class="icon fa fa-angle-down"></div></div>
+								<div class="acc-content current">
+									<div class="content">
+										<ul class="accordion-list">
+											<li><a href="#"><span class="list-icon fa fa-file-o"></span>Course Assignments <span class="time">05:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Section Intro <span class="time">10:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>A Brief Introduction to JavaScript <span class="time">15:12</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Linking a JavaScript File <span class="time">20:30</span></a></li>
+											<li><a href="#"><span class="list-icon fa fa-file-word-o"></span>Data Types <span class="time">10:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Taking Decisions: if / else Statements <span class="time">11:22</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Truthy and Falsy Values <span class="time">18:44</span></a></li>
+										</ul>
+									</div>
+								</div>
+							</li>
+							
+							<!-- Block -->
+							<li class="accordion block">
+								<div class="acc-btn">JavaScript Fundamentals – Part 3 <span class="side-text">5 lectures . 5 video </span> <div class="icon fa fa-angle-down"></div></div>
+								<div class="acc-content">
+									<div class="content">
+										<ul class="accordion-list">
+											<li><a href="#"><span class="list-icon fa fa-file-o"></span>Course Assignments <span class="time">05:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Section Intro <span class="time">10:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>A Brief Introduction to JavaScript <span class="time">15:12</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Linking a JavaScript File <span class="time">20:30</span></a></li>
+											<li><a href="#"><span class="list-icon fa fa-file-word-o"></span>Data Types <span class="time">10:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Taking Decisions: if / else Statements <span class="time">11:22</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Truthy and Falsy Values <span class="time">18:44</span></a></li>
+										</ul>
+									</div>
+								</div>
+							</li>
+							
+							<!-- Block -->
+							<li class="accordion block">
+								<div class="acc-btn">How to Navigate This Course <span class="side-text">5 lectures . 5 video </span> <div class="icon fa fa-angle-down"></div></div>
+								<div class="acc-content">
+									<div class="content">
+										<ul class="accordion-list">
+											<li><a href="#"><span class="list-icon fa fa-file-o"></span>Course Assignments <span class="time">05:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Section Intro <span class="time">10:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>A Brief Introduction to JavaScript <span class="time">15:12</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Linking a JavaScript File <span class="time">20:30</span></a></li>
+											<li><a href="#"><span class="list-icon fa fa-file-word-o"></span>Data Types <span class="time">10:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Taking Decisions: if / else Statements <span class="time">11:22</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Truthy and Falsy Values <span class="time">18:44</span></a></li>
+										</ul>
+									</div>
+								</div>
+							</li>
+							
+							<!-- Block -->
+							<li class="accordion block">
+								<div class="acc-btn">JavaScript in the Browser: DOM and Events Fundamentals <span class="side-text">5 lectures . 5 video </span> <div class="icon fa fa-angle-down"></div></div>
+								<div class="acc-content">
+									<div class="content">
+										<ul class="accordion-list">
+											<li><a href="#"><span class="list-icon fa fa-file-o"></span>Course Assignments <span class="time">05:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Section Intro <span class="time">10:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>A Brief Introduction to JavaScript <span class="time">15:12</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Linking a JavaScript File <span class="time">20:30</span></a></li>
+											<li><a href="#"><span class="list-icon fa fa-file-word-o"></span>Data Types <span class="time">10:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Taking Decisions: if / else Statements <span class="time">11:22</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Truthy and Falsy Values <span class="time">18:44</span></a></li>
+										</ul>
+									</div>
+								</div>
+							</li>
+							
+							<!-- Block -->
+							<li class="accordion block">
+								<div class="acc-btn">How JavaScript Works Behind the Scenes <span class="side-text">5 lectures . 5 video </span> <div class="icon fa fa-angle-down"></div></div>
+								<div class="acc-content">
+									<div class="content">
+										<ul class="accordion-list">
+											<li><a href="#"><span class="list-icon fa fa-file-o"></span>Course Assignments <span class="time">05:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Section Intro <span class="time">10:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>A Brief Introduction to JavaScript <span class="time">15:12</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Linking a JavaScript File <span class="time">20:30</span></a></li>
+											<li><a href="#"><span class="list-icon fa fa-file-word-o"></span>Data Types <span class="time">10:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Taking Decisions: if / else Statements <span class="time">11:22</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Truthy and Falsy Values <span class="time">18:44</span></a></li>
+										</ul>
+									</div>
+								</div>
+							</li>
+							
+							<!-- Block -->
+							<li class="accordion block">
+								<div class="acc-btn">A Closer Look at Functions <span class="side-text">5 lectures . 5 video </span> <div class="icon fa fa-angle-down"></div></div>
+								<div class="acc-content">
+									<div class="content">
+										<ul class="accordion-list">
+											<li><a href="#"><span class="list-icon fa fa-file-o"></span>Course Assignments <span class="time">05:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Section Intro <span class="time">10:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>A Brief Introduction to JavaScript <span class="time">15:12</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Linking a JavaScript File <span class="time">20:30</span></a></li>
+											<li><a href="#"><span class="list-icon fa fa-file-word-o"></span>Data Types <span class="time">10:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Taking Decisions: if / else Statements <span class="time">11:22</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Truthy and Falsy Values <span class="time">18:44</span></a></li>
+										</ul>
+									</div>
+								</div>
+							</li>
+							
+							<!-- Block -->
+							<li class="accordion block">
+								<div class="acc-btn">Build 6 beautiful real-world projects <span class="side-text">5 lectures . 5 video </span> <div class="icon fa fa-angle-down"></div></div>
+								<div class="acc-content">
+									<div class="content">
+										<ul class="accordion-list">
+											<li><a href="#"><span class="list-icon fa fa-file-o"></span>Course Assignments <span class="time">05:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Section Intro <span class="time">10:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>A Brief Introduction to JavaScript <span class="time">15:12</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Linking a JavaScript File <span class="time">20:30</span></a></li>
+											<li><a href="#"><span class="list-icon fa fa-file-word-o"></span>Data Types <span class="time">10:25</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Taking Decisions: if / else Statements <span class="time">11:22</span></a></li>
+											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Truthy and Falsy Values <span class="time">18:44</span></a></li>
+										</ul>
+									</div>
+								</div>
+							</li>
+							
+						</ul>
+						<!-- End Accordion Box -->
+					
+						<!-- Read More -->
+						<div class="read-more">
+							<a href="#">Show more</a>
+						</div>
+						
+						<h5>Instructor</h5>
+						
+						<!-- Author Box -->
+						<div class="author-box">
+							<div class="box-inner">
+								<div class="image">
+									<img src="{% static 'images/resource/author-4.jpg' %}" alt="" />
+								</div>
+								<h6>Jonas jashiom <a href="#" class="icon fa fa-plus"></a></h6>
+								<div class="designation">java Developer, Designer, and Teacher</div>
+								<ul class="list">
+									<li><span class="icon fa fa-play-circle-o"></span>44 Course</li>
+									<li><span class="icon fa fa-star-o"></span>4.6 Instructor Rating</li>
+									<li><span class="icon fa fa-user"></span>6,073 Students</li>
+								</ul>
+								<div class="text">Hi, I'm Riad! I have been identified as one of LebariTop Instructors and all my premium courses have recently earned the best-selling status for outstanding performance and student satisfaction.</div>
+							</div>
+						</div>
+						
+						<!-- Comment Area -->
+						<div class="comments-area">
+							<div class="group-title">
+								<h5>Course Review</h5>
+							</div>
+							
+							<div class="comment-box">
+								<!-- Comment -->
+								<div class="comment">
+									<div class="author-thumb"><img src="{% static 'images/resource/author-5.jpg' %}" alt=""></div>
+									<div class="comment-info clearfix">
+										<strong>Shopnil Mahadi</strong>
+										<div class="rating">
+											<span class="fa fa-star"></span>
+											<span class="fa fa-star"></span>
+											<span class="fa fa-star"></span>
+											<span class="fa fa-star"></span>
+											<span class="fa fa-star-o"></span>
+										</div>
+										<div class="comment-time">3 weeks ago</div>
+										<ul class="like-dislike">
+											<li><a href="#" class="flaticon-like-1"></a></li>
+											<li><a href="#" class="flaticon-dislike"></a></li>
+										</ul>
+									</div>
+									<div class="text"> I have been identified as one of LebariTop Instructors and all my premium courses have recently earned the best-selling status for outstanding performance and student satisfaction.</div>
+								</div>
+								<!-- Comment -->
+								<div class="comment">
+									<div class="author-thumb"><img src="{% static 'images/resource/author-6.jpg' %}" alt=""></div>
+									<div class="comment-info clearfix">
+										<strong>Shopnil Mahadi</strong>
+										<div class="rating">
+											<span class="fa fa-star"></span>
+											<span class="fa fa-star"></span>
+											<span class="fa fa-star"></span>
+											<span class="fa fa-star"></span>
+											<span class="fa fa-star-o"></span>
+										</div>
+										<div class="comment-time">3 weeks ago</div>
+										<ul class="like-dislike">
+											<li><a href="#" class="flaticon-like-1"></a></li>
+											<li><a href="#" class="flaticon-dislike"></a></li>
+										</ul>
+									</div>
+									<div class="text"> I have been identified as one of LebariTop Instructors and all my premium courses have recently earned the best-selling status for outstanding performance and student satisfaction.</div>
+								</div>
+								<!-- Comment -->
+								<div class="comment">
+									<div class="author-thumb"><img src="{% static 'images/resource/author-7.jpg' %}" alt=""></div>
+									<div class="comment-info clearfix">
+										<strong>Shopnil Mahadi</strong>
+										<div class="rating">
+											<span class="fa fa-star"></span>
+											<span class="fa fa-star"></span>
+											<span class="fa fa-star"></span>
+											<span class="fa fa-star"></span>
+											<span class="fa fa-star-o"></span>
+										</div>
+										<div class="comment-time">3 weeks ago</div>
+										<ul class="like-dislike">
+											<li><a href="#" class="flaticon-like-1"></a></li>
+											<li><a href="#" class="flaticon-dislike"></a></li>
+										</ul>
+									</div>
+									<div class="text"> I have been identified as one of LebariTop Instructors and all my premium courses have recently earned the best-selling status for outstanding performance and student satisfaction.</div>
+								</div>
+							</div>
+						</div>
+						<!-- End Comment Area -->
+						
+						<div class="comment-form">
+									
+							<div class="group-title"><h5>Leave A Comment</h5></div>
+							
+							<!--Comment Form-->
+							<form method="post" action="{% url 'blog_list' %}">
+{% csrf_token %}
+								<div class="row clearfix">
+									
+									<div class="col-lg-6 col-md-6 col-sm-12 form-group">
+										<input type="text" name="username" placeholder="Full Name" required="">
+									</div>
+									
+									<div class="col-lg-6 col-md-6 col-sm-12 form-group">
+										<input type="email" name="email" placeholder="Email" required="">
+									</div>
+									
+									<div class="col-lg-12 col-md-12 col-sm-12 form-group">
+										<input type="text" name="subject" placeholder="Subject" required="">
+									</div>
+									
+									<div class="col-lg-12 col-md-12 col-sm-12 form-group">
+										<textarea class="darma" name="message" placeholder="Your Message"></textarea>
+									</div>
+									
+									<div class="col-lg-12 col-md-12 col-sm-12 form-group">
+										<button class="theme-btn btn-style-five" type="submit" name="submit-form">Write A Review</button>
+									</div>
+									
+								</div>
+							</form>
+								
+						</div>
+						
+					</div>
+				</div>
+				
+				<!-- Info Column -->
+				<div class="info-column col-lg-4 col-md-12 col-sm-12">
+					<div class="inner-column">
+						<div class="price">${{ course.price }}</div>
+						<h5>This course includes:</h5>
+						<div class="text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered </div>
+						<ul class="level-list">
+							<li>Level :<span>{{ course.level }}</span></li>
+							<li>Topic :<span>{{ course.category.name }}</span></li>
+							<li>Class :<span>32 articles</span></li>
+							<li>Access :<span>Mobile and TV</span></li>
+						</ul>
+						<h5>Other includes:</h5>
+						<ul class="level-list-two">
+							<li>Full lifetime access</li>
+							<li>19 downloadable resources</li>
+							<li>Certificate of completion</li>
+						</ul>
+						
+						<!-- Coupon Form -->
+						<div class="coupon-form">
+							<h6>Watch Video <span class="fa fa-caret-right"></span></h6>
+							<form method="post" action="{% url 'contact' %}">
+{% csrf_token %}
+								<div class="form-group">
+									<input type="email" name="email" value="" placeholder="Enter Coupon" required>
+									<button type="submit" class="submit-btn">Enter</button>
+								</div>
+							</form>
+						</div>
+						<div class="btns-box">
+							<a href="#" class="theme-btn enrol-btn">Enrol Now</a>
+							<a href="#" class="theme-btn wishlist-btn">Add to wishlist</a>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</section>
+	<!-- End Course Detail Section -->
+	
+	
+{% endblock %}
