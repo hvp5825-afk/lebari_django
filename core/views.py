@@ -9,7 +9,7 @@ def index(request):
     testimonials = Testimonial.objects.all()
     # Get latest 3 courses for the homepage
     courses = Course.objects.all().order_by('-created_at')[:3]
-    return render(request, 'index.html', {
+    return render(request, 'index-2.html', {
         'settings': settings,
         'banners': banners,
         'testimonials': testimonials,

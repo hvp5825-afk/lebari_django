@@ -1775,7 +1775,7 @@ img{
 .header-style-two .header-upper .logo-box{
 	padding:17.5px 0px;
 	padding-left:12px;
-	background-color:#43b97e;
+	background-color:#ffffff;
 }
 
 .header-style-two .main-menu,
@@ -11190,7 +11190,7 @@ img{
 	z-index:12;
 	margin:14px 0px;
 	margin-right:20px;
-	background-color:#43b97e;
+	background-color:#ffffff;
 	padding:15px 0px 15px 20px;
 }
 
@@ -11350,7 +11350,7 @@ img{
 	left:0px;
 	z-index:12;
 	margin:18px 0px;
-	background-color:#16161f;
+	background-color:#ffffff;
 	padding:15px 0px 15px 20px;
 }
 
@@ -17347,3 +17347,27 @@ img{
 /* Add organic blob shapes to the main slider images */
 .banner-section .image-column .image img { border-radius: 54% 46% 38% 62% / 49% 54% 46% 51%; }
 .banner-section .image-column .image-two img { border-radius: 42% 58% 69% 31% / 55% 42% 58% 45%; }
+
+
+/* Premium Dynamic Background */
+body {
+    background: linear-gradient(-45deg, #f8fafc, #ffffff, #fdf4ff, #eff6ff) !important;
+    background-size: 400% 400% !important;
+    animation: gradientBG 15s ease infinite !important;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Glassmorphism utility for modern look */
+.glass-card {
+    background: rgba(255, 255, 255, 0.6) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05) !important;
+    border-radius: 15px;
+}
