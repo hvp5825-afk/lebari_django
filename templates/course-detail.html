@@ -1,58 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block content %}
 
-	
-	<!-- Sidebar Cart Item -->
-	<div class="xs-sidebar-group info-group">
-		<div class="xs-overlay xs-bg-black"></div>
-		<div class="xs-sidebar-widget">
-			<div class="sidebar-widget-container">
-				<div class="widget-heading">
-					<a href="#" class="close-side-widget">
-						X
-					</a>
-				</div>
-				<div class="sidebar-textwidget">
-					
-					<!-- Sidebar Info Content -->
-					<div class="sidebar-info-contents">
-						<div class="content-inner">
-							<div class="logo">
-								<a href="{% url 'index' %}"><img src="{% static 'images/logo-white.png' %}?v=2" alt="" /></a>
-							</div>
-							<div class="content-box">
-								<h2>About Us</h2>
-								<p class="text">The argument in favor of using filler text goes something like this: If you use real content in the Consulting Process, anytime you reach a review point you’ll end up reviewing and negotiating the content itself and not the design.</p>
-								<a href="#" class="theme-btn btn-style-two"><span class="txt">Consultation</span></a>
-							</div>
-							<div class="contact-info">
-								<h2>Contact Info</h2>
-								<ul class="list-style-two">
-									<li><span class="icon fa fa-location-arrow"></span>Chicago 12, Melborne City, USA</li>
-									<li><span class="icon fa fa-phone"></span>(111) 111-111-1111</li>
-									<li><span class="icon fa fa-envelope"></span>lebari@gmail.com</li>
-									<li><span class="icon fa fa-clock-o"></span>Week Days: 09.00 to 18.00 Sunday: Closed</li>
-								</ul>
-							</div>
-							<!-- Social Box -->
-							<ul class="social-box">
-								<li class="facebook"><a href="#" class="fa fa-facebook-f"></a></li>
-								<li class="twitter"><a href="#" class="fa fa-twitter"></a></li>
-								<li class="linkedin"><a href="#" class="fa fa-linkedin"></a></li>
-								<li class="instagram"><a href="#" class="fa fa-instagram"></a></li>
-								<li class="youtube"><a href="#" class="fa fa-youtube"></a></li>
-							</ul>
-						</div>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- END sidebar widget item -->
-	
-	<!-- Cource Detail Banner Section -->
+<!-- Cource Detail Banner Section -->
     <section class="cource-detail-banner-section">
 		<div class="pattern-layer-one" style="background-image: url({% static 'images/icons/icon-5.png' %})"></div>
 		<div class="pattern-layer-two" style="background-image: url({% static 'images/icons/icon-6.png' %})"></div>
@@ -66,13 +17,13 @@
 			</ul>
 			<div class="content-box">
 				<div class="title">5 day left at this price!</div>
-				<h2>{{ course.title|safe }}</h2>
+				<h2>The Complete JavaScript Course 2020 <br> From Zero to Expert!</h2>
 				<ul class="course-info">
-					<li><span class="icon fa fa-clock-o"></span>Last Update : {{ course.updated_at|date:"M d, Y" }}</li>
+					<li><span class="icon fa fa-clock-o"></span>Last Update : {{ course.updated_at|date:"M d, Y"|default:"November 23, 2020" }}</li>
 					<li><span class="icon fa fa-language"></span>English</li>
 					<li><span class="icon fa fa-user"></span>749 students</li>
 				</ul>
-				<div class="development">{{ course.category.name }}</div>
+				<div class="development">Development courses</div>
 				<div class="rating">
 					<span class="fa fa-star"></span>
 					<span class="fa fa-star"></span>
@@ -82,7 +33,7 @@
 					<strong>4.9</strong>
 					<i>(70 Review)</i>
 				</div>
-				<div class="hovers">{{ course.duration }} . {{ course.level }}</div>
+				<div class="hovers">11.5 total hours . All Levels  </div>
 				
 				<!-- Social Box -->
 				<ul class="social-box">
@@ -107,7 +58,7 @@
 				<div class="content-column col-lg-8 col-md-12 col-sm-12">
 					<div class="inner-column">
 						<h5>Courses Description</h5>
-						{{ course.description|safe }}
+						<p>{{ course.description|safe|default:"We offer a broad range of..." }}</p>
 						<div class="learn-box">
 							<h5>What you'll learn</h5>
 							<ul class="learn-list">
@@ -291,7 +242,7 @@
 								<div class="image">
 									<img src="{% static 'images/resource/author-4.jpg' %}" alt="" />
 								</div>
-								<h6>Jonas jashiom <a href="#" class="icon fa fa-plus"></a></h6>
+								<h6>Jonas jashiom <a href="profile.html" class="icon fa fa-plus"></a></h6>
 								<div class="designation">java Developer, Designer, and Teacher</div>
 								<ul class="list">
 									<li><span class="icon fa fa-play-circle-o"></span>44 Course</li>
@@ -378,8 +329,7 @@
 							<div class="group-title"><h5>Leave A Comment</h5></div>
 							
 							<!--Comment Form-->
-							<form method="post" action="{% url 'blog_list' %}">
-{% csrf_token %}
+							<form method="post" action="blog.html">
 								<div class="row clearfix">
 									
 									<div class="col-lg-6 col-md-6 col-sm-12 form-group">
@@ -413,12 +363,12 @@
 				<!-- Info Column -->
 				<div class="info-column col-lg-4 col-md-12 col-sm-12">
 					<div class="inner-column">
-						<div class="price">${{ course.price }}</div>
+						<div class="price">$9.99 <i>$129.99</i> <span>92% of</span></div>
 						<h5>This course includes:</h5>
 						<div class="text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered </div>
 						<ul class="level-list">
-							<li>Level :<span>{{ course.level }}</span></li>
-							<li>Topic :<span>{{ course.category.name }}</span></li>
+							<li>Level :<span>Beginner</span></li>
+							<li>Topic :<span>Java Script</span></li>
 							<li>Class :<span>32 articles</span></li>
 							<li>Access :<span>Mobile and TV</span></li>
 						</ul>
@@ -432,8 +382,7 @@
 						<!-- Coupon Form -->
 						<div class="coupon-form">
 							<h6>Watch Video <span class="fa fa-caret-right"></span></h6>
-							<form method="post" action="{% url 'contact' %}">
-{% csrf_token %}
+							<form method="post" action="contact.html">
 								<div class="form-group">
 									<input type="email" name="email" value="" placeholder="Enter Coupon" required>
 									<button type="submit" class="submit-btn">Enter</button>
@@ -452,5 +401,6 @@
 	</section>
 	<!-- End Course Detail Section -->
 	
-	
+	<!-- Main Footer -->
+    
 {% endblock %}

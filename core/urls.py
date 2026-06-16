@@ -4,6 +4,10 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('online-course-1/', views.online_course_1, name='online_course_1'),
+    path('coaching/', views.coaching, name='coaching'),
+    path('kindergarten/', views.kindergarten, name='kindergarten'),
+    path('university/', views.university, name='university'),
     path('index.html', RedirectView.as_view(url='/', permanent=True)),
     path('course.html', RedirectView.as_view(url='/courses/', permanent=True)),
     path('blog.html', RedirectView.as_view(url='/blog/', permanent=True)),

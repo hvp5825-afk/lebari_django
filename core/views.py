@@ -16,6 +16,36 @@ def index(request):
         'courses': courses,
     })
 
+def online_course_1(request):
+    settings = SiteSetting.objects.first()
+    banners = Banner.objects.all()
+    testimonials = Testimonial.objects.all()
+    courses = Course.objects.all().order_by('-created_at')[:3]
+    return render(request, 'index.html', {
+        'settings': settings,
+        'banners': banners,
+        'testimonials': testimonials,
+        'courses': courses,
+    })
+
+def coaching(request):
+    settings = SiteSetting.objects.first()
+    return render(request, 'index-3.html', {
+        'settings': settings,
+    })
+
+def kindergarten(request):
+    settings = SiteSetting.objects.first()
+    return render(request, 'index-4.html', {
+        'settings': settings,
+    })
+
+def university(request):
+    settings = SiteSetting.objects.first()
+    return render(request, 'index-5.html', {
+        'settings': settings,
+    })
+
 def about(request):
     settings = SiteSetting.objects.first()
     return render(request, 'about.html', {
