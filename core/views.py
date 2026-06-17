@@ -1,32 +1,49 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .models import SiteSetting, Banner, Testimonial, Teacher, FAQ, Event
+from .models import SiteSetting, Banner, Testimonial, Teacher, FAQ, Event, FrontendSection, FeatureItem, CounterItem, ClientLogo
 from courses.models import Course, CourseCategory
+from blog.models import Post
+
+def get_cms_context(page_name):
+    sections = {s.identifier: s for s in FrontendSection.objects.all()}
+    features = FeatureItem.objects.filter(page=page_name)
+    counters = CounterItem.objects.all()
+    clients = ClientLogo.objects.all()
+    return {'sections': sections, 'features': features, 'counters': counters, 'clients': clients}
 
 def index(request):
     settings = SiteSetting.objects.first()
     banners = Banner.objects.all()
     testimonials = Testimonial.objects.all()
-    # Get latest 3 courses for the homepage
     courses = Course.objects.all().order_by('-created_at')[:3]
-    return render(request, 'index-2.html', {
+    event = Event.objects.order_by('-date').first()
+    
+    ctx = {
         'settings': settings,
         'banners': banners,
         'testimonials': testimonials,
         'courses': courses,
-    })
+        'event': event,
+    }
+    ctx.update(get_cms_context('home2'))
+    return render(request, 'index-2.html', ctx)
 
 def online_course_1(request):
     settings = SiteSetting.objects.first()
     banners = Banner.objects.all()
     testimonials = Testimonial.objects.all()
     courses = Course.objects.all().order_by('-created_at')[:3]
-    return render(request, 'index.html', {
+    posts = Post.objects.all().order_by('-created_at')[:2]
+    
+    ctx = {
         'settings': settings,
         'banners': banners,
         'testimonials': testimonials,
         'courses': courses,
-    })
+        'posts': posts,
+    }
+    ctx.update(get_cms_context('home1'))
+    return render(request, 'index.html', ctx)
 
 def coaching(request):
     settings = SiteSetting.objects.first()
@@ -135,4 +152,52 @@ def profile(request):
     settings = SiteSetting.objects.first()
     return render(request, 'profile.html', {
         'settings': settings,
+    })
+
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import login, logout
+
+def register_view(request):
+    settings = SiteSetting.objects.first()
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Registration successful.')
+            return redirect('index')
+        else:
+            messages.error(request, 'Unsuccessful registration. Invalid information.')
+    else:
+        form = UserCreationForm()
+    return render(request, 'register.html', {'form': form, 'settings': settings})
+
+def login_view(request):
+    settings = SiteSetting.objects.first()
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            messages.info(request, f'You are now logged in as {user.username}.')
+            return redirect('index')
+        else:
+            messages.error(request, 'Invalid username or password.')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'login.html', {'form': form, 'settings': settings})
+
+def logout_view(request):
+    logout(request)
+    messages.info(request, 'You have successfully logged out.')
+    return redirect('index')
+
+from .models import CustomPage
+
+def custom_page_detail(request, slug):
+    settings = SiteSetting.objects.first()
+    page = get_object_or_404(CustomPage, slug=slug, is_active=True)
+    return render(request, 'custom_page.html', {
+        'settings': settings,
+        'page': page,
     })

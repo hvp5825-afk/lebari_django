@@ -1,0 +1,302 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Banner Section Three -->
+    <section class="banner-section-three">
+		<div class="pattern-layer-two" style="background-image: url({% static 'images/background/pattern-21.png' %})"></div>
+		<div class="auto-container">
+			<!-- Page Breadcrumb -->
+			<ul class="page-breadcrumb">
+				<li><a href="{% url 'index' %}">home</a></li>
+				<li>{% if sections.teacher_banner %}{{ sections.teacher_banner.subtitle }}{% else %}Pages{% endif %}</li>
+			</ul>
+            <div class="row clearfix">
+				
+				<!-- Content Column -->
+				<div class="content-column col-lg-8 col-md-12 col-sm-12">
+					<div class="inner-column">
+						<div class="pattern-layer-one" style="background-image: url({% static 'images/main-slider/pattern-1.png' %})"></div>
+						<div class="icon-layer" style="background-image: url({% static 'images/icons/icon-2.png' %})"></div>
+						<div class="icon-layer-two" style="background-image: url({% static 'images/icons/icon-5.png' %})"></div>
+						<h2>{% if sections.teacher_banner %}{{ sections.teacher_banner.title|safe }}{% else %}Page Banner{% endif %}</h2>
+					</div>
+				</div>
+				
+				<!-- Images Column -->
+				<div class="image-column col-lg-4 col-md-12 col-sm-12">
+					<div class="inner-column">
+						<div class="icon-layer-three" style="background-image: url({% static 'images/icons/icon-3.png' %})"></div>
+						<div class="icon-layer-four" style="background-image: url({% static 'images/icons/icon-2.png' %})"></div>
+						<div class="icon-layer-five" style="background-image: url({% static 'images/icons/icon-4.png' %})"></div>
+						<div class="image">
+							<img src="{% if sections.teacher_banner and sections.teacher_banner.image %}{{ sections.teacher_banner.image.url }}{% else %}{% static 'images/resource/page-title-4.png' %}{% endif %}" alt="" />
+						</div>
+						<div class="image-two">
+							<img src="{% static 'images/resource/page-title-2.png' %}" alt="" />
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</section>
+    <!-- End Banner Section Three -->
+	
+	<!-- Goal Section -->
+	<section class="goal-section">
+		<div class="pattern-layer-four" style="background-image:url({% static 'images/background/pattern-18.png' %})"></div>
+		<div class="auto-container">
+			<div class="row clearfix">
+				
+				<!-- Images Column -->
+				<div class="images-column col-lg-6 col-md-12 col-sm-12">
+					<div class="color-layer"></div>
+					<div class="inner-column">
+						<div class="pattern-layer" style="background-image:url({% static 'images/background/pattern-4.png' %})"></div>
+						<div class="pattern-layer-two" style="background-image:url({% static 'images/background/pattern-17.png' %})"></div>
+						<div class="image">
+							<img src="{% if sections.teacher_goal and sections.teacher_goal.image %}{{ sections.teacher_goal.image.url }}{% else %}{% static 'images/resource/goal-1.jpg' %}{% endif %}" alt="" />
+						</div>
+						<div class="image-two">
+							<img src="{% static 'images/resource/goal-2.jpg' %}" alt="" />
+						</div>
+					</div>
+				</div>
+				
+				<!-- Content Column -->
+				<div class="content-column col-lg-6 col-md-12 col-sm-12">
+					<div class="inner-column">
+						<div class="pattern-layer-three" style="background-image:url({% static 'images/background/pattern-13.png' %})"></div>
+						<div class="sec-title">
+							<div class="title">{% if sections.teacher_goal %}{{ sections.teacher_goal.subtitle }}{% else %}Achieve Goals{% endif %}</div>
+							<h2>{% if sections.teacher_goal %}{{ sections.teacher_goal.title|safe }}{% else %}Start To Success{% endif %}</h2>
+							<div class="text">{% if sections.teacher_goal %}{{ sections.teacher_goal.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Duis aute irure dolor in{% endif %}</div>
+						</div>
+						
+						<!-- Fact Counter -->
+						<div class="fact-counter">
+							<div class="row clearfix">
+                                {% if counters %}
+                                    {% for counter in counters %}
+								<!-- Column -->
+								<div class="column counter-column col-lg-6 col-md-6 col-sm-12">
+									<div class="inner wow fadeInLeft" data-wow-delay="{{ counter.delay }}" data-wow-duration="1500ms">
+										<div class="content">
+											<div class="count-outer count-box">
+												<span class="count-text" data-speed="3000" data-stop="{{ counter.number }}">0</span>{{ counter.suffix|default:'' }}
+											</div>
+											<h4 class="counter-title">{{ counter.title }}</h4>
+										</div>
+									</div>
+								</div>
+                                    {% endfor %}
+                                {% else %}
+								<!-- Column -->
+								<div class="column counter-column col-lg-6 col-md-6 col-sm-12">
+									<div class="inner wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
+										<div class="content">
+											<div class="count-outer count-box">
+												<span class="count-text" data-speed="3000" data-stop="36">0</span>+
+											</div>
+											<h4 class="counter-title">Over 35 Free Courses</h4>
+										</div>
+									</div>
+								</div>
+
+								<!-- Column -->
+								<div class="column counter-column col-lg-6 col-md-6 col-sm-12">
+									<div class="inner wow fadeInLeft" data-wow-delay="300ms" data-wow-duration="1500ms">
+										<div class="content">
+											<div class="count-outer count-box alternate">
+												<span class="count-text" data-speed="5000" data-stop="34">0</span>
+											</div>
+											<h4 class="counter-title">Member State Associations</h4>
+										</div>
+									</div>
+								</div>
+                                {% endif %}
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				
+			</div>
+			
+		</div>
+	</section>
+    <!-- End Goal Section -->
+	
+	<!-- Team Section Two -->
+	<section class="team-section-two">
+		<div class="auto-container">
+			<div class="pattern-layer" style="background-image:url({% static 'images/background/pattern-18.png' %})"></div>
+			<div class="pattern-layer-two" style="background-image:url({% static 'images/background/pattern-19.png' %})"></div>
+			<div class="pattern-layer-three" style="background-image:url({% static 'images/icons/icon-4.png' %})"></div>
+			<div class="pattern-layer-four" style="background-image:url({% static 'images/icons/icon-4.png' %})"></div>
+			<div class="inner-container">
+				<div class="pattern-layer-five" style="background-image:url({% static 'images/icons/icon-2.png' %})"></div>
+				<div class="color-layer"></div>
+				<div class="row clearfix">
+					
+					
+					{% for teacher in teachers %}
+					<!-- Team Block -->
+					<div class="team-block col-lg-4 col-md-6 col-sm-12">
+						<div class="inner-box">
+							<div class="image">
+								<a href="#">
+									{% if teacher.image %}
+									<img src="{{ teacher.image.url }}" alt="{{ teacher.name }}" />
+									{% else %}
+									<img src="{% static 'images/resource/team-1.jpg' %}" alt="{{ teacher.name }}" />
+									{% endif %}
+								</a>
+							</div>
+							<div class="lower-content">
+								<h5><a href="#">{{ teacher.name }}</a></h5>
+								<div class="designation">{{ teacher.designation }}</div>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Team Section -->
+	
+	<!-- Clients Section -->
+	<section class="clients-section">
+		<div class="auto-container">
+			<!-- Sec Title -->
+			<div class="sec-title centered">
+				<h2>{% if sections.teacher_clients %}{{ sections.teacher_clients.title }}{% else %}Key supporters{% endif %}</h2>
+				<div class="text">{% if sections.teacher_clients %}{{ sections.teacher_clients.text|safe }}{% else %}These leading universities are currently offering online degree <br> courses on FutureLearn:{% endif %}</div>
+			</div>
+			
+			<div class="sponsors-outer">
+				<!--Sponsors Carousel-->
+				<ul class="sponsors-carousel owl-carousel owl-theme">
+                    {% if clients %}
+                        {% for client in clients %}
+					    <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ client.image.url }}" alt="{{ client.name }}"></a></figure></li>
+                        {% endfor %}
+                    {% else %}
+					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/1.png' %}" alt=""></a></figure></li>
+					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/2.png' %}" alt=""></a></figure></li>
+					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/3.png' %}" alt=""></a></figure></li>
+					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/4.png' %}" alt=""></a></figure></li>
+					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/5.png' %}" alt=""></a></figure></li>
+                    {% endif %}
+				</ul>
+			</div>
+			
+		</div>
+	</section>
+	<!-- End Clients Section -->
+	
+	<!-- Contact Section -->
+	<section class="contact-section">
+		<div class="pattern-layer" style="background-image:url({% static 'images/background/pattern-19.png' %})"></div>
+		<div class="pattern-layer-two" style="background-image:url({% static 'images/background/pattern-20.png' %})"></div>
+		<div class="icon-layer-two" style="background-image:url({% static 'images/icons/icon-2.png' %})"></div>
+		<div class="icon-layer-three" style="background-image:url({% static 'images/icons/icon-2.png' %})"></div>
+		<div class="auto-container">
+			<div class="row clearfix">
+				
+				<!-- Info Column -->
+				<div class="info-column col-lg-4 col-md-12 col-sm-12">
+					<div class="inner-column">
+						<div class="icon-layer" style="background-image:url({% static 'images/icons/icon-2.png' %})"></div>
+						<div class="image">
+							<img src="{% static 'images/resource/contact.png' %}" alt="" />
+						</div>
+						<h5>Contact us</h5>
+						<p>It is a long established fact that a reader will be distracted by the readable content of a page </p>
+						<ul class="contact-list">
+							<li>
+								<strong>Phone:</strong>
+								<a href="tel:+88-01682648101">+88 01682648101</a>
+							</li>
+							<li>
+								<strong>Email:</strong>
+								<a href="mailo:hello@lebari.com">hello@lebari.com</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				
+				<!-- Form Column -->
+				<div class="form-column col-lg-8 col-md-12 col-sm-12">
+					<div class="inner-column">
+						<div class="color-layer"></div>
+						<!-- Sec Title -->
+						<div class="sec-title">
+							<h2> Visit us <br> for Free Resources</h2>
+							<div class="text">These leading universities are currently offering online degree courses on FutureLearn:</div>
+						</div>
+						
+						<!-- Default Form -->
+						<div class="default-form">
+							<form method="post" action="{% url 'contact' %}">
+{% csrf_token %}
+								<div class="row clearfix">
+								
+									<!-- Form Group -->
+									<div class="form-group col-lg-6 col-md-6 col-sm-12">
+										<input type="text" name="username" value="" placeholder="First Name" required>
+									</div>
+									
+									<!-- Form Group -->
+									<div class="form-group col-lg-6 col-md-6 col-sm-12">
+										<input type="text" name="lastname" value="" placeholder="Last Name" required>
+									</div>
+									
+									<!-- Form Group -->
+									<div class="form-group col-lg-12 col-md-12 col-sm-12">
+										<input type="email" name="email" value="" placeholder="Email" required>
+									</div>
+									
+									<!-- Form Group -->
+									<div class="form-group col-lg-12 col-md-12 col-sm-12">
+										<select name="country" class="custom-select-box">
+											<option>When you want to start courses</option>
+											<option>courses 01</option>
+											<option>courses 02</option>
+											<option>courses 03</option>
+											<option>courses 04</option>
+										</select>
+									</div>
+									
+									<!-- Form Group -->
+									<div class="form-group col-lg-6 col-md-6 col-sm-12">
+										<input type="text" name="date" value="" placeholder="Date" required>
+									</div>
+									
+									<!-- Form Group -->
+									<div class="form-group col-lg-6 col-md-6 col-sm-12">
+										<input type="text" name="time" value="" placeholder="Time" required>
+									</div>
+									
+									<!-- Form Group -->
+									<div class="form-group col-lg-12 col-md-12 col-sm-12">
+										<textarea placeholder="Type you comment here"></textarea>
+									</div>
+									
+									<div class="form-group col-lg-12 col-md-12 col-sm-12">
+										<button type="submit" class="theme-btn btn-style-one"><span class="txt">Submit</span></button>
+									</div>
+                                </div>
+                            </form>
+                        </div>
+						
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</section>
+	<!-- End Contact Section -->
+	
+	{% endblock %}

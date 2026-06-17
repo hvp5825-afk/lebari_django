@@ -43,7 +43,7 @@
 	<!-- End Banner Section Three -->
 	
 	<!-- Goal Section -->
-	<section class="goal-section style-two">
+	<section class="goal-section">
 		<div class="pattern-layer-four" style="background-image:url({% static 'images/background/pattern-18.png' %})"></div>
 		<div class="auto-container">
 			<div class="row clearfix">
@@ -55,7 +55,7 @@
 						<div class="pattern-layer" style="background-image:url({% static 'images/background/pattern-4.png' %})"></div>
 						<div class="pattern-layer-two" style="background-image:url({% static 'images/background/pattern-17.png' %})"></div>
 						<div class="image">
-							<img src="{% static 'images/resource/goal-1.jpg' %}" alt="" />
+							<img src="{% if sections.teacher_goal and sections.teacher_goal.image %}{{ sections.teacher_goal.image.url }}{% else %}{% static 'images/resource/goal-1.jpg' %}{% endif %}" alt="" />
 						</div>
 						<div class="image-two">
 							<img src="{% static 'images/resource/goal-2.jpg' %}" alt="" />
@@ -68,15 +68,29 @@
 					<div class="inner-column">
 						<div class="pattern-layer-three" style="background-image:url({% static 'images/background/pattern-13.png' %})"></div>
 						<div class="sec-title">
-							<div class="title">Achieve Goals</div>
-							<h2>Start To Success</h2>
-							<div class="text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Duis aute irure dolor in</div>
+							<div class="title">{% if sections.teacher_goal %}{{ sections.teacher_goal.subtitle }}{% else %}Achieve Goals{% endif %}</div>
+							<h2>{% if sections.teacher_goal %}{{ sections.teacher_goal.title|safe }}{% else %}Start To Success{% endif %}</h2>
+							<div class="text">{% if sections.teacher_goal %}{{ sections.teacher_goal.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Duis aute irure dolor in{% endif %}</div>
 						</div>
 						
 						<!-- Fact Counter -->
 						<div class="fact-counter">
 							<div class="row clearfix">
-
+                                {% if counters %}
+                                    {% for counter in counters %}
+								<!-- Column -->
+								<div class="column counter-column col-lg-6 col-md-6 col-sm-12">
+									<div class="inner wow fadeInLeft" data-wow-delay="{{ counter.delay }}" data-wow-duration="1500ms">
+										<div class="content">
+											<div class="count-outer count-box">
+												<span class="count-text" data-speed="3000" data-stop="{{ counter.number }}">0</span>{{ counter.suffix|default:'' }}
+											</div>
+											<h4 class="counter-title">{{ counter.title }}</h4>
+										</div>
+									</div>
+								</div>
+                                    {% endfor %}
+                                {% else %}
 								<!-- Column -->
 								<div class="column counter-column col-lg-6 col-md-6 col-sm-12">
 									<div class="inner wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
@@ -100,31 +114,7 @@
 										</div>
 									</div>
 								</div>
-
-								<!-- Column -->
-								<div class="column counter-column col-lg-6 col-md-6 col-sm-12">
-									<div class="inner wow fadeInLeft" data-wow-delay="600ms" data-wow-duration="1500ms">
-										<div class="content">
-											<div class="count-outer count-box">
-												<span class="count-text" data-speed="2000" data-stop="15">0</span>k
-											</div>
-											<h4 class="counter-title">Over 19,000 High Schools</h4>
-										</div>
-									</div>
-								</div>
-
-								<!-- Column -->
-								<div class="column counter-column col-lg-6 col-md-6 col-sm-12">
-									<div class="inner wow fadeInLeft" data-wow-delay="900ms" data-wow-duration="1500ms">
-										<div class="content">
-											<div class="count-outer count-box">
-												<span class="count-text" data-speed="3500" data-stop="20">0</span>m
-											</div>
-											<h4 class="counter-title">Over 11 million Students</h4>
-										</div>
-									</div>
-								</div>
-
+                                {% endif %}
 							</div>
 						</div>
 						
@@ -135,7 +125,7 @@
 			
 		</div>
 	</section>
-	<!-- End Goal Section -->
+    <!-- End Goal Section -->
 	
 	<!-- Team Section Two -->
 	<section class="team-section-two">
@@ -181,21 +171,24 @@
 		<div class="auto-container">
 			<!-- Sec Title -->
 			<div class="sec-title centered">
-				<h2>Key supporters</h2>
-				<div class="text">These leading universities are currently offering online degree <br> courses on FutureLearn:</div>
+				<h2>{% if sections.teacher_clients %}{{ sections.teacher_clients.title }}{% else %}Key supporters{% endif %}</h2>
+				<div class="text">{% if sections.teacher_clients %}{{ sections.teacher_clients.text|safe }}{% else %}These leading universities are currently offering online degree <br> courses on FutureLearn:{% endif %}</div>
 			</div>
 			
 			<div class="sponsors-outer">
 				<!--Sponsors Carousel-->
 				<ul class="sponsors-carousel owl-carousel owl-theme">
+                    {% if clients %}
+                        {% for client in clients %}
+					    <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ client.image.url }}" alt="{{ client.name }}"></a></figure></li>
+                        {% endfor %}
+                    {% else %}
 					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/1.png' %}" alt=""></a></figure></li>
 					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/2.png' %}" alt=""></a></figure></li>
 					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/3.png' %}" alt=""></a></figure></li>
 					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/4.png' %}" alt=""></a></figure></li>
 					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/5.png' %}" alt=""></a></figure></li>
-					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/1.png' %}" alt=""></a></figure></li>
-					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/2.png' %}" alt=""></a></figure></li>
-					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/3.png' %}" alt=""></a></figure></li>
+                    {% endif %}
 				</ul>
 			</div>
 			

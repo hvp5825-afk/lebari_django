@@ -31,3 +31,31 @@ class FAQAdmin(admin.ModelAdmin):
 class EventAdmin(admin.ModelAdmin):
     list_display = ('title', 'date', 'time_start', 'time_end', 'location')
     prepopulated_fields = {'slug': ('title',)}
+
+from .models import FrontendSection, FeatureItem, CounterItem, ClientLogo
+
+@admin.register(FrontendSection)
+class FrontendSectionAdmin(admin.ModelAdmin):
+    list_display = ('name', 'identifier', 'title')
+
+@admin.register(FeatureItem)
+class FeatureItemAdmin(admin.ModelAdmin):
+    list_display = ('title', 'page', 'icon_class')
+    list_filter = ('page',)
+
+@admin.register(CounterItem)
+class CounterItemAdmin(admin.ModelAdmin):
+    list_display = ('title', 'number', 'suffix')
+
+@admin.register(ClientLogo)
+class ClientLogoAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+from .models import CustomPage
+
+@admin.register(CustomPage)
+class CustomPageAdmin(admin.ModelAdmin):
+    list_display = ('title', 'slug', 'is_active', 'created_at')
+    prepopulated_fields = {'slug': ('title',)}
+    list_filter = ('is_active',)
+    search_fields = ('title', 'slug')

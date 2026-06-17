@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Page Title Section -->
+    <section class="page-title-section">
+		<div class="icon-layer-one" style="background-image: url({% static 'images/icons/icon-5.png' %})"></div>
+		<div class="icon-layer-two" style="background-image: url({% static 'images/icons/icon-6.png' %})"></div>
+		<div class="icon-layer-three" style="background-image: url({% static 'images/icons/icon-4.png' %})"></div>
+		<div class="icon-layer-four" style="background-image: url({% static 'images/icons/icon-7.png' %})"></div>
+		<div class="icon-layer-five" style="background-image: url({% static 'images/icons/icon-7.png' %})"></div>
+		<div class="icon-layer-six" style="background-image: url({% static 'images/icons/icon-8.png' %})"></div>
+		<div class="auto-container">
+			<!-- Page Breadcrumb -->
+			<ul class="page-breadcrumb">
+				<li><a href="{% url 'index' %}">Home</a></li>
+				<li>faq</li>
+			</ul>
+            <div class="content-box">
+				<h2>Get Answers to Your Questions</h2>
+				<div class="text">dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <br> Excepteur sint occaecat cupidatat non proident, </div>
+			</div>
+		</div>
+	</section>
+	<!-- End Page Title Section -->
+	
+	<!-- Faq Blocks Section -->
+	<section class="faq-blocks-section">
+		<div class="auto-container">
+			<div class="inner-container">
+				<div class="row clearfix">
+					
+					<!-- Faq Block -->
+					<div class="faq-block col-lg-4 col-md-6 col-sm-12">
+						<div class="inner-box wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
+							<div class="icon-box">
+								<span class="icon flaticon-unity"></span>
+							</div>
+							<h5><a href="#">Become a Partner</a></h5>
+							<div class="text">consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</div>
+							<a href="#" class="read-more">Read More</a>
+						</div>
+					</div>
+					
+					<!-- Faq Block -->
+					<div class="faq-block col-lg-4 col-md-6 col-sm-12">
+						<div class="inner-box wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
+							<div class="icon-box">
+								<span class="icon flaticon-calendar"></span>
+							</div>
+							<h5><a href="#">Become a Courier</a></h5>
+							<div class="text">consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</div>
+							<a href="#" class="read-more">Read More</a>
+						</div>
+					</div>
+					
+					<!-- Faq Block -->
+					<div class="faq-block col-lg-4 col-md-6 col-sm-12">
+						<div class="inner-box wow fadeInRight" data-wow-delay="0ms" data-wow-duration="1500ms">
+							<div class="icon-box">
+								<span class="icon flaticon-customer"></span>
+							</div>
+							<h5><a href="#">Join Our Team</a></h5>
+							<div class="text">consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</div>
+							<a href="#" class="read-more">Read More</a>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Faq Blocks Section -->
+	
+	<!-- Faq Section -->
+	<section class="faq-section">
+		<div class="auto-container">
+			<div class="row clearfix">
+				
+				<!-- Column -->
+				<div class="column col-lg-6 col-md-12 col-sm-12">
+					<div class="title-box">
+						<h4>Primary FAQ</h4>
+					</div>
+					
+					<ul class="accordion-box">
+						{% for faq in primary_faqs %}
+						<li class="accordion block {% if forloop.first %}active-block{% endif %}">
+							<div class="acc-btn {% if forloop.first %}active{% endif %}">{{ faq.question }} <div class="icon fa fa-angle-down"></div></div>
+							<div class="acc-content {% if forloop.first %}current{% endif %}">
+								<div class="content">
+									<div class="text">
+										{{ faq.answer|safe }}
+									</div>
+								</div>
+							</div>
+						</li>
+						{% empty %}
+						<p>No primary FAQs available.</p>
+						{% endfor %}
+</ul>
+					
+				</div>
+				<!-- Column -->
+				<div class="column col-lg-6 col-md-12 col-sm-12">
+					<div class="title-box">
+						<h4>Other questions</h4>
+					</div>
+					
+					<ul class="accordion-box">
+						{% for faq in other_faqs %}
+						<li class="accordion block {% if forloop.first %}active-block{% endif %}">
+							<div class="acc-btn {% if forloop.first %}active{% endif %}">{{ faq.question }} <div class="icon fa fa-angle-down"></div></div>
+							<div class="acc-content {% if forloop.first %}current{% endif %}">
+								<div class="content">
+									<div class="text">
+										{{ faq.answer|safe }}
+									</div>
+								</div>
+							</div>
+						</li>
+						{% empty %}
+						<p>No other questions available.</p>
+						{% endfor %}
+</ul>
+					
+				</div>
+				
+			</div>
+		</div>
+	</section>
+	<!-- End Faq Section -->
+	
+	{% endblock %}

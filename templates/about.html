@@ -19,7 +19,13 @@
 					<div class="sidebar-info-contents">
 						<div class="content-inner">
 							<div class="logo">
-								<a href="{% url 'index' %}"><img src="{% static 'images/logo-white.png' %}?v=2" alt="" /></a>
+								<a href="{% url 'index' %}">{% if site_setting and site_setting.logo_type == 'text' %}
+    <h2 style="color: inherit; font-weight: bold; margin: 0; line-height: 1;">{{ site_setting.logo_text }}</h2>
+{% elif site_setting and site_setting.logo_type == 'image' and site_setting.logo %}
+    <img src="{{ site_setting.logo.url }}" alt="Logo" title="">
+{% else %}
+    <img src="{% static 'images/logo-white.png' %}?v=2" alt="Logo" title="">
+{% endif %}</a>
 							</div>
 							<div class="content-box">
 								<h2>About Us</h2>
@@ -94,7 +100,7 @@
 	<!-- End Banner Section Three -->
 	
 	<!-- Goal Section -->
-	<section class="goal-section style-two">
+	<section class="goal-section">
 		<div class="pattern-layer-four" style="background-image:url({% static 'images/background/pattern-18.png' %})"></div>
 		<div class="auto-container">
 			<div class="row clearfix">
@@ -106,7 +112,7 @@
 						<div class="pattern-layer" style="background-image:url({% static 'images/background/pattern-4.png' %})"></div>
 						<div class="pattern-layer-two" style="background-image:url({% static 'images/background/pattern-17.png' %})"></div>
 						<div class="image">
-							<img src="{% static 'images/resource/goal-1.jpg' %}" alt="" />
+							<img src="{% if sections.about_goal and sections.about_goal.image %}{{ sections.about_goal.image.url }}{% else %}{% static 'images/resource/goal-1.jpg' %}{% endif %}" alt="" />
 						</div>
 						<div class="image-two">
 							<img src="{% static 'images/resource/goal-2.jpg' %}" alt="" />
@@ -119,15 +125,29 @@
 					<div class="inner-column">
 						<div class="pattern-layer-three" style="background-image:url({% static 'images/background/pattern-13.png' %})"></div>
 						<div class="sec-title">
-							<div class="title">Achieve Goals</div>
-							<h2>Start To Success</h2>
-							<div class="text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Duis aute irure dolor in</div>
+							<div class="title">{% if sections.about_goal %}{{ sections.about_goal.subtitle }}{% else %}Achieve Goals{% endif %}</div>
+							<h2>{% if sections.about_goal %}{{ sections.about_goal.title|safe }}{% else %}Start To Success{% endif %}</h2>
+							<div class="text">{% if sections.about_goal %}{{ sections.about_goal.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Duis aute irure dolor in{% endif %}</div>
 						</div>
 						
 						<!-- Fact Counter -->
 						<div class="fact-counter">
 							<div class="row clearfix">
-
+                                {% if counters %}
+                                    {% for counter in counters %}
+								<!-- Column -->
+								<div class="column counter-column col-lg-6 col-md-6 col-sm-12">
+									<div class="inner wow fadeInLeft" data-wow-delay="{{ counter.delay }}" data-wow-duration="1500ms">
+										<div class="content">
+											<div class="count-outer count-box">
+												<span class="count-text" data-speed="3000" data-stop="{{ counter.number }}">0</span>{{ counter.suffix|default:'' }}
+											</div>
+											<h4 class="counter-title">{{ counter.title }}</h4>
+										</div>
+									</div>
+								</div>
+                                    {% endfor %}
+                                {% else %}
 								<!-- Column -->
 								<div class="column counter-column col-lg-6 col-md-6 col-sm-12">
 									<div class="inner wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
@@ -151,31 +171,7 @@
 										</div>
 									</div>
 								</div>
-
-								<!-- Column -->
-								<div class="column counter-column col-lg-6 col-md-6 col-sm-12">
-									<div class="inner wow fadeInLeft" data-wow-delay="600ms" data-wow-duration="1500ms">
-										<div class="content">
-											<div class="count-outer count-box">
-												<span class="count-text" data-speed="2000" data-stop="15">0</span>k
-											</div>
-											<h4 class="counter-title">Over 19,000 High Schools</h4>
-										</div>
-									</div>
-								</div>
-
-								<!-- Column -->
-								<div class="column counter-column col-lg-6 col-md-6 col-sm-12">
-									<div class="inner wow fadeInLeft" data-wow-delay="900ms" data-wow-duration="1500ms">
-										<div class="content">
-											<div class="count-outer count-box">
-												<span class="count-text" data-speed="3500" data-stop="20">0</span>m
-											</div>
-											<h4 class="counter-title">Over 11 million Students</h4>
-										</div>
-									</div>
-								</div>
-
+                                {% endif %}
 							</div>
 						</div>
 						
@@ -186,7 +182,7 @@
 			
 		</div>
 	</section>
-	<!-- End Goal Section -->
+    <!-- End Goal Section -->
 	
 	<!-- Skill Section -->
 	<section class="skill-section">
@@ -199,14 +195,34 @@
 					<div class="inner-column">
 						<!-- Sec Title -->
 						<div class="sec-title">
-							<div class="title">Our Status valu</div>
-							<h2>Differentiate your classroom <br> What makes us special?</h2>
-							<div class="text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</div>
+							<div class="title">{% if sections.about_skill %}{{ sections.about_skill.subtitle }}{% else %}Our Status valu{% endif %}</div>
+							<h2>{% if sections.about_skill %}{{ sections.about_skill.title|safe }}{% else %}Differentiate your classroom <br> What makes us special?{% endif %}</h2>
+							<div class="text">{% if sections.about_skill %}{{ sections.about_skill.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur{% endif %}</div>
 						</div>
 						
 						<!-- Skills -->
 						<div class="skills">
 
+                            {% if counters %}
+                                {% for counter in counters %}
+                                    {% if '%' in counter.suffix|default:'' or '0' in counter.suffix|default:'' or counter.suffix == '' %}
+							<!-- Skill Item -->
+							<div class="skill-item">
+								<div class="skill-header clearfix">
+									<div class="skill-title">{{ counter.title }}</div>
+									<div class="skill-percentage">
+										<div class="count-box">
+											<span class="count-text" data-speed="2000" data-stop="{{ counter.number }}">0</span>%
+										</div>
+									</div>
+								</div>
+								<div class="skill-bar">
+									<div class="bar-inner"><div class="bar progress-line" data-width="{{ counter.number }}"></div></div>
+								</div>
+							</div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
 							<!-- Skill Item -->
 							<div class="skill-item">
 								<div class="skill-header clearfix">
@@ -221,28 +237,7 @@
 									<div class="bar-inner"><div class="bar progress-line" data-width="90"></div></div>
 								</div>
 							</div>
-
-							<!-- Skill Item -->
-							<div class="skill-item">
-								<div class="skill-header clearfix">
-									<div class="skill-title">Case Study success </div>
-									<div class="skill-percentage"><div class="count-box"><span class="count-text" data-speed="2000" data-stop="95">0</span>%</div></div>
-								</div>
-								<div class="skill-bar">
-									<div class="bar-inner"><div class="bar progress-line" data-width="95"></div></div>
-								</div>
-							</div>
-
-							<!-- Skill Item -->
-							<div class="skill-item">
-								<div class="skill-header clearfix">
-									<div class="skill-title">Engaging</div>
-									<div class="skill-percentage"><div class="count-box"><span class="count-text" data-speed="2000" data-stop="75">0</span>%</div></div>
-								</div>
-								<div class="skill-bar">
-									<div class="bar-inner"><div class="bar progress-line" data-width="75"></div></div>
-								</div>
-							</div>
+                            {% endif %}
 
 						</div>
 						
@@ -255,7 +250,7 @@
 						<div class="circle-one"></div>
 						<div class="circle-two"></div>
 						<div class="image titlt" data-tilt data-tilt-max="4">
-							<img src="{% static 'images/resource/skill.png' %}" alt="" />
+							<img src="{% if sections.about_skill and sections.about_skill.image %}{{ sections.about_skill.image.url }}{% else %}{% static 'images/resource/skill.png' %}{% endif %}" alt="" />
 						</div>
 					</div>
 				</div>
@@ -266,7 +261,7 @@
 	<!-- End Skill Section -->
 	
 	<!-- Professional Section -->
-	<section class="professional-section style-two">
+	<section class="professional-section">
 		<div class="background-layer-one" style="background-image:url({% static 'images/background/pattern-5.png' %})"></div>
 		<div class="auto-container">
 			<div class="row clearfix">
@@ -279,7 +274,7 @@
 						<div class="color-layer"></div>
 						<div class="color-layer-two"></div>
 						<div class="image wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
-							<img src="{% static 'images/resource/professional.jpg' %}" alt="" />
+							<img src="{% if sections.about_professional and sections.about_professional.image %}{{ sections.about_professional.image.url }}{% else %}{% static 'images/resource/professional.jpg' %}{% endif %}" alt="" />
 						</div>
 					</div>
 				</div>
@@ -289,13 +284,12 @@
 					<div class="inner-column">
 						<div class="pattern-layer-three" style="background-image:url({% static 'images/background/pattern-16.png' %})"></div>
 						<div class="sec-title">
-							<div class="title">Learn anything</div>
-							<h2>Take online courses Earn <br> professional</h2>
+							<div class="title">{% if sections.about_professional %}{{ sections.about_professional.subtitle }}{% else %}Learn anything{% endif %}</div>
+							<h2>{% if sections.about_professional %}{{ sections.about_professional.title|safe }}{% else %}Take online courses Earn <br> professional{% endif %}</h2>
 						</div>
-						<div class="bold-text">Position yourself for success with a variety of collegeclasses including general education courses</div>
-						<p>Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+						<div class="bold-text">{% if sections.about_professional %}{{ sections.about_professional.text|safe }}{% else %}Position yourself for success with a variety of collegeclasses including general education courses{% endif %}</div>
 						<div class="btn-box">
-							<a href="#" class="theme-btn btn-style-four"><span class="txt">Short courses</span></a>
+							<a href="{% if sections.about_professional %}{{ sections.about_professional.button_link }}{% else %}#{% endif %}" class="theme-btn btn-style-four"><span class="txt">{% if sections.about_professional %}{{ sections.about_professional.button_text }}{% else %}Short courses{% endif %}</span></a>
 						</div>
 					</div>
 				</div>
@@ -304,7 +298,7 @@
 			
 		</div>
 	</section>
-	<!-- End Professional Section -->
+    <!-- End Professional Section -->
 	
 	<!-- Testimonial Section Two -->
 	<section class="testimonial-section-two">
@@ -554,21 +548,24 @@
 		<div class="auto-container">
 			<!-- Sec Title -->
 			<div class="sec-title centered">
-				<h2>Key supporters</h2>
-				<div class="text">These leading universities are currently offering online degree <br> courses on FutureLearn:</div>
+				<h2>{% if sections.about_clients %}{{ sections.about_clients.title }}{% else %}Key supporters{% endif %}</h2>
+				<div class="text">{% if sections.about_clients %}{{ sections.about_clients.text|safe }}{% else %}These leading universities are currently offering online degree <br> courses on FutureLearn:{% endif %}</div>
 			</div>
 			
 			<div class="sponsors-outer">
 				<!--Sponsors Carousel-->
 				<ul class="sponsors-carousel owl-carousel owl-theme">
+                    {% if clients %}
+                        {% for client in clients %}
+					    <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ client.image.url }}" alt="{{ client.name }}"></a></figure></li>
+                        {% endfor %}
+                    {% else %}
 					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/1.png' %}" alt=""></a></figure></li>
 					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/2.png' %}" alt=""></a></figure></li>
 					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/3.png' %}" alt=""></a></figure></li>
 					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/4.png' %}" alt=""></a></figure></li>
 					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/5.png' %}" alt=""></a></figure></li>
-					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/1.png' %}" alt=""></a></figure></li>
-					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/2.png' %}" alt=""></a></figure></li>
-					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/3.png' %}" alt=""></a></figure></li>
+                    {% endif %}
 				</ul>
 			</div>
 			

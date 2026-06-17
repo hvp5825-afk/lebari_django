@@ -23,4 +23,8 @@ urlpatterns = [
     path('donation/', views.donation, name='donation'),
     path('profile/', views.profile, name='profile'),
     path('profile.html', RedirectView.as_view(url='/profile/', permanent=True)),
+    path('register/', views.register_view, name='register'),
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
+    path('<slug:slug>/', views.custom_page_detail, name='custom_page'),
 ]

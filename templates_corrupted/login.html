@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <section class="contact-banner-section">
+		<div class="pattern-layer-one" style="background-image: url({% static 'images/icons/icon-5.png' %})"></div>
+		<div class="pattern-layer-two" style="background-image: url({% static 'images/icons/icon-6.png' %})"></div>
+		<div class="pattern-layer-three" style="background-image: url({% static 'images/icons/icon-4.png' %})"></div>
+		<div class="auto-container">
+			<ul class="page-breadcrumb">
+				<li><a href="{% url 'index' %}">Home</a></li>
+				<li>{% if sections.login_banner %}{{ sections.login_banner.subtitle }}{% else %}Login{% endif %}</li>
+			</ul>
+			<div class="content-box">
+				<h2>{% if sections.login_banner %}{{ sections.login_banner.title|safe }}{% else %}Login Now{% endif %}</h2>
+				<div class="text">{% if sections.login_banner %}{{ sections.login_banner.text|safe }}{% else %}Welcome back! Please login to your account.{% endif %}</div>
+			</div>
+		</div>
+	</section>
+
+    <section class="contact-page-section">
+		<div class="pattern-layer-three" style="background-image: url({% static 'images/icons/icon-8.png' %})"></div>
+		<div class="auto-container">
+			<div class="row clearfix justify-content-center">
+				<div class="form-column col-lg-8 col-md-12 col-sm-12">
+					<div class="inner-column">
+						<div class="circle-layer"></div>
+						<div class="pattern-layer-one" style="background-image: url({% static 'images/icons/icon-7.png' %})"></div>
+						<div class="pattern-layer-two" style="background-image: url({% static 'images/icons/icon-9.png' %})"></div>
+						<h2>Login to your account</h2>
+						
+						<div class="contact-form">
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+                            <form method="post" action="{% url 'login' %}">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+								<div class="form-group mt-4">
+									<button class="theme-btn btn-style-five" type="submit">Login</button>
+								</div>
+                                <div class="form-group mt-3">
+                                    <p>Don't have an account? <a href="{% url 'register' %}">Register here</a>.</p>
+                                </div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}

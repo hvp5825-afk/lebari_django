@@ -41,7 +41,13 @@
 					<div class="inner-container clearfix">
 						
 						<div class="pull-left logo-box">
-							<div class="logo"><a href="{% url 'index' %}"><img src="{% static 'images/logo-white.png' %}?v=2" alt="" title=""></a></div>
+							<div class="logo"><a href="{% url 'index' %}">{% if site_setting and site_setting.logo_type == 'text' %}
+    <h2 style="color: inherit; font-weight: bold; margin: 0; line-height: 1;">{{ site_setting.logo_text }}</h2>
+{% elif site_setting and site_setting.logo_type == 'image' and site_setting.logo %}
+    <img src="{{ site_setting.logo.url }}" alt="Logo" title="">
+{% else %}
+    <img src="{% static 'images/logo-white.png' %}?v=2" alt="Logo" title="">
+{% endif %}</a></div>
 						</div>
 						<!-- Language Nav -->
 						<ul class="language-nav">
@@ -181,7 +187,13 @@
             <div class="close-btn"><span class="icon flaticon-multiply"></span></div>
             
             <nav class="menu-box">
-                <div class="nav-logo"><a href="{% url 'index' %}"><img src="{% static 'images/logo-white.png' %}?v=2" alt="" title=""></a></div>
+                <div class="nav-logo"><a href="{% url 'index' %}">{% if site_setting and site_setting.logo_type == 'text' %}
+    <h2 style="color: inherit; font-weight: bold; margin: 0; line-height: 1;">{{ site_setting.logo_text }}</h2>
+{% elif site_setting and site_setting.logo_type == 'image' and site_setting.logo %}
+    <img src="{{ site_setting.logo.url }}" alt="Logo" title="">
+{% else %}
+    <img src="{% static 'images/logo-white.png' %}?v=2" alt="Logo" title="">
+{% endif %}</a></div>
                 <div class="menu-outer">
 					<!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
 				</div>

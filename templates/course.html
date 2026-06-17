@@ -19,7 +19,13 @@
 					<div class="sidebar-info-contents">
 						<div class="content-inner">
 							<div class="logo">
-								<a href="{% url 'index' %}"><img src="{% static 'images/logo-white.png' %}?v=2" alt="" /></a>
+								<a href="{% url 'index' %}">{% if site_setting and site_setting.logo_type == 'text' %}
+    <h2 style="color: inherit; font-weight: bold; margin: 0; line-height: 1;">{{ site_setting.logo_text }}</h2>
+{% elif site_setting and site_setting.logo_type == 'image' and site_setting.logo %}
+    <img src="{{ site_setting.logo.url }}" alt="Logo" title="">
+{% else %}
+    <img src="{% static 'images/logo-white.png' %}?v=2" alt="Logo" title="">
+{% endif %}</a>
 							</div>
 							<div class="content-box">
 								<h2>About Us</h2>

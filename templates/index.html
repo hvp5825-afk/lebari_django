@@ -59,7 +59,21 @@
 				<div class="blocks-column col-lg-8 col-md-12 col-sm-12">
 					<div class="inner-column">
 						<div class="row clearfix">
-							
+							{% if features %}
+							{% for feature in features %}
+							<!-- Service Block -->
+							<div class="service-block col-lg-6 col-md-6 col-sm-12">
+								<div class="inner-box wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
+									<div class="border-layer"></div>
+									<div class="icon-box">
+										<div class="icon {{ feature.icon_class }}"></div>
+									</div>
+									<h4><a href="#">{{ feature.title }}</a></h4>
+									<div class="text">{{ feature.text }}</div>
+								</div>
+							</div>
+							{% endfor %}
+							{% else %}
 							<!-- Service Block -->
 							<div class="service-block col-lg-6 col-md-6 col-sm-12">
 								<div class="inner-box wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
@@ -67,7 +81,7 @@
 									<div class="icon-box">
 										<div class="icon flaticon-verify"></div>
 									</div>
-									<h4><a href="course-detail.html">Trusted content</a></h4>
+									<h4><a href="#">Trusted content</a></h4>
 									<div class="text">Online learning is as easy and natural as chatting with a group of friends.</div>
 								</div>
 							</div>
@@ -79,11 +93,11 @@
 									<div class="icon-box">
 										<div class="icon flaticon-heart-box"></div>
 									</div>
-									<h4><a href="course-detail.html">Flexible courses</a></h4>
+									<h4><a href="#">Flexible courses</a></h4>
 									<div class="text">We provide online learning solutions for secondary education, from structured content to courses fully taught </div>
 								</div>
 							</div>
-							
+							{% endif %}
 						</div>
 					</div>
 				</div>
@@ -91,12 +105,11 @@
 				<!-- Instructor Column -->
 				<div class="instructor-column col-lg-4 col-md-12 col-sm-12">
 					<div class="inner-column wow fadeInRight" data-wow-delay="0ms" data-wow-duration="1500ms">
-						<h4>Become an instructor</h4>
-						<p>Top instructors from around the world teach millions of students  Duis aute irure dolor in reprehenderit in </p>
-						<p>voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</p>
-						<a class="click-here" href="membership.html">Click here for apply</a>
+						<h4>{% if sections.home1_instructor %}{{ sections.home1_instructor.title }}{% else %}Become an instructor{% endif %}</h4>
+						<p>{% if sections.home1_instructor %}{{ sections.home1_instructor.text|safe }}{% else %}Top instructors from around the world teach millions of students  Duis aute irure dolor in reprehenderit in <br> voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non{% endif %}</p>
+						<a class="click-here" href="{% if sections.home1_instructor %}{{ sections.home1_instructor.button_link }}{% else %}{% url 'membership' %}{% endif %}">{% if sections.home1_instructor %}{{ sections.home1_instructor.button_text }}{% else %}Click here for apply{% endif %}</a>
 						<div class="image titlt" data-tilt data-tilt-max="4">
-							<img src="{% static 'images/resource/instructor.png' %}" alt="" />
+							<img src="{% if sections.home1_instructor and sections.home1_instructor.image %}{{ sections.home1_instructor.image.url }}{% else %}{% static 'images/resource/instructor.png' %}{% endif %}" alt="" />
 						</div>
 					</div>
 				</div>
@@ -120,7 +133,7 @@
 						<div class="pattern-layer-two" style="background-image:url({% static 'images/background/pattern-4.png' %})"></div>
 						<div class="color-layer"></div>
 						<div class="image">
-							<img src="{% static 'images/resource/benefit-1.jpg' %}" alt="" />
+							<img src="{% if sections.home1_benefit and sections.home1_benefit.image %}{{ sections.home1_benefit.image.url }}{% else %}{% static 'images/resource/benefit-1.jpg' %}{% endif %}" alt="" />
 						</div>
 						<div class="image-two">
 							<img src="{% static 'images/resource/benefit-3.jpg' %}" alt="" />
@@ -135,16 +148,23 @@
 				<div class="content-column col-lg-5 col-md-12 col-sm-12">
 					<div class="inner-column">
 						<div class="sec-title">
-							<div class="title">Learn anything</div>
-							<h2>Benefit from our <br> online learning expertise <br> Earn professional </h2>
+							<div class="title">{% if sections.home1_benefit %}{{ sections.home1_benefit.subtitle }}{% else %}Learn anything{% endif %}</div>
+							<h2>{% if sections.home1_benefit %}{{ sections.home1_benefit.title|safe }}{% else %}Benefit from our <br> online learning expertise <br> Earn professional{% endif %}</h2>
 						</div>
 						<ul class="list-style-one">
+                            {% for feature in features %}
+                                {% if feature.page == 'home1_benefit' %}
+							    <li><span class="icon {{ feature.icon_class }}"></span><strong>{{ feature.title }}</strong>{{ feature.text }}</li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if not features %}
 							<li><span class="icon flaticon-double-check"></span><strong>Online degrees</strong>Vendors, suppliers and companies with online access to your technology can be your weakest link</li>
 							<li><span class="icon flaticon-double-check"></span><strong>Short courses</strong>Vendors, suppliers and companies with online access to your technology can be your weakest link</li>
 							<li><span class="icon flaticon-double-check"></span><strong>Learn with experts</strong>Vendors, suppliers and companies with online access to your technology can be your weakest link</li>
+                            {% endif %}
 						</ul>
 						<div class="btn-box">
-							<a href="about.html" class="theme-btn btn-style-two"><span class="txt">Join For free</span></a>
+							<a href="{% if sections.home1_benefit %}{{ sections.home1_benefit.button_link }}{% else %}{% url 'about' %}{% endif %}" class="theme-btn btn-style-two"><span class="txt">{% if sections.home1_benefit %}{{ sections.home1_benefit.button_text }}{% else %}Join For free{% endif %}</span></a>
 						</div>
 					</div>
 				</div>
@@ -153,12 +173,12 @@
 			
 			<!-- Lower Text -->
 			<div class="lower-text">
-				<p>Lebari is built for people like you. With useful features, your dream and idea can <br> become a reality. Lebari helps you to achieve big things!</p>
+				<p>{% if sections.home1_benefit %}{{ sections.home1_benefit.text|safe }}{% else %}Lebari is built for people like you. With useful features, your dream and idea can <br> become a reality. Lebari helps you to achieve big things!{% endif %}</p>
 			</div>
 			
 		</div>
 	</section>
-	<!-- End Benefit Section -->
+	
 	
 	<!-- Feature Section -->
 	<section class="feature-section">
@@ -219,110 +239,49 @@
 			</div>
 			<div class="row clearfix">
 				
+								{% for course in courses %}
 				<!-- Course Column -->
 				<div class="course-block col-lg-4 col-md-6 col-sm-12">
 					<div class="inner-box wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
 						<div class="image">
-							<a href="course-detail.html"><img src="{% static 'images/resource/course-1.jpg' %}" alt="" /></a>
+							<a href="{% url 'course_detail' course.slug %}"><img src="{% if course.image %}{{ course.image.url }}{% else %}{% static 'images/resource/course-1.jpg' %}{% endif %}" alt="{{ course.title|striptags }}" /></a>
 						</div>
 						<div class="lower-content">
-							<h4><a href="course-detail.html">Growth Mindsets for Teachers and Learners</a></h4>
-							<div class="uni-name">University of Roehampton</div>
+							<h4><a href="{% url 'course_detail' course.slug %}">{{ course.title|truncatechars:50 }}</a></h4>
+							<div class="uni-name">{{ course.category.name }}</div>
 							<div class="rating">
 								<span class="fa fa-star"></span>
 								<span class="fa fa-star"></span>
 								<span class="fa fa-star"></span>
 								<span class="fa fa-star"></span>
 								<span class="fa fa-star-o"></span>
-								<strong>4.9</strong>
-								<i>(70 Review)</i>
+								<strong>{{ course.rating }}</strong>
+								<i>({{ course.reviews_count }} Review)</i>
 							</div>
-							<div class="price">$12 <span>$100.99</span></div>
+							<div class="price">${{ course.price }} {% if course.original_price %}<span>${{ course.original_price }}</span>{% endif %}</div>
 							<div class="clearfix">
 								<div class="pull-left">
-									<div class="hovers">11.5 total hours . All Levels  </div>
+									<div class="hovers">{{ course.duration }} . {{ course.level }}  </div>
 								</div>
 								<div class="pull-right">
-									<a href="course-detail.html" class="enroll-now">ENROL NOW</a>
+									<a href="{% url 'course_detail' course.slug %}" class="enroll-now">ENROL NOW</a>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				
-				<!-- Course Column -->
-				<div class="course-block col-lg-4 col-md-6 col-sm-12">
-					<div class="inner-box wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
-						<div class="image">
-							<a href="course-detail.html"><img src="{% static 'images/resource/course-2.jpg' %}" alt="" /></a>
-						</div>
-						<div class="lower-content">
-							<h4><a href="course-detail.html">Programming for Everybody Getting Started with Python</a></h4>
-							<div class="uni-name">University of Roehampton</div>
-							<div class="rating">
-								<span class="fa fa-star"></span>
-								<span class="fa fa-star"></span>
-								<span class="fa fa-star"></span>
-								<span class="fa fa-star"></span>
-								<span class="fa fa-star-o"></span>
-								<strong>4.9</strong>
-								<i>(70 Review)</i>
-							</div>
-							<div class="price">$12 <span>$100.99</span></div>
-							<div class="clearfix">
-								<div class="pull-left">
-									<div class="hovers">11.5 total hours . All Levels  </div>
-								</div>
-								<div class="pull-right">
-									<a href="course-detail.html" class="enroll-now">ENROL NOW</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<!-- Course Column -->
-				<div class="course-block col-lg-4 col-md-6 col-sm-12">
-					<div class="inner-box wow fadeInRight" data-wow-delay="0ms" data-wow-duration="1500ms">
-						<div class="image">
-							<a href="course-detail.html"><img src="{% static 'images/resource/course-3.jpg' %}" alt="" /></a>
-						</div>
-						<div class="lower-content">
-							<h4><a href="course-detail.html">Introduction to Forensic Science</a></h4>
-							<div class="uni-name">University of Roehampton</div>
-							<div class="rating">
-								<span class="fa fa-star"></span>
-								<span class="fa fa-star"></span>
-								<span class="fa fa-star"></span>
-								<span class="fa fa-star"></span>
-								<span class="fa fa-star-o"></span>
-								<strong>4.9</strong>
-								<i>(70 Review)</i>
-							</div>
-							<div class="price">$12 <span>$100.99</span></div>
-							<div class="clearfix">
-								<div class="pull-left">
-									<div class="hovers">11.5 total hours . All Levels  </div>
-								</div>
-								<div class="pull-right">
-									<a href="course-detail.html" class="enroll-now">ENROL NOW</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				
+				{% endfor %}
 			</div>
 		</div>
 	</section>
-	<!-- End Courses Section -->
+	
 	
 	<!-- Career Section -->
 	<section class="career-section">
 		<div class="auto-container">
 			<!-- Sec Title -->
 			<div class="sec-title">
-				<h2>Change careers courses <br> Thinking about a career change?</h2>
+				<h2>{% if sections.home1_career %}{{ sections.home1_career.title|safe }}{% else %}Change careers courses <br> Thinking about a career change?{% endif %}</h2>
 			</div>
 			
 			<div class="row clearfix">
@@ -331,7 +290,7 @@
 				<div class="image-column col-lg-5 col-md-12 col-sm-12">
 					<div class="inner-column">
 						<div class="image titlt" data-tilt data-tilt-max="4">
-							<img src="{% static 'images/resource/career.png' %}" alt="" />
+							<img src="{% if sections.home1_career and sections.home1_career.image %}{{ sections.home1_career.image.url }}{% else %}{% static 'images/resource/career.png' %}{% endif %}" alt="" />
 						</div>
 					</div>
 				</div>
@@ -339,19 +298,21 @@
 				<!-- Content Column -->
 				<div class="content-column col-lg-7 col-md-12 col-sm-12">
 					<div class="inner-column">
-						<h5>The International Admissions Bulletin</h5>
+						<h5>{% if sections.home1_career %}{{ sections.home1_career.subtitle }}{% else %}The International Admissions Bulletin{% endif %}</h5>
 						<div class="text">
+							{% if sections.home1_career %}{{ sections.home1_career.text|safe }}{% else %}
 							<p>Ut enim ad minim veniam aliquip amet, nostrud exercitation ullamco. Pharetra massaultricies mi quis hendrerit. Elit eget gravida cum sociis.Ut enim ad minim veniam aliquip amet, </p>
 							<p>nostrud exercitation ullamco. Pharetra massaultricies mi quis hendrerit. Elit eget gravida cum sociis.</p>
+                            {% endif %}
 						</div>
-						<a href="about.html" class="theme-btn btn-style-three">Read it now <span class="fa fa-caret-right"></span></a>
+						<a href="{% if sections.home1_career %}{{ sections.home1_career.button_link }}{% else %}{% url 'about' %}{% endif %}" class="theme-btn btn-style-three">{% if sections.home1_career %}{{ sections.home1_career.button_text }}{% else %}Read it now{% endif %} <span class="fa fa-caret-right"></span></a>
 					</div>
 				</div>
 				
 			</div>
 		</div>
 	</section>
-	<!-- End Career Section -->
+	
 	
 	<!-- Skill Section -->
 	<section class="skill-section">
@@ -446,113 +407,29 @@
 				</div>
 				<div class="testimonial-carousel owl-carousel owl-theme">
 					
+										{% for testimonial in testimonials %}
 					<!-- Testimonial Block -->
 					<div class="testimonial-block">
 						<div class="inner-box">
-							<div class="text">We turn your experts into thought leaders by getting their voices heard in the market and by building credibility and brand advocates amongst industry influencers from the media, analyst community</div>
+							<div class="text">{{ testimonial.text }}</div>
 							<div class="author-info">
 								<div class="info-inner">
 									<div class="author-image">
-										<img src="{% static 'images/resource/author-1.jpg' %}" alt="" />
+										<img src="{% if testimonial.image %}{{ testimonial.image.url }}{% else %}{% static 'images/resource/author-1.jpg' %}{% endif %}" alt="{{ testimonial.name }}" />
 									</div>
-									<h6>Mahfuz Riad</h6>
-									<div class="designation">Online Teacher</div>
+									<h6>{{ testimonial.name }}</h6>
+									<div class="designation">{{ testimonial.designation }}</div>
 								</div>
 							</div>
 							<div class="quote-icon flaticon-quote-2"></div>
 						</div>
 					</div>
-					
-					<!-- Testimonial Block -->
-					<div class="testimonial-block">
-						<div class="inner-box">
-							<div class="text">We turn your experts into thought leaders by getting their voices heard in the market and by building credibility and brand advocates amongst industry influencers from the media, analyst community</div>
-							<div class="author-info">
-								<div class="info-inner">
-									<div class="author-image">
-										<img src="{% static 'images/resource/author-1.jpg' %}" alt="" />
-									</div>
-									<h6>Mahfuz Riad</h6>
-									<div class="designation">Online Teacher</div>
-								</div>
-							</div>
-							<div class="quote-icon flaticon-quote-2"></div>
-						</div>
-					</div>
-					
-					<!-- Testimonial Block -->
-					<div class="testimonial-block">
-						<div class="inner-box">
-							<div class="text">We turn your experts into thought leaders by getting their voices heard in the market and by building credibility and brand advocates amongst industry influencers from the media, analyst community</div>
-							<div class="author-info">
-								<div class="info-inner">
-									<div class="author-image">
-										<img src="{% static 'images/resource/author-1.jpg' %}" alt="" />
-									</div>
-									<h6>Mahfuz Riad</h6>
-									<div class="designation">Online Teacher</div>
-								</div>
-							</div>
-							<div class="quote-icon flaticon-quote-2"></div>
-						</div>
-					</div>
-					
-					<!-- Testimonial Block -->
-					<div class="testimonial-block">
-						<div class="inner-box">
-							<div class="text">We turn your experts into thought leaders by getting their voices heard in the market and by building credibility and brand advocates amongst industry influencers from the media, analyst community</div>
-							<div class="author-info">
-								<div class="info-inner">
-									<div class="author-image">
-										<img src="{% static 'images/resource/author-1.jpg' %}" alt="" />
-									</div>
-									<h6>Mahfuz Riad</h6>
-									<div class="designation">Online Teacher</div>
-								</div>
-							</div>
-							<div class="quote-icon flaticon-quote-2"></div>
-						</div>
-					</div>
-					
-					<!-- Testimonial Block -->
-					<div class="testimonial-block">
-						<div class="inner-box">
-							<div class="text">We turn your experts into thought leaders by getting their voices heard in the market and by building credibility and brand advocates amongst industry influencers from the media, analyst community</div>
-							<div class="author-info">
-								<div class="info-inner">
-									<div class="author-image">
-										<img src="{% static 'images/resource/author-1.jpg' %}" alt="" />
-									</div>
-									<h6>Mahfuz Riad</h6>
-									<div class="designation">Online Teacher</div>
-								</div>
-							</div>
-							<div class="quote-icon flaticon-quote-2"></div>
-						</div>
-					</div>
-					
-					<!-- Testimonial Block -->
-					<div class="testimonial-block">
-						<div class="inner-box">
-							<div class="text">We turn your experts into thought leaders by getting their voices heard in the market and by building credibility and brand advocates amongst industry influencers from the media, analyst community</div>
-							<div class="author-info">
-								<div class="info-inner">
-									<div class="author-image">
-										<img src="{% static 'images/resource/author-1.jpg' %}" alt="" />
-									</div>
-									<h6>Mahfuz Riad</h6>
-									<div class="designation">Online Teacher</div>
-								</div>
-							</div>
-							<div class="quote-icon flaticon-quote-2"></div>
-						</div>
-					</div>
-					
+					{% endfor %}
 				</div>
 			</div>
 		</div>
 	</section>
-	<!-- End Testimonial Section -->
+	
 	
 	<!-- News Section -->
 	<section class="news-section">
@@ -570,74 +447,60 @@
 				<div class="icon-layer-three" style="background-image:url({% static 'images/icons/icon-2.png' %})"></div>
 				<div class="row clearfix">
 				
+										{% for post in posts %}
 					<!-- News Block -->
 					<div class="news-block col-lg-6 col-md-6 col-sm-12">
 						<div class="inner-box wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
 							<div class="image">
-								<a href="#"><img src="{% static 'images/resource/news-1.jpg' %}" alt="" /></a>
+								<a href="{% url 'blog_detail' post.slug %}"><img src="{% if post.image %}{{ post.image.url }}{% else %}{% static 'images/resource/news-1.jpg' %}{% endif %}" alt="{{ post.title }}" /></a>
 							</div>
 							<div class="lower-content">
 								<div class="border-layer"></div>
 								<ul class="post-info">
-									<li>Technology</li>
-									<li>Updated  Sep 26, 2020</li>
+									<li>{{ post.category.name }}</li>
+									<li>Updated  {{ post.created_at|date:"M d, Y" }}</li>
 								</ul>
-								<h4><a href="#">All The Security & Privacy <br> Updates From Amazon’s</a></h4>
-								<a href="#" class="more">More <span class="fa fa-angle-double-right"></span></a>
+								<h4><a href="{% url 'blog_detail' post.slug %}">{{ post.title|truncatechars:50 }}</a></h4>
+								<a href="{% url 'blog_detail' post.slug %}" class="more">More <span class="fa fa-angle-double-right"></span></a>
 							</div>
 						</div>
 					</div>
-					
-					<!-- News Block -->
-					<div class="news-block col-lg-6 col-md-6 col-sm-12">
-						<div class="inner-box wow fadeInRight" data-wow-delay="0ms" data-wow-duration="1500ms">
-							<div class="image">
-								<a href="#"><img src="{% static 'images/resource/news-2.jpg' %}" alt="" /></a>
-							</div>
-							<div class="lower-content">
-								<div class="border-layer"></div>
-								<ul class="post-info">
-									<li>Education</li>
-									<li>Updated  Sep 26, 2020</li>
-								</ul>
-								<h4><a href="#">All The Security & Privacy Updates From Amazon’s</a></h4>
-								<a href="#" class="more">More <span class="fa fa-angle-double-right"></span></a>
-							</div>
-						</div>
-					</div>
-					
+					{% endfor %}
 				</div>
 			</div>
 		</div>
 	</section>
-	<!-- End News Section -->
+	
 	
 	<!-- Clients Section -->
 	<section class="clients-section">
 		<div class="auto-container">
 			<!-- Sec Title -->
 			<div class="sec-title centered">
-				<h2>Key supporters</h2>
-				<div class="text">These leading universities are currently offering online degree <br> courses on FutureLearn:</div>
+				<h2>{% if sections.home1_clients %}{{ sections.home1_clients.title }}{% else %}Key supporters{% endif %}</h2>
+				<div class="text">{% if sections.home1_clients %}{{ sections.home1_clients.text|safe }}{% else %}These leading universities are currently offering online degree <br> courses on FutureLearn:{% endif %}</div>
 			</div>
 			
 			<div class="sponsors-outer">
 				<!--Sponsors Carousel-->
 				<ul class="sponsors-carousel owl-carousel owl-theme">
+                    {% if clients %}
+                        {% for client in clients %}
+					    <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ client.image.url }}" alt="{{ client.name }}"></a></figure></li>
+                        {% endfor %}
+                    {% else %}
 					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/1.png' %}" alt=""></a></figure></li>
 					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/2.png' %}" alt=""></a></figure></li>
 					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/3.png' %}" alt=""></a></figure></li>
 					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/4.png' %}" alt=""></a></figure></li>
 					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/5.png' %}" alt=""></a></figure></li>
-					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/1.png' %}" alt=""></a></figure></li>
-					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/2.png' %}" alt=""></a></figure></li>
-					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/3.png' %}" alt=""></a></figure></li>
+                    {% endif %}
 				</ul>
 			</div>
 			
 		</div>
 	</section>
-	<!-- End Clients Section -->
+	
 	
 	<!-- Main Footer -->
     
