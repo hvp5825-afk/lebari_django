@@ -178,11 +178,11 @@
 {% csrf_token %}
 									
 									<div class="form-group">
-										<input type="text" name="username" placeholder="Your Name" required="">
+										<input type="text" name="username" placeholder="Your Name" required="" value="{% if request.user.is_authenticated %}{{ request.user.get_full_name|default:request.user.username }}{% endif %}">
 									</div>
 									
 									<div class="form-group">
-										<input type="email" name="email" placeholder="Email" required="">
+										<input type="email" name="email" placeholder="Email" required="" value="{% if request.user.is_authenticated %}{{ request.user.email }}{% endif %}">
 									</div>
 									
 									<div class="form-group">
@@ -190,7 +190,7 @@
 									</div>
 									
 									<div class="form-group">
-										<button class="theme-btn btn-style-one" type="submit" name="submit-form"><span class="txt">Post comment</span></button>
+										<button class="theme-btn btn-style-one" type="submit" name="submit-form"><span class="txt">{{ buttons.post_comment|default:'Post comment' }}</span></button>
 									</div>
 									
 								</form>

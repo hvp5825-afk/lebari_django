@@ -205,12 +205,27 @@ def profile(request):
     active_count = enrollments.filter(status='Active').count()
     completed_count = enrollments.filter(status='Completed').count()
 
+    from .forms import UserUpdateForm, ProfileUpdateForm
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, 'Your profile has been updated!')
+            return redirect('profile')
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
+
     return render(request, 'profile.html', {
         'settings': settings,
         'enrollments': enrollments,
         'enrolled_count': enrolled_count,
         'active_count': active_count,
         'completed_count': completed_count,
+        'u_form': u_form,
+        'p_form': p_form,
     })
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout

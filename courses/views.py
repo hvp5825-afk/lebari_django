@@ -20,15 +20,38 @@ def course_list(request):
 def course_detail(request, slug):
     settings = SiteSetting.objects.first()
     course = get_object_or_404(Course, slug=slug)
+    
+    if request.method == 'POST':
+        name = request.POST.get('username')
+        email = request.POST.get('email')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+        if name and email and message:
+            from .models import CourseReview
+            CourseReview.objects.create(
+                course=course,
+                name=name,
+                email=email,
+                subject=subject,
+                message=message
+            )
+            from django.contrib import messages
+            messages.success(request, 'Your review has been submitted successfully.')
+            from django.shortcuts import redirect
+            return redirect('course_detail', slug=slug)
+
     is_enrolled = False
     if request.user.is_authenticated:
         from .models import CourseEnrollment
         is_enrolled = CourseEnrollment.objects.filter(user=request.user, course=course).exists()
         
+    reviews = course.reviews.all().order_by('-created_at')
+
     return render(request, 'course-detail.html', {
         'settings': settings,
         'course': course,
         'is_enrolled': is_enrolled,
+        'reviews': reviews,
     })
 
 from django.contrib.auth.decorators import login_required

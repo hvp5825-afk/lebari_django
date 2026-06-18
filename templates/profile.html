@@ -421,11 +421,78 @@
 						</div>
 					</div>
                     {% empty %}
-                    <div class="col-lg-12 text-center">
+                    <div class="col-lg-12 text-center mb-5">
                         <p>You haven't enrolled in any courses yet.</p>
                         <a href="{% url 'course_list' %}" class="theme-btn btn-style-two"><span class="txt">Browse Courses</span></a>
                     </div>
                     {% endfor %}
+                </div>
+
+                <!-- Update Profile Form -->
+                <div class="row clearfix" style="margin-top: 50px;">
+                    <div class="col-lg-8 col-md-12 col-sm-12 mx-auto">
+                        <div class="sec-title text-center">
+                            <h2>Edit Profile</h2>
+                            <div class="text">Update your personal information</div>
+                        </div>
+                        <div class="contact-form">
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-success">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <h4 class="mb-3">Personal Information</h4>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label>First Name</label>
+                                        {{ u_form.first_name }}
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Last Name</label>
+                                        {{ u_form.last_name }}
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label>Email Address</label>
+                                        {{ u_form.email }}
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label>Profile Picture</label>
+                                        {{ p_form.profile_picture }}
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label>Bio</label>
+                                        {{ p_form.bio }}
+                                    </div>
+                                </div>
+                                
+                                <h4 class="mt-4 mb-3">Social Links</h4>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label>Facebook URL</label>
+                                        {{ p_form.facebook_url }}
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Twitter URL</label>
+                                        {{ p_form.twitter_url }}
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Pinterest URL</label>
+                                        {{ p_form.pinterest_url }}
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Dribbble URL</label>
+                                        {{ p_form.dribbble_url }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group text-center mt-4">
+                                    <button class="theme-btn btn-style-five" type="submit">{{ buttons.update_profile|default:'Update Profile' }}</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
 			</div>
 		</div>
@@ -543,7 +610,7 @@
 					
 					<!-- Copyright Column -->
 					<div class="copyright-column col-lg-6 col-md-12 col-sm-12">
-						<div class="copyright">Copyright 2020, All Right Reserved</div>
+						<div class="copyright">Copyright 2026, All Right Reserved</div>
 					</div>
 					
 					<!-- Nav Column -->

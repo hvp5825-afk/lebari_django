@@ -89,9 +89,12 @@ class FrontendSection(models.Model):
     title = models.CharField(max_length=200, blank=True, null=True)
     subtitle = models.CharField(max_length=200, blank=True, null=True)
     text = models.TextField(blank=True, null=True)
+    extra_text = models.CharField(max_length=200, blank=True, null=True, help_text="e.g. Badge text or secondary subtitle")
     button_text = models.CharField(max_length=50, blank=True, null=True)
     button_link = models.CharField(max_length=200, blank=True, null=True)
     image = models.ImageField(upload_to='frontend/', blank=True, null=True)
+    image_2 = models.ImageField(upload_to='frontend/', blank=True, null=True, help_text="Secondary image if needed")
+    image_3 = models.ImageField(upload_to='frontend/', blank=True, null=True, help_text="Tertiary image if needed")
     video_url = models.URLField(blank=True, null=True)
 
     def __str__(self):
@@ -178,6 +181,16 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s Profile"
+
+class ButtonSetting(models.Model):
+    identifier = models.CharField(max_length=50, unique=True, help_text="e.g. enroll_now, read_more, submit, subscribe")
+    text = models.CharField(max_length=50, help_text="The actual text shown on the button")
+
+    class Meta:
+        verbose_name_plural = "Button Settings"
+
+    def __str__(self):
+        return f"{self.identifier} -> {self.text}"
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

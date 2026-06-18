@@ -17,12 +17,17 @@ class CourseAdmin(admin.ModelAdmin):
     list_filter = ('category', 'teacher')
     search_fields = ('title', 'description')
 
-from .models import CourseModule, CourseLecture, CourseEnrollment
+from .models import CourseModule, CourseLecture, CourseEnrollment, CourseReview
 
 @admin.register(CourseEnrollment)
 class CourseEnrollmentAdmin(admin.ModelAdmin):
     list_display = ('user', 'course', 'status', 'enrolled_on')
     list_filter = ('status', 'course')
+
+@admin.register(CourseReview)
+class CourseReviewAdmin(admin.ModelAdmin):
+    list_display = ('name', 'course', 'created_at')
+    list_filter = ('course',)
 
 class CourseLectureInline(admin.TabularInline):
     model = CourseLecture

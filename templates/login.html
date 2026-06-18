@@ -47,7 +47,7 @@
                                 </div>
                                 {% endfor %}
 								<div class="form-group mt-4">
-									<button class="theme-btn btn-style-five" type="submit">Login</button>
+									<button class="theme-btn btn-style-five" type="submit">{{ buttons.login|default:'Login' }}</button>
 								</div>
                                 <div class="form-group mt-3">
                                     <p>Don't have an account? <a href="{% url 'register' %}">Register here</a>.</p>

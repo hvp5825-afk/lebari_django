@@ -20,13 +20,13 @@
 						<div class="pattern-layer-four" style="background-image: url({% static 'images/main-slider/pattern-3.png' %})"></div>
 						<div class="pattern-layer-five" style="background-image: url({% static 'images/main-slider/icon-2.png' %})"></div>
 						<div class="image">
-							<img src="{% static 'images/main-slider/image-1.png' %}" alt="" />
+							<img src="{% if sections.home_hero_banner and sections.home_hero_banner.image %}{{ sections.home_hero_banner.image.url }}{% else %}{% static 'images/main-slider/image-1.png' %}{% endif %}" alt="" />
 						</div>
 						<div class="image-two">
-							<img src="{% static 'images/main-slider/image-4.png' %}" alt="" />
+							<img src="{% if sections.home_hero_banner and sections.home_hero_banner.image_2 %}{{ sections.home_hero_banner.image_2.url }}{% else %}{% static 'images/main-slider/image-4.png' %}{% endif %}" alt="" />
 						</div>
 						<div class="image-content" style="background-image: url({% static 'images/main-slider/pattern-6.png' %})">
-							<p>87% of people <br> learning</p>
+							<p>{% if sections.home_hero_banner %}{{ sections.home_hero_banner.extra_text|safe }}{% else %}87% of people <br> learning{% endif %}</p>
 						</div>
 					</div>
 				</div>
@@ -34,10 +34,10 @@
 				<!-- Content Column -->
 				<div class="content-column col-lg-6 col-md-12 col-sm-12">
 					<div class="inner-column">
-						<div class="title">Learn the latest skills</div>
-						<h1>Build skills with <br> courses flexible online <br> courses</h1>
+						<div class="title">{% if sections.home_hero_banner %}{{ sections.home_hero_banner.subtitle }}{% else %}Learn the latest skills{% endif %}</div>
+						<h1>{% if sections.home_hero_banner %}{{ sections.home_hero_banner.title|safe }}{% else %}Build skills with <br> courses flexible online <br> courses{% endif %}</h1>
 						<div class="btns-box">
-							<a href="{% url 'about' %}" class="theme-btn btn-style-one"><span class="txt">Join For free</span></a>
+							<a href="{% if sections.home_hero_banner %}{{ sections.home_hero_banner.button_link }}{% else %}{% url 'about' %}{% endif %}" class="theme-btn btn-style-one"><span class="txt">{% if sections.home_hero_banner %}{{ sections.home_hero_banner.button_text }}{% else %}Join For free{% endif %}</span></a>
 						</div>
 					</div>
 				</div>
@@ -234,8 +234,8 @@
 		<div class="circle-two paroller" data-paroller-factor="0.20" data-paroller-factor-lg="-0.20" data-paroller-type="foreground" data-paroller-direction="horizontal"></div>
 		<div class="auto-container">
 			<div class="sec-title centered">
-				<h2>You can learn anything, Explore <br> featured courses</h2>
-				<div class="text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat <br> nulla pariatur Duis aute irure dolor in reprehenderit in</div>
+				<h2>{% if sections.home_explore_courses %}{{ sections.home_explore_courses.title|safe }}{% else %}You can learn anything, Explore <br> featured courses{% endif %}</h2>
+				<div class="text">{% if sections.home_explore_courses %}{{ sections.home_explore_courses.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat <br> nulla pariatur Duis aute irure dolor in reprehenderit in{% endif %}</div>
 			</div>
 			<div class="row clearfix">
 				

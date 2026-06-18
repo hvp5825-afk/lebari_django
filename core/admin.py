@@ -1,5 +1,10 @@
 from django.contrib import admin
-from .models import SiteSetting, Banner, Testimonial, ContactMessage, Teacher, FAQ, Event
+from .models import SiteSetting, Banner, Testimonial, ContactMessage, Teacher, FAQ, Event, ButtonSetting
+
+@admin.register(ButtonSetting)
+class ButtonSettingAdmin(admin.ModelAdmin):
+    list_display = ('identifier', 'text')
+    search_fields = ('identifier', 'text')
 
 @admin.register(SiteSetting)
 class SiteSettingAdmin(admin.ModelAdmin):

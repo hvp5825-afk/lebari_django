@@ -130,91 +130,54 @@
 							</div>
 						</div>
 						
-						<!-- Comment Area -->
 						<div class="comments-area">
-							<div class="group-title">
-								<h5>Course Review</h5>
-							</div>
-							
-							<div class="comment-box">
+							<div class="group-title"><h5>{{ reviews.count }} Reviews</h5></div>
+							<div class="comment-outer-box">
+                                {% for review in reviews %}
 								<!-- Comment -->
 								<div class="comment">
-									<div class="author-thumb"><img src="{% static 'images/resource/author-5.jpg' %}" alt=""></div>
+									<div class="author-thumb"><img src="{% static 'images/resource/user.jpg' %}" alt=""></div>
 									<div class="comment-info clearfix">
-										<strong>Shopnil Mahadi</strong>
+										<strong>{{ review.name }}</strong>
 										<div class="rating">
 											<span class="fa fa-star"></span>
 											<span class="fa fa-star"></span>
 											<span class="fa fa-star"></span>
 											<span class="fa fa-star"></span>
-											<span class="fa fa-star-o"></span>
+											<span class="fa fa-star"></span>
 										</div>
-										<div class="comment-time">3 weeks ago</div>
-										<ul class="like-dislike">
-											<li><a href="#" class="flaticon-like-1"></a></li>
-											<li><a href="#" class="flaticon-dislike"></a></li>
-										</ul>
+										<div class="comment-time">{{ review.created_at|date:"M d, Y" }}</div>
 									</div>
-									<div class="text"> I have been identified as one of LebariTop Instructors and all my premium courses have recently earned the best-selling status for outstanding performance and student satisfaction.</div>
+									<div class="text">{% if review.subject %}<strong>{{ review.subject }}</strong><br>{% endif %}{{ review.message }}</div>
 								</div>
-								<!-- Comment -->
-								<div class="comment">
-									<div class="author-thumb"><img src="{% static 'images/resource/author-6.jpg' %}" alt=""></div>
-									<div class="comment-info clearfix">
-										<strong>Shopnil Mahadi</strong>
-										<div class="rating">
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star-o"></span>
-										</div>
-										<div class="comment-time">3 weeks ago</div>
-										<ul class="like-dislike">
-											<li><a href="#" class="flaticon-like-1"></a></li>
-											<li><a href="#" class="flaticon-dislike"></a></li>
-										</ul>
-									</div>
-									<div class="text"> I have been identified as one of LebariTop Instructors and all my premium courses have recently earned the best-selling status for outstanding performance and student satisfaction.</div>
-								</div>
-								<!-- Comment -->
-								<div class="comment">
-									<div class="author-thumb"><img src="{% static 'images/resource/author-7.jpg' %}" alt=""></div>
-									<div class="comment-info clearfix">
-										<strong>Shopnil Mahadi</strong>
-										<div class="rating">
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star-o"></span>
-										</div>
-										<div class="comment-time">3 weeks ago</div>
-										<ul class="like-dislike">
-											<li><a href="#" class="flaticon-like-1"></a></li>
-											<li><a href="#" class="flaticon-dislike"></a></li>
-										</ul>
-									</div>
-									<div class="text"> I have been identified as one of LebariTop Instructors and all my premium courses have recently earned the best-selling status for outstanding performance and student satisfaction.</div>
-								</div>
+                                {% empty %}
+                                <div class="comment"><div class="text">No reviews yet. Be the first to leave a review!</div></div>
+                                {% endfor %}
 							</div>
 						</div>
 						<!-- End Comment Area -->
 						
 						<div class="comment-form">
 									
-							<div class="group-title"><h5>Leave A Comment</h5></div>
+							<div class="group-title"><h5>Leave A Review</h5></div>
 							
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-success">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+
 							<!--Comment Form-->
-							<form method="post" action="blog.html">
+							<form method="post" action="{% url 'course_detail' course.slug %}">
+                                {% csrf_token %}
 								<div class="row clearfix">
 									
 									<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-										<input type="text" name="username" placeholder="Full Name" required="">
+										<input type="text" name="username" placeholder="Full Name" required="" value="{% if request.user.is_authenticated %}{{ request.user.get_full_name|default:request.user.username }}{% endif %}">
 									</div>
 									
 									<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-										<input type="email" name="email" placeholder="Email" required="">
+										<input type="email" name="email" placeholder="Email" required="" value="{% if request.user.is_authenticated %}{{ request.user.email }}{% endif %}">
 									</div>
 									
 									<div class="col-lg-12 col-md-12 col-sm-12 form-group">
@@ -222,11 +185,11 @@
 									</div>
 									
 									<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-										<textarea class="darma" name="message" placeholder="Your Message"></textarea>
+										<textarea class="darma" name="message" placeholder="Your Message" required=""></textarea>
 									</div>
 									
 									<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-										<button class="theme-btn btn-style-five" type="submit" name="submit-form">Write A Review</button>
+										<button class="theme-btn btn-style-five" type="submit" name="submit-form">{{ buttons.write_review|default:'Write A Review' }}</button>
 									</div>
 									
 								</div>
@@ -273,16 +236,19 @@
 								</div>
 							</form>
 						</div>
-						<div class="btns-box">
                             {% if request.user.is_authenticated %}
+								<div class="btns-box">
                                 {% if is_enrolled %}
-                                    <a href="{% url 'profile' %}" class="theme-btn enrol-btn">Go to Dashboard</a>
+                                    <a href="{% url 'profile' %}" class="theme-btn enrol-btn">{{ buttons.go_to_dashboard|default:"Go to Dashboard" }}</a>
                                 {% else %}
-                                    <a href="{% url 'enroll_course' course.slug %}" class="theme-btn enrol-btn">Enrol Now</a>
+                                    <a href="{% url 'enroll_course' course.slug %}" class="theme-btn enrol-btn">{{ buttons.enroll_now|default:"Enrol Now" }}</a>
                                 {% endif %}
-                            {% else %}
-                                <a href="{% url 'login' %}?next={{ request.path }}" class="theme-btn enrol-btn">Login to Enrol</a>
-                            {% endif %}
+							</div>
+						{% else %}
+							<div class="btns-box">
+                                <a href="{% url 'login' %}?next={{ request.path }}" class="theme-btn enrol-btn">{{ buttons.login_to_enroll|default:"Login to Enrol" }}</a>
+							</div>
+						{% endif %}
 							<a href="#" class="theme-btn wishlist-btn">Add to wishlist</a>
 						</div>
 					</div>
