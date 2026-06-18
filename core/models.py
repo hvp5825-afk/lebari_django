@@ -132,3 +132,68 @@ class CustomPage(models.Model):
 
     def __str__(self):
         return self.title
+
+class MembershipPlan(models.Model):
+    CYCLE_CHOICES = [
+        ('monthly', 'Monthly'),
+        ('yearly', 'Yearly'),
+    ]
+    name = models.CharField(max_length=100)
+    price = models.CharField(max_length=20, help_text="e.g. '$09', 'Free'")
+    duration = models.CharField(max_length=20, help_text="e.g. '/month', '/year'")
+    billing_cycle = models.CharField(max_length=10, choices=CYCLE_CHOICES, default='monthly')
+    features = models.TextField(help_text="Enter one feature per line")
+    is_featured = models.BooleanField(default=False, help_text="Highlight this plan (e.g. Enterprise)")
+    button_text = models.CharField(max_length=50, default="Get started")
+    button_link = models.CharField(max_length=200, default="#")
+
+    def __str__(self):
+        return f"{self.name} ({self.get_billing_cycle_display()})"
+
+    def get_features_list(self):
+        return [f.strip() for f in self.features.split('\n') if f.strip()]
+
+class Donation(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    amount = models.CharField(max_length=50)
+    is_recurring = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.amount}"
+
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    bio = models.TextField(blank=True, null=True, default="Hi, I'm a new student here!")
+    profile_picture = models.ImageField(upload_to='profiles/', blank=True, null=True)
+    facebook_url = models.URLField(blank=True, null=True)
+    twitter_url = models.URLField(blank=True, null=True)
+    pinterest_url = models.URLField(blank=True, null=True)
+    dribbble_url = models.URLField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.user.username}'s Profile"
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    if hasattr(instance, 'profile'):
+        instance.profile.save()
+    else:
+        UserProfile.objects.create(user=instance)
+
+class Subscriber(models.Model):
+    email = models.EmailField(unique=True)
+    subscribed_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email

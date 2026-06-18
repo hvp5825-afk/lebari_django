@@ -519,7 +519,13 @@
 							</ul>
 						</div>
 						<div class="pull-right">
-							<div class="total-course">We found <span>39</span> courses available for you</div>
+							<div class="total-course">
+                                {% if query %}
+                                Search results for "{{ query }}" - <span>{{ courses|length }}</span> courses found
+                                {% else %}
+                                We found <span>{{ courses|length }}</span> courses available for you
+                                {% endif %}
+                            </div>
 						</div>
 						
 					</div>
@@ -553,7 +559,13 @@
 								<strong>4.9</strong>
 								<i>(70 Review)</i>
 							</div>
-							<div class="price">${{ course.price }}</div>
+							<div class="price">
+                                {% if course.price == 0 %}
+                                    Free
+                                {% else %}
+                                    ${{ course.price }}
+                                {% endif %}
+                            </div>
 							<div class="clearfix">
 								<div class="pull-left">
 									<div class="hovers">{{ course.duration }} . {{ course.level }}</div>

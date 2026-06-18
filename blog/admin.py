@@ -12,3 +12,11 @@ class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     list_filter = ('category', 'author')
     search_fields = ('title', 'content')
+
+from .models import Comment
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'post', 'created_at', 'is_active')
+    list_filter = ('is_active', 'created_at')
+    search_fields = ('name', 'email', 'content')

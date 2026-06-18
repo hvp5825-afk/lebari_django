@@ -114,7 +114,13 @@
 										<li><a href="{% url 'about' %}">About Us</a></li>
 										<li><a href="{% url 'faq' %}">Faq</a></li>
 										<li><a href="{% url 'teacher' %}">Teacher</a></li>
-										<li><a href="{% url 'profile' %}">User Profile</a></li>
+										{% if user.is_authenticated %}
+                                        <li><a href="{% url 'profile' %}">User Profile</a></li>
+                                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                                        {% else %}
+                                        <li><a href="{% url 'login' %}">Login</a></li>
+                                        <li><a href="{% url 'register' %}">Register</a></li>
+                                        {% endif %}
 										<li><a href="{% url 'membership' %}">Membership</a></li>
 										<li class="dropdown"><a href="{% url 'event_list' %}">Events</a>
 											<ul>
@@ -152,10 +158,9 @@
 						
 						<!-- Search -->
 						<div class="search-box">
-							<form method="post" action="{% url 'contact' %}">
-{% csrf_token %}
+							<form method="get" action="{% url 'course_list' %}">
 								<div class="form-group">
-									<input type="search" name="search-field" value="" placeholder="What do we want learn" required>
+									<input type="search" name="q" value="{{ request.GET.q|default:'' }}" placeholder="What do we want learn" required>
 									<button type="submit"><span class="icon fa fa-search"></span></button>
 								</div>
 							</form>
@@ -317,8 +322,13 @@
 						<!-- Subscribe Form -->
 						<div class="subscribe-form">
 							<h6>Newsletter</h6>
-							<form method="post" action="{% url 'contact' %}">
+							<form method="post" action="{% url 'subscribe' %}">
 {% csrf_token %}
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <div style="color: {% if message.tags == 'success' %}#00C853{% else %}#fff{% endif %}; margin-bottom: 10px;">{{ message }}</div>
+                                    {% endfor %}
+                                {% endif %}
 								<div class="form-group">
 									<input type="email" name="email" value="" placeholder="Your email" required>
 									<button type="submit" class="submit-btn"><span class="icon flaticon-right-arrow-2"></span></button>

@@ -334,119 +334,28 @@
                 <div class="content-side col-lg-9 col-md-12 col-sm-12">
                 	<div class="blog-classic">
 						
+						{% for post in posts %}
 						<!-- News Block Two -->
 						<div class="news-block-two">
 							<div class="inner-box">
 								<div class="image">
-									<a href="#"><img src="{% static 'images/resource/news-15.jpg' %}" alt="" /></a>
+									<a href="{% url 'blog_detail' post.slug %}"><img src="{% if post.image %}{{ post.image.url }}{% else %}{% static 'images/resource/news-15.jpg' %}{% endif %}" alt="" /></a>
 								</div>
 								<div class="lower-content">
 									<ul class="post-info">
-										<li><a href="#"><span class="icon fa fa-eye"></span>109 Views</a></li>
-										<li><a href="#"><span class="icon fa fa-comment"></span>12</a></li>
-										<li><a href="#"><span class="icon fa fa-bookmark-o"></span>Education, teach , Course</a></li>
+										<li><a href="{% url 'blog_detail' post.slug %}"><span class="icon fa fa-user"></span>{{ post.author.username|default:"Admin" }}</a></li>
+										<li><a href="{% url 'blog_detail' post.slug %}"><span class="icon fa fa-calendar"></span>{{ post.created_at|date:"M d, Y" }}</a></li>
+										<li><a href="{% url 'blog_detail' post.slug %}"><span class="icon fa fa-bookmark-o"></span>{{ post.category.name }}</a></li>
 									</ul>
-									<h2><a href="#">Interior Design Principles and Elements</a></h2>
-									<div class="text">Overview Interior Design Principles and Elements, the best course for you to gain in-depth knowledge of this topic. Experts and…</div>
-									<a href="#" class="learn-more">Learn More <span class="icon flaticon-right-arrow-1"></span></a>
+									<h2><a href="{% url 'blog_detail' post.slug %}">{{ post.title }}</a></h2>
+									<div class="text">{{ post.content|truncatechars:150|safe }}</div>
+									<a href="{% url 'blog_detail' post.slug %}" class="learn-more">Learn More <span class="icon flaticon-right-arrow-1"></span></a>
 								</div>
 							</div>
 						</div>
-						
-						<!-- News Block Two -->
-						<div class="news-block-two">
-							<div class="inner-box">
-								<div class="image">
-									<a href="#"><img src="{% static 'images/resource/news-16.jpg' %}" alt="" /></a>
-								</div>
-								<div class="lower-content">
-									<ul class="post-info">
-										<li><a href="#"><span class="icon fa fa-eye"></span>109 Views</a></li>
-										<li><a href="#"><span class="icon fa fa-comment"></span>12</a></li>
-										<li><a href="#"><span class="icon fa fa-bookmark-o"></span>Education, teach , Course</a></li>
-									</ul>
-									<h2><a href="#">The Good, The Bad and The Ugly things</a></h2>
-									<div class="text">Working in recruitment is rewarding, but it has some dark sides also. The blog contains the good, bad and ugly sides of recruitment job.</div>
-									<a href="#" class="learn-more">Learn More <span class="icon flaticon-right-arrow-1"></span></a>
-								</div>
-							</div>
-						</div>
-						
-						<!-- News Block Two -->
-						<div class="news-block-two">
-							<div class="inner-box">
-								<div class="image">
-									<a href="#"><img src="{% static 'images/resource/news-17.jpg' %}" alt="" /></a>
-								</div>
-								<div class="lower-content">
-									<ul class="post-info">
-										<li><a href="#"><span class="icon fa fa-eye"></span>109 Views</a></li>
-										<li><a href="#"><span class="icon fa fa-comment"></span>12</a></li>
-										<li><a href="#"><span class="icon fa fa-bookmark-o"></span>Education, teach , Course</a></li>
-									</ul>
-									<h2><a href="#">How to become a motivational life coach</a></h2>
-									<div class="text">Working in recruitment is rewarding, but it has some dark sides also. The blog contains the good, bad and ugly sides of recruitment job.</div>
-									<a href="#" class="learn-more">Learn More <span class="icon flaticon-right-arrow-1"></span></a>
-								</div>
-							</div>
-						</div>
-						
-						<!-- News Block Two -->
-						<div class="news-block-two">
-							<div class="inner-box">
-								<div class="image">
-									<a href="#"><img src="{% static 'images/resource/news-18.jpg' %}" alt="" /></a>
-								</div>
-								<div class="lower-content">
-									<ul class="post-info">
-										<li><a href="#"><span class="icon fa fa-eye"></span>109 Views</a></li>
-										<li><a href="#"><span class="icon fa fa-comment"></span>12</a></li>
-										<li><a href="#"><span class="icon fa fa-bookmark-o"></span>Education, teach , Course</a></li>
-									</ul>
-									<h2><a href="#">A Guide for Beginners</a></h2>
-									<div class="text">Working in recruitment is rewarding, but it has some dark sides also. The blog contains the good, bad and ugly sides of recruitment job.</div>
-									<a href="#" class="learn-more">Learn More <span class="icon flaticon-right-arrow-1"></span></a>
-								</div>
-							</div>
-						</div>
-						
-						<!-- News Block Two -->
-						<div class="news-block-two">
-							<div class="inner-box">
-								<div class="image">
-									<a href="#"><img src="{% static 'images/resource/news-19.jpg' %}" alt="" /></a>
-								</div>
-								<div class="lower-content">
-									<ul class="post-info">
-										<li><a href="#"><span class="icon fa fa-eye"></span>109 Views</a></li>
-										<li><a href="#"><span class="icon fa fa-comment"></span>12</a></li>
-										<li><a href="#"><span class="icon fa fa-bookmark-o"></span>Education, teach , Course</a></li>
-									</ul>
-									<h2><a href="#">10 Quick ways to Shortlist Candidates For An Interview</a></h2>
-									<div class="text">Overview Interior Design Principles and Elements, the best course for you to gain in-depth knowledge of this topic. Experts and…</div>
-									<a href="#" class="learn-more">Learn More <span class="icon flaticon-right-arrow-1"></span></a>
-								</div>
-							</div>
-						</div>
-						
-						<!-- News Block Two -->
-						<div class="news-block-two">
-							<div class="inner-box">
-								<div class="image">
-									<a href="#"><img src="{% static 'images/resource/news-20.jpg' %}" alt="" /></a>
-								</div>
-								<div class="lower-content">
-									<ul class="post-info">
-										<li><a href="#"><span class="icon fa fa-eye"></span>109 Views</a></li>
-										<li><a href="#"><span class="icon fa fa-comment"></span>12</a></li>
-										<li><a href="#"><span class="icon fa fa-bookmark-o"></span>Education, teach , Course</a></li>
-									</ul>
-									<h2><a href="#">How to become a baker: Career Information and Requirements</a></h2>
-									<div class="text">Overview Interior Design Principles and Elements, the best course for you to gain in-depth knowledge of this topic. Experts and…</div>
-									<a href="#" class="learn-more">Learn More <span class="icon flaticon-right-arrow-1"></span></a>
-								</div>
-							</div>
-						</div>
+						{% empty %}
+						<p>No blog posts found. Add some posts from the Django Admin.</p>
+						{% endfor %}
 						
 						<!-- Post Share Options -->
 						<div class="styled-pagination-two">
@@ -504,16 +413,14 @@
 						<!-- Links Widget -->
 						<div class="sidebar-widget links-widget">
 							<div class="sidebar-title">
-								<h4>Recent Post</h4>
+								<h4>Categories</h4>
 							</div>
 							<div class="widget-content">
 								<ul class="blog-cat">
-									<li><a href="#">Business (3)</a></li>
-									<li><a href="#">Education  (03)</a></li>
-									<li><a href="#">Technology (12)</a></li>
-									<li><a href="#">News (6)</a></li>
-									<li><a href="#">Design (4)</a></li>
-									<li><a href="#">Lifestyle  News (6)</a></li>
+									<li><a href="{% url 'blog_list' %}">All Categories</a></li>
+									{% for category in categories %}
+									<li><a href="{% url 'blog_list' %}?category={{ category.slug }}">{{ category.name }} ({{ category.posts.count }})</a></li>
+									{% endfor %}
 								</ul>
 							</div>
 						</div>

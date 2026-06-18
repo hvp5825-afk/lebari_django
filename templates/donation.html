@@ -374,27 +374,35 @@
 											
 											<!-- Donate Form -->
 											<div class="donate-form">
-												<form method="post" action="{% url 'contact' %}">
+                                                {% if messages %}
+                                                    <div class="messages mb-4">
+                                                        {% for message in messages %}
+                                                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+												<form method="post" action="{% url 'donation' %}">
 {% csrf_token %}
 													<div class="row clearfix">
 														
 														<div class="form-group select-amount col-lg-12 col-md-12 col-sm-12 clearfix">
 															<label>Select amount (in US dollars)</label>
-															<div class="select-box"><input type="radio" name="payment-group" id="radio-three" checked><label for="radio-three">$10</label></div>
-															<div class="select-box"><input type="radio" name="payment-group" id="radio-four"><label for="radio-four">$20</label></div>
-															<div class="select-box"><input type="radio" name="payment-group" id="radio-five"><label for="radio-five">$30</label></div>
-															<div class="select-box"><input type="radio" name="payment-group" id="radio-six"><label for="radio-six">$40</label></div>
-															<div class="select-box"><input type="radio" name="payment-group" id="radio-seven"><label for="radio-seven">Others</label></div>
+															<div class="select-box"><input type="radio" name="payment-group" id="radio-three" value="$10" checked><label for="radio-three">$10</label></div>
+															<div class="select-box"><input type="radio" name="payment-group" id="radio-four" value="$20"><label for="radio-four">$20</label></div>
+															<div class="select-box"><input type="radio" name="payment-group" id="radio-five" value="$30"><label for="radio-five">$30</label></div>
+															<div class="select-box"><input type="radio" name="payment-group" id="radio-six" value="$40"><label for="radio-six">$40</label></div>
+															<div class="select-box"><input type="radio" name="payment-group" id="radio-seven" value="Others"><label for="radio-seven">Others</label></div>
+                                                            <input type="text" name="amount_text" placeholder="Custom Amount" class="mt-2" style="display:none;" id="custom-amount-monthly">
 														</div>
 														
 														<!-- Form Group -->
 														<div class="form-group col-lg-12 col-md-12 col-sm-12">
 															<div class="select-box">
-																<input type="checkbox" name="payment-group" id="radio-one">
+																<input type="checkbox" name="is_recurring" id="radio-one">
 																<label for="radio-one">
 																	<span class="default-check"></span>
 																	<span class="check-icon fa fa-check"></span>
-																	Yes, I'll generously add on each month to sunt in culpa qui <br> officia deserunt mollit anim id est laborum
+																	Yes, I'll generously add on each month
 																</label>
 															</div>
 														</div>
@@ -422,7 +430,7 @@
 														
 														<!-- Form Group -->
 														<div class="form-group col-lg-4 col-md-6 col-sm-12">
-															<input type="text" name="name" value="" placeholder="Date" required>
+															<input type="text" name="date" value="" placeholder="Date" required>
 														</div>
 														
 														<!-- Form Group -->
@@ -453,17 +461,25 @@
 											
 											<!-- Donate Form -->
 											<div class="donate-form">
-												<form method="post" action="{% url 'contact' %}">
+                                                {% if messages %}
+                                                    <div class="messages mb-4">
+                                                        {% for message in messages %}
+                                                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+												<form method="post" action="{% url 'donation' %}">
 {% csrf_token %}
 													<div class="row clearfix">
 														
 														<div class="form-group select-amount col-lg-12 col-md-12 col-sm-12 clearfix">
 															<label>Select amount (in US dollars)</label>
-															<div class="select-box"><input type="radio" name="payment-group" id="radio-eight" checked><label for="radio-eight">$10</label></div>
-															<div class="select-box"><input type="radio" name="payment-group" id="radio-nine"><label for="radio-nine">$20</label></div>
-															<div class="select-box"><input type="radio" name="payment-group" id="radio-ten"><label for="radio-ten">$30</label></div>
-															<div class="select-box"><input type="radio" name="payment-group" id="radio-eleven"><label for="radio-eleven">$40</label></div>
-															<div class="select-box"><input type="radio" name="payment-group" id="radio-twelve"><label for="radio-twelve">Others</label></div>
+															<div class="select-box"><input type="radio" name="payment-group" id="radio-eight" value="$10" checked><label for="radio-eight">$10</label></div>
+															<div class="select-box"><input type="radio" name="payment-group" id="radio-nine" value="$20"><label for="radio-nine">$20</label></div>
+															<div class="select-box"><input type="radio" name="payment-group" id="radio-ten" value="$30"><label for="radio-ten">$30</label></div>
+															<div class="select-box"><input type="radio" name="payment-group" id="radio-eleven" value="$40"><label for="radio-eleven">$40</label></div>
+															<div class="select-box"><input type="radio" name="payment-group" id="radio-twelve" value="Others"><label for="radio-twelve">Others</label></div>
+                                                            <input type="text" name="amount_text" placeholder="Custom Amount" class="mt-2" style="display:none;" id="custom-amount-onetime">
 														</div>
 														
 														<!-- Form Group -->
@@ -501,7 +517,7 @@
 														
 														<!-- Form Group -->
 														<div class="form-group col-lg-4 col-md-6 col-sm-12">
-															<input type="text" name="name" value="" placeholder="Date" required>
+															<input type="text" name="date" value="" placeholder="Date" required>
 														</div>
 														
 														<!-- Form Group -->
@@ -536,6 +552,21 @@
 		</div>
 	</section>
 	<!-- End Donate Page Section -->
+    
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var radios = document.querySelectorAll('input[type=radio][name="payment-group"]');
+        radios.forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                var isOthers = this.value === 'Others';
+                var customMonthly = document.getElementById('custom-amount-monthly');
+                var customOnetime = document.getElementById('custom-amount-onetime');
+                if(customMonthly) customMonthly.style.display = isOthers ? 'block' : 'none';
+                if(customOnetime) customOnetime.style.display = isOthers ? 'block' : 'none';
+            });
+        });
+    });
+    </script>
 	
 	<!-- Main Footer -->
     <footer class="main-footer">

@@ -316,6 +316,27 @@
 				</div>
 				<div class="testimonial-carousel-two owl-carousel owl-theme">
 				
+                    {% if testimonials %}
+                        {% for testimonial in testimonials %}
+					<!-- Testimonial Block Two -->
+					<div class="testimonial-block-two">
+						<div class="inner-box">
+							<div class="border-layer"></div>
+							<div class="text">{{ testimonial.text }}</div>
+							<div class="author-info">
+								<div class="info-inner">
+									<div class="author-image">
+										<img src="{% if testimonial.image %}{{ testimonial.image.url }}{% else %}{% static 'images/resource/author-1.jpg' %}{% endif %}" alt="" />
+									</div>
+									<h6>{{ testimonial.name }}</h6>
+									<div class="designation">{{ testimonial.designation }}</div>
+								</div>
+							</div>
+							<div class="quote-icon flaticon-quote-2"></div>
+						</div>
+					</div>
+                        {% endfor %}
+                    {% else %}
 					<!-- Testimonial Block Two -->
 					<div class="testimonial-block-two">
 						<div class="inner-box">
@@ -369,114 +390,7 @@
 							<div class="quote-icon flaticon-quote-2"></div>
 						</div>
 					</div>
-					
-					<!-- Testimonial Block Two -->
-					<div class="testimonial-block-two">
-						<div class="inner-box">
-							<div class="border-layer"></div>
-							<div class="text">From exhibitions and dinners, to celebrations and conferences, the University of Bath is a great place to hold any event.</div>
-							<div class="author-info">
-								<div class="info-inner">
-									<div class="author-image">
-										<img src="{% static 'images/resource/author-1.jpg' %}" alt="" />
-									</div>
-									<h6>Mahfuz Riad</h6>
-									<div class="designation">Online Teacher</div>
-								</div>
-							</div>
-							<div class="quote-icon flaticon-quote-2"></div>
-						</div>
-					</div>
-					
-					<!-- Testimonial Block Two -->
-					<div class="testimonial-block-two">
-						<div class="inner-box">
-							<div class="border-layer"></div>
-							<div class="text">From exhibitions and dinners, to celebrations and conferences, the University of Bath is a great place to hold any event.</div>
-							<div class="author-info">
-								<div class="info-inner">
-									<div class="author-image">
-										<img src="{% static 'images/resource/author-2.jpg' %}" alt="" />
-									</div>
-									<h6>Shopnil mahadi</h6>
-									<div class="designation">Online Teacher</div>
-								</div>
-							</div>
-							<div class="quote-icon flaticon-quote-2"></div>
-						</div>
-					</div>
-					
-					<!-- Testimonial Block Two -->
-					<div class="testimonial-block-two">
-						<div class="inner-box">
-							<div class="border-layer"></div>
-							<div class="text">From exhibitions and dinners, to celebrations and conferences, the University of Bath is a great place to hold any event.</div>
-							<div class="author-info">
-								<div class="info-inner">
-									<div class="author-image">
-										<img src="{% static 'images/resource/author-3.jpg' %}" alt="" />
-									</div>
-									<h6>Alamin Sa</h6>
-									<div class="designation">Online Teacher</div>
-								</div>
-							</div>
-							<div class="quote-icon flaticon-quote-2"></div>
-						</div>
-					</div>
-					
-					<!-- Testimonial Block Two -->
-					<div class="testimonial-block-two">
-						<div class="inner-box">
-							<div class="border-layer"></div>
-							<div class="text">From exhibitions and dinners, to celebrations and conferences, the University of Bath is a great place to hold any event.</div>
-							<div class="author-info">
-								<div class="info-inner">
-									<div class="author-image">
-										<img src="{% static 'images/resource/author-1.jpg' %}" alt="" />
-									</div>
-									<h6>Mahfuz Riad</h6>
-									<div class="designation">Online Teacher</div>
-								</div>
-							</div>
-							<div class="quote-icon flaticon-quote-2"></div>
-						</div>
-					</div>
-					
-					<!-- Testimonial Block Two -->
-					<div class="testimonial-block-two">
-						<div class="inner-box">
-							<div class="border-layer"></div>
-							<div class="text">From exhibitions and dinners, to celebrations and conferences, the University of Bath is a great place to hold any event.</div>
-							<div class="author-info">
-								<div class="info-inner">
-									<div class="author-image">
-										<img src="{% static 'images/resource/author-2.jpg' %}" alt="" />
-									</div>
-									<h6>Shopnil mahadi</h6>
-									<div class="designation">Online Teacher</div>
-								</div>
-							</div>
-							<div class="quote-icon flaticon-quote-2"></div>
-						</div>
-					</div>
-					
-					<!-- Testimonial Block Two -->
-					<div class="testimonial-block-two">
-						<div class="inner-box">
-							<div class="border-layer"></div>
-							<div class="text">From exhibitions and dinners, to celebrations and conferences, the University of Bath is a great place to hold any event.</div>
-							<div class="author-info">
-								<div class="info-inner">
-									<div class="author-image">
-										<img src="{% static 'images/resource/author-3.jpg' %}" alt="" />
-									</div>
-									<h6>Alamin Sa</h6>
-									<div class="designation">Online Teacher</div>
-								</div>
-							</div>
-							<div class="quote-icon flaticon-quote-2"></div>
-						</div>
-					</div>
+                    {% endif %}
 				
 				</div>
 			</div>
@@ -508,6 +422,22 @@
 						<div class="inner-column">
 							<div class="row clearfix">
 								
+								{% if teachers %}
+                                    {% for teacher in teachers %}
+								<!-- Team Block -->
+								<div class="team-block col-lg-6 col-md-6 col-sm-12">
+									<div class="inner-box">
+										<div class="image">
+											<a href="{% url 'teacher' %}"><img src="{% if teacher.image %}{{ teacher.image.url }}{% else %}{% static 'images/resource/team-1.jpg' %}{% endif %}" alt="{{ teacher.name }}" /></a>
+										</div>
+										<div class="lower-content">
+											<h5><a href="{% url 'teacher' %}">{{ teacher.name }}</a></h5>
+											<div class="designation">{{ teacher.designation|default:"- Teacher" }}</div>
+										</div>
+									</div>
+								</div>
+                                    {% endfor %}
+                                {% else %}
 								<!-- Team Block -->
 								<div class="team-block col-lg-6 col-md-6 col-sm-12">
 									<div class="inner-box">
@@ -533,6 +463,7 @@
 										</div>
 									</div>
 								</div>
+                                {% endif %}
 								
 							</div>
 						</div>
@@ -557,7 +488,7 @@
 				<ul class="sponsors-carousel owl-carousel owl-theme">
                     {% if clients %}
                         {% for client in clients %}
-					    <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ client.image.url }}" alt="{{ client.name }}"></a></figure></li>
+					    <li class="slide-item"><figure class="image-box"><a href="#">{% if client.image %}<img src="{{ client.image.url }}" alt="{{ client.name }}">{% endif %}</a></figure></li>
                         {% endfor %}
                     {% else %}
 					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/1.png' %}" alt=""></a></figure></li>

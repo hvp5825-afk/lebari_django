@@ -7,5 +7,6 @@ urlpatterns = [
     path('course-2.html', RedirectView.as_view(url='/courses/', permanent=True)),
     path('course-3.html', RedirectView.as_view(url='/courses/', permanent=True)),
     path('course-4.html', RedirectView.as_view(url='/courses/', permanent=True)),
+    path('<slug:slug>/enroll/', views.enroll_course, name='enroll_course'),
     path('<slug:slug>/', views.course_detail, name='course_detail'),
 ]

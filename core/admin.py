@@ -27,6 +27,13 @@ class FAQAdmin(admin.ModelAdmin):
     list_display = ('question', 'category')
     list_filter = ('category',)
 
+from .models import Subscriber
+
+@admin.register(Subscriber)
+class SubscriberAdmin(admin.ModelAdmin):
+    list_display = ('email', 'subscribed_at')
+    search_fields = ('email',)
+
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     list_display = ('title', 'date', 'time_start', 'time_end', 'location')
@@ -59,3 +66,20 @@ class CustomPageAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     list_filter = ('is_active',)
     search_fields = ('title', 'slug')
+
+from .models import MembershipPlan, Donation, UserProfile
+
+@admin.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('user',)
+
+@admin.register(MembershipPlan)
+class MembershipPlanAdmin(admin.ModelAdmin):
+    list_display = ('name', 'price', 'billing_cycle', 'is_featured')
+    list_filter = ('billing_cycle', 'is_featured')
+
+@admin.register(Donation)
+class DonationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'amount', 'is_recurring', 'created_at')
+    list_filter = ('is_recurring', 'created_at')
+    readonly_fields = ('created_at',)

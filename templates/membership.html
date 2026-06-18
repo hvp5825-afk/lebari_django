@@ -542,59 +542,28 @@
 						<div class="content">
 							<div class="row clearfix">
 								
+                                {% for plan in monthly_plans %}
 								<!-- Price Block Two -->
-								<div class="price-block-two col-lg-4 col-md-6 col-sm-12">
-									<div class="inner-box wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
-										<h4>Basic</h4>
-										<div class="price">$09 <span>/month</span></div>
-										<ul class="price-list">
-											<li>Courses i - 4</li>
-											<li>Individual Course</li>
-											<li>Course Assessments</li>
-											<li>Individual Diploma Courses</li>
-										</ul>
-										<div class="btn-box">
-											<a href="#" class="theme-btn started-btn">Get started</a>
-										</div>
-									</div>
-								</div>
-								
-								<!-- Price Block Two -->
-								<div class="price-block-two active col-lg-4 col-md-6 col-sm-12">
+								<div class="price-block-two col-lg-4 col-md-6 col-sm-12 {% if plan.is_featured %}active{% endif %}">
 									<div class="inner-box wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
+                                        {% if plan.is_featured %}
 										<div class="icon-box">
 											<span class="icon"><img src="{% static 'images/icons/price-icon-4.png' %}" alt="" /></span>
 										</div>
-										<h4>Enterprise</h4>
-										<div class="price">$49 <span>/month</span></div>
+                                        {% endif %}
+										<h4>{{ plan.name }}</h4>
+										<div class="price">{{ plan.price }} <span>{{ plan.duration }}</span></div>
 										<ul class="price-list">
-											<li>Courses i - 4</li>
-											<li>Individual Course</li>
-											<li>Course Assessments</li>
-											<li>Individual Diploma Courses</li>
+                                            {% for feature in plan.get_features_list %}
+											<li>{{ feature }}</li>
+                                            {% endfor %}
 										</ul>
 										<div class="btn-box">
-											<a href="#" class="theme-btn started-btn">Get started</a>
+											<a href="{{ plan.button_link }}" class="theme-btn started-btn">{{ plan.button_text }}</a>
 										</div>
 									</div>
 								</div>
-								
-								<!-- Price Block Two -->
-								<div class="price-block-two col-lg-4 col-md-6 col-sm-12">
-									<div class="inner-box wow fadeInRight" data-wow-delay="0ms" data-wow-duration="1500ms">
-										<h4>Started</h4>
-										<div class="price">$29 <span>/month</span></div>
-										<ul class="price-list">
-											<li>Courses i - 4</li>
-											<li>Individual Course</li>
-											<li>Course Assessments</li>
-											<li>Individual Diploma Courses</li>
-										</ul>
-										<div class="btn-box">
-											<a href="#" class="theme-btn started-btn">Get started</a>
-										</div>
-									</div>
-								</div>
+                                {% endfor %}
 								
 							</div>
 						</div>
@@ -605,59 +574,28 @@
 						<div class="content">
 							<div class="row clearfix">
 								
+                                {% for plan in yearly_plans %}
 								<!-- Price Block Two -->
-								<div class="price-block-two col-lg-4 col-md-6 col-sm-12">
-									<div class="inner-box wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
-										<h4>Basic</h4>
-										<div class="price">$09 <span>/month</span></div>
-										<ul class="price-list">
-											<li>Courses i - 4</li>
-											<li>Individual Course</li>
-											<li>Course Assessments</li>
-											<li>Individual Diploma Courses</li>
-										</ul>
-										<div class="btn-box">
-											<a href="#" class="theme-btn started-btn">Get started</a>
-										</div>
-									</div>
-								</div>
-								
-								<!-- Price Block Two -->
-								<div class="price-block-two active col-lg-4 col-md-6 col-sm-12">
+								<div class="price-block-two col-lg-4 col-md-6 col-sm-12 {% if plan.is_featured %}active{% endif %}">
 									<div class="inner-box wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
+                                        {% if plan.is_featured %}
 										<div class="icon-box">
 											<span class="icon"><img src="{% static 'images/icons/price-icon-4.png' %}" alt="" /></span>
 										</div>
-										<h4>Enterprise</h4>
-										<div class="price">$49 <span>/month</span></div>
+                                        {% endif %}
+										<h4>{{ plan.name }}</h4>
+										<div class="price">{{ plan.price }} <span>{{ plan.duration }}</span></div>
 										<ul class="price-list">
-											<li>Courses i - 4</li>
-											<li>Individual Course</li>
-											<li>Course Assessments</li>
-											<li>Individual Diploma Courses</li>
+                                            {% for feature in plan.get_features_list %}
+											<li>{{ feature }}</li>
+                                            {% endfor %}
 										</ul>
 										<div class="btn-box">
-											<a href="#" class="theme-btn started-btn">Get started</a>
+											<a href="{{ plan.button_link }}" class="theme-btn started-btn">{{ plan.button_text }}</a>
 										</div>
 									</div>
 								</div>
-								
-								<!-- Price Block Two -->
-								<div class="price-block-two col-lg-4 col-md-6 col-sm-12">
-									<div class="inner-box wow fadeInRight" data-wow-delay="0ms" data-wow-duration="1500ms">
-										<h4>Started</h4>
-										<div class="price">$29 <span>/month</span></div>
-										<ul class="price-list">
-											<li>Courses i - 4</li>
-											<li>Individual Course</li>
-											<li>Course Assessments</li>
-											<li>Individual Diploma Courses</li>
-										</ul>
-										<div class="btn-box">
-											<a href="#" class="theme-btn started-btn">Get started</a>
-										</div>
-									</div>
-								</div>
+                                {% endfor %}
 								
 							</div>
 						</div>

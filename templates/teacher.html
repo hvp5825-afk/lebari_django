@@ -180,7 +180,7 @@
 				<ul class="sponsors-carousel owl-carousel owl-theme">
                     {% if clients %}
                         {% for client in clients %}
-					    <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ client.image.url }}" alt="{{ client.name }}"></a></figure></li>
+					    <li class="slide-item"><figure class="image-box"><a href="#">{% if client.image %}<img src="{{ client.image.url }}" alt="{{ client.name }}">{% endif %}</a></figure></li>
                         {% endfor %}
                     {% else %}
 					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/1.png' %}" alt=""></a></figure></li>

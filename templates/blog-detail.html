@@ -128,54 +128,53 @@
 							<div class="related-projects">
 								<div class="row clearfix">
 									
+									{% for rel_post in related_posts %}
 									<!-- News Block Three -->
 									<div class="news-block-three col-lg-4 col-md-4 col-sm-12">
 										<div class="inner-box">
 											<div class="image">
-												<a href="#"><img src="{% static 'images/resource/news-22.jpg' %}" alt="" /></a>
+												<a href="{% url 'blog_detail' rel_post.slug %}"><img src="{% if rel_post.image %}{{ rel_post.image.url }}{% else %}{% static 'images/resource/news-22.jpg' %}{% endif %}" alt="" /></a>
 											</div>
 											<div class="lower-content">
-												<h6><a href="#">Sales assistant responsibilities and duties</a></h6>
-												<a href="#" class="learn-more">Learn more</a>
+												<h6><a href="{% url 'blog_detail' rel_post.slug %}">{{ rel_post.title|truncatechars:45 }}</a></h6>
+												<a href="{% url 'blog_detail' rel_post.slug %}" class="learn-more">Learn more</a>
 											</div>
 										</div>
 									</div>
-									
-									<!-- News Block Three -->
-									<div class="news-block-three col-lg-4 col-md-4 col-sm-12">
-										<div class="inner-box">
-											<div class="image">
-												<a href="#"><img src="{% static 'images/resource/news-23.jpg' %}" alt="" /></a>
-											</div>
-											<div class="lower-content">
-												<h6><a href="#">A Comprehensive Guide to Become a Medical</a></h6>
-												<a href="#" class="learn-more">Learn more</a>
-											</div>
-										</div>
-									</div>
-									
-									<!-- News Block Three -->
-									<div class="news-block-three col-lg-4 col-md-4 col-sm-12">
-										<div class="inner-box">
-											<div class="image">
-												<a href="#"><img src="{% static 'images/resource/news-24.jpg' %}" alt="" /></a>
-											</div>
-											<div class="lower-content">
-												<h6><a href="#">How to get a Job in the Motorcycle Industry?</a></h6>
-												<a href="#" class="learn-more">Learn more</a>
-											</div>
-										</div>
-									</div>
+									{% endfor %}
 									
 								</div>
 							</div>
 							
+							<div class="comments-area" style="margin-top: 40px; margin-bottom: 40px;">
+								<div class="group-title"><h4>{{ comments|length }} Comments</h4></div>
+								{% for comment in comments %}
+								<div class="comment-box" style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #eee;">
+									<div class="comment">
+										<div class="author-info">
+											<strong>{{ comment.name }}</strong>
+											<div class="comment-time">{{ comment.created_at|date:"F d, Y h:i A" }}</div>
+										</div>
+										<div class="text">{{ comment.content }}</div>
+									</div>
+								</div>
+								{% empty %}
+								<p>No comments yet. Be the first to comment!</p>
+								{% endfor %}
+							</div>
+
 							<div class="comment-form">
 									
 								<div class="group-title"><h4>Leave A Comment</h4></div>
 								
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-success">{{ message }}</div>
+                                    {% endfor %}
+                                {% endif %}
+
 								<!--Comment Form-->
-								<form method="post" action="{% url 'blog_list' %}">
+								<form method="post" action="{% url 'blog_detail' post.slug %}">
 {% csrf_token %}
 									
 									<div class="form-group">
@@ -187,15 +186,7 @@
 									</div>
 									
 									<div class="form-group">
-										<input type="text" name="topic" placeholder="Topic" required="">
-									</div>
-									
-									<div class="form-group">
-										<textarea class="" name="message" placeholder="Type your comment"></textarea>
-									</div>
-									
-									<div class="form-group">
-										<div class="check-box"><input type="checkbox" name="shipping-option" id="account-option"> &ensp; <label for="account-option">Save my name, email, and website in this browser for the next time I comment.</label></div>
+										<textarea class="" name="message" placeholder="Type your comment" required></textarea>
 									</div>
 									
 									<div class="form-group">
@@ -252,16 +243,14 @@
 						<!-- Links Widget -->
 						<div class="sidebar-widget links-widget">
 							<div class="sidebar-title">
-								<h4>Recent Post</h4>
+								<h4>Categories</h4>
 							</div>
 							<div class="widget-content">
 								<ul class="blog-cat">
-									<li><a href="#">Business (3)</a></li>
-									<li><a href="#">Education  (03)</a></li>
-									<li><a href="#">Technology (12)</a></li>
-									<li><a href="#">News (6)</a></li>
-									<li><a href="#">Design (4)</a></li>
-									<li><a href="#">Lifestyle  News (6)</a></li>
+									<li><a href="{% url 'blog_list' %}">All Categories</a></li>
+									{% for category in categories %}
+									<li><a href="{% url 'blog_list' %}?category={{ category.slug }}">{{ category.name }} ({{ category.posts.count }})</a></li>
+									{% endfor %}
 								</ul>
 							</div>
 						</div>

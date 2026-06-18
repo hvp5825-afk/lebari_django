@@ -16,3 +16,21 @@ class CourseAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     list_filter = ('category', 'teacher')
     search_fields = ('title', 'description')
+
+from .models import CourseModule, CourseLecture, CourseEnrollment
+
+@admin.register(CourseEnrollment)
+class CourseEnrollmentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'course', 'status', 'enrolled_on')
+    list_filter = ('status', 'course')
+
+class CourseLectureInline(admin.TabularInline):
+    model = CourseLecture
+    extra = 1
+
+@admin.register(CourseModule)
+class CourseModuleAdmin(admin.ModelAdmin):
+    list_display = ('course', 'title', 'order')
+    list_filter = ('course',)
+    search_fields = ('title',)
+    inlines = [CourseLectureInline]

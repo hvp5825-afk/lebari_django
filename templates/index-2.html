@@ -452,7 +452,14 @@
 								<i>({{ course.reviews_count }} Review)</i>
 							</div>
 							<div class="clearfix">
-								<div class="price">${{ course.price }} {% if course.original_price %}<span>${{ course.original_price }}</span>{% endif %}</div>
+								<div class="price">
+                                {% if course.price == 0 %}
+                                    Free
+                                {% else %}
+                                    ${{ course.price }}
+                                {% endif %}
+                                {% if course.original_price %}<span>${{ course.original_price }}</span>{% endif %}
+                            </div>
 								<div class="hovers">{{ course.duration }} . {{ course.level }}</div>
 							</div>
 						</div>
@@ -718,59 +725,25 @@
 				<div class="icon-layer-three" style="background-image:url({% static 'images/icons/icon-2.png' %})"></div>
 				<div class="row clearfix">
 				
+					{% for post in posts %}
 					<!-- News Block / Style Two -->
 					<div class="news-block style-two col-lg-4 col-md-6 col-sm-12">
 						<div class="inner-box">
 							<div class="image">
-								<a href="#"><img src="{% static 'images/resource/news-3.jpg' %}" alt="" /></a>
+								<a href="{% url 'blog_detail' post.slug %}"><img src="{% if post.image %}{{ post.image.url }}{% else %}{% static 'images/resource/news-3.jpg' %}{% endif %}" alt="" /></a>
 							</div>
 							<div class="lower-content">
 								<div class="border-layer"></div>
 								<ul class="post-info">
-									<li>Technology</li>
-									<li>Updated  Sep 26, 2020</li>
+									<li>{{ post.category.name }}</li>
+									<li>Updated  {{ post.created_at|date:"M d, Y" }}</li>
 								</ul>
-								<h4><a href="#">All The Security & Privacy <br> Updates From Amazon’s</a></h4>
-								<a href="#" class="more">More <span class="fa fa-angle-double-right"></span></a>
+								<h4><a href="{% url 'blog_detail' post.slug %}">{{ post.title }}</a></h4>
+								<a href="{% url 'blog_detail' post.slug %}" class="more">More <span class="fa fa-angle-double-right"></span></a>
 							</div>
 						</div>
 					</div>
-					
-					<!-- News Block / Style Two -->
-					<div class="news-block style-two col-lg-4 col-md-6 col-sm-12">
-						<div class="inner-box">
-							<div class="image">
-								<a href="#"><img src="{% static 'images/resource/news-4.jpg' %}" alt="" /></a>
-							</div>
-							<div class="lower-content">
-								<div class="border-layer"></div>
-								<ul class="post-info">
-									<li>Education</li>
-									<li>Updated  Sep 26, 2020</li>
-								</ul>
-								<h4><a href="#">All The Security & Privacy Updates From Amazon’s</a></h4>
-								<a href="#" class="more">More <span class="fa fa-angle-double-right"></span></a>
-							</div>
-						</div>
-					</div>
-					
-					<!-- News Block / Style Two -->
-					<div class="news-block style-two col-lg-4 col-md-6 col-sm-12">
-						<div class="inner-box">
-							<div class="image">
-								<a href="#"><img src="{% static 'images/resource/news-5.jpg' %}" alt="" /></a>
-							</div>
-							<div class="lower-content">
-								<div class="border-layer"></div>
-								<ul class="post-info">
-									<li>Education</li>
-									<li>Updated  Sep 26, 2020</li>
-								</ul>
-								<h4><a href="#">All The Security & Privacy Updates From Amazon’s</a></h4>
-								<a href="#" class="more">More <span class="fa fa-angle-double-right"></span></a>
-							</div>
-						</div>
-					</div>
+					{% endfor %}
 					
 				</div>
 			</div>

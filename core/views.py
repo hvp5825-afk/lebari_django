@@ -9,7 +9,9 @@ def get_cms_context(page_name):
     features = FeatureItem.objects.filter(page=page_name)
     counters = CounterItem.objects.all()
     clients = ClientLogo.objects.all()
-    return {'sections': sections, 'features': features, 'counters': counters, 'clients': clients}
+    posts = Post.objects.all().order_by('-created_at')[:3]
+    testimonials = Testimonial.objects.all()
+    return {'sections': sections, 'features': features, 'counters': counters, 'clients': clients, 'posts': posts, 'testimonials': testimonials}
 
 def index(request):
     settings = SiteSetting.objects.first()
@@ -47,27 +49,39 @@ def online_course_1(request):
 
 def coaching(request):
     settings = SiteSetting.objects.first()
-    return render(request, 'index-3.html', {
+    ctx = {
         'settings': settings,
-    })
+    }
+    ctx.update(get_cms_context('coaching'))
+    return render(request, 'index-3.html', ctx)
 
 def kindergarten(request):
     settings = SiteSetting.objects.first()
-    return render(request, 'index-4.html', {
+    ctx = {
         'settings': settings,
-    })
+    }
+    ctx.update(get_cms_context('kindergarten'))
+    return render(request, 'index-4.html', ctx)
 
 def university(request):
     settings = SiteSetting.objects.first()
-    return render(request, 'index-5.html', {
+    ctx = {
         'settings': settings,
-    })
+    }
+    ctx.update(get_cms_context('university'))
+    return render(request, 'index-5.html', ctx)
 
 def about(request):
     settings = SiteSetting.objects.first()
-    return render(request, 'about.html', {
+    from courses.models import Teacher
+    from core.models import Testimonial
+    ctx = {
         'settings': settings,
-    })
+        'teachers': Teacher.objects.all()[:4],
+        'testimonials': Testimonial.objects.all(),
+    }
+    ctx.update(get_cms_context('about'))
+    return render(request, 'about.html', ctx)
 
 def contact(request):
     settings = SiteSetting.objects.first()
@@ -129,11 +143,20 @@ def event_detail(request, slug):
         'event': event,
     })
 
+from .models import MembershipPlan, Donation
+
 def membership(request):
     settings = SiteSetting.objects.first()
-    return render(request, 'membership.html', {
+    monthly_plans = MembershipPlan.objects.filter(billing_cycle='monthly')
+    yearly_plans = MembershipPlan.objects.filter(billing_cycle='yearly')
+    
+    ctx = {
         'settings': settings,
-    })
+        'monthly_plans': monthly_plans,
+        'yearly_plans': yearly_plans,
+    }
+    ctx.update(get_cms_context('membership'))
+    return render(request, 'membership.html', ctx)
 
 def not_found(request, exception=None):
     settings = SiteSetting.objects.first()
@@ -143,17 +166,52 @@ def not_found(request, exception=None):
 
 def donation(request):
     settings = SiteSetting.objects.first()
-    return render(request, 'donation.html', {
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        amount_radio = request.POST.get('payment-group')
+        amount_text = request.POST.get('amount_text')
+        
+        amount = amount_text if amount_radio == 'Others' else amount_radio
+        if not amount:
+            amount = '$10'
+
+        is_recurring = request.POST.get('is_recurring') == 'on'
+        
+        Donation.objects.create(
+            name=name,
+            email=email,
+            amount=amount,
+            is_recurring=is_recurring
+        )
+        messages.success(request, 'Thank you! Your donation request has been received.')
+        return redirect('donation')
+
+    ctx = {
         'settings': settings,
-    })
+    }
+    ctx.update(get_cms_context('donation'))
+    return render(request, 'donation.html', ctx)
 
 
+from django.contrib.auth.decorators import login_required
+from courses.models import CourseEnrollment
+
+@login_required(login_url='login')
 def profile(request):
     settings = SiteSetting.objects.first()
+    enrollments = CourseEnrollment.objects.filter(user=request.user)
+    enrolled_count = enrollments.count()
+    active_count = enrollments.filter(status='Active').count()
+    completed_count = enrollments.filter(status='Completed').count()
+
     return render(request, 'profile.html', {
         'settings': settings,
+        'enrollments': enrollments,
+        'enrolled_count': enrolled_count,
+        'active_count': active_count,
+        'completed_count': completed_count,
     })
-
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 
@@ -201,3 +259,19 @@ def custom_page_detail(request, slug):
         'settings': settings,
         'page': page,
     })
+
+from .models import Subscriber
+
+def subscribe(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        if email:
+            if not Subscriber.objects.filter(email=email).exists():
+                Subscriber.objects.create(email=email)
+                messages.success(request, 'Thank you for subscribing to our newsletter!')
+            else:
+                messages.info(request, 'You are already subscribed to our newsletter!')
+    referer = request.META.get('HTTP_REFERER')
+    if referer:
+        return redirect(referer)
+    return redirect('index')

@@ -36,3 +36,48 @@ class Course(models.Model):
 
     def __str__(self):
         return self.title
+
+class CourseModule(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='modules')
+    title = models.CharField(max_length=200)
+    side_text = models.CharField(max_length=100, blank=True, null=True, help_text="e.g. 5 lectures . 5 video")
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return f"{self.course.title} - {self.title}"
+
+class CourseLecture(models.Model):
+    module = models.ForeignKey(CourseModule, on_delete=models.CASCADE, related_name='lectures')
+    title = models.CharField(max_length=200)
+    time = models.CharField(max_length=50, blank=True, null=True, help_text="e.g. 10:25")
+    icon_class = models.CharField(max_length=50, default="fa-play-circle-o", help_text="e.g. fa-play-circle-o, fa-file-o, fa-file-word-o")
+    link = models.CharField(max_length=500, default="#", help_text="YouTube URL or # for document")
+    is_lightbox = models.BooleanField(default=True, help_text="Check if this is a video that should open in a popup")
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.title
+
+from django.contrib.auth.models import User
+
+class CourseEnrollment(models.Model):
+    STATUS_CHOICES = [
+        ('Active', 'Active'),
+        ('Completed', 'Completed'),
+    ]
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='enrollments')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='enrollments')
+    enrolled_on = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Active')
+
+    class Meta:
+        unique_together = ('user', 'course')
+
+    def __str__(self):
+        return f"{self.user.username} - {self.course.title}"

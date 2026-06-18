@@ -326,25 +326,29 @@
             <div class="profile-box">
 				<div class="box-inner">
 					<div class="image">
-						<img src="{% static 'images/resource/user.jpg' %}" alt="" />
+						{% if request.user.profile.profile_picture %}
+							<img src="{{ request.user.profile.profile_picture.url }}" alt="" />
+						{% else %}
+							<img src="{% static 'images/resource/user.jpg' %}" alt="" />
+						{% endif %}
 					</div>
-					<h4>Siropa Tamim</h4>
-					<div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod <br> tempor incididunt ut labore et dolore</div>
-					<div class="rating">
-						<span class="fa fa-star"></span>
-						<span class="fa fa-star"></span>
-						<span class="fa fa-star"></span>
-						<span class="fa fa-star"></span>
-						<span class="fa fa-star-o"></span>
-						<strong>4.9</strong>
-						<i>(70 Review)</i>
-					</div>
+					<h4>{{ request.user.username|title }}</h4>
+					<div class="text">{{ request.user.profile.bio|default:"No bio available" }}</div>
+					
 					<!-- Social Box -->
 					<ul class="social-box">
-						<li class="twitter"><a target="_blank" href="http://twitter.com/" class="fa fa-twitter"></a></li>
-						<li class="pinterest"><a target="_blank" href="http://pinterest.com/" class="fa fa-pinterest-p"></a></li>
-						<li class="facebook"><a target="_blank" href="http://facebook.com/" class="fa fa-facebook-f"></a></li>
-						<li class="dribbble"><a target="_blank" href="http://dribbble.com/" class="fa fa-dribbble"></a></li>
+                        {% if request.user.profile.twitter_url %}
+						<li class="twitter"><a target="_blank" href="{{ request.user.profile.twitter_url }}" class="fa fa-twitter"></a></li>
+                        {% endif %}
+                        {% if request.user.profile.pinterest_url %}
+						<li class="pinterest"><a target="_blank" href="{{ request.user.profile.pinterest_url }}" class="fa fa-pinterest-p"></a></li>
+                        {% endif %}
+                        {% if request.user.profile.facebook_url %}
+						<li class="facebook"><a target="_blank" href="{{ request.user.profile.facebook_url }}" class="fa fa-facebook-f"></a></li>
+                        {% endif %}
+                        {% if request.user.profile.dribbble_url %}
+						<li class="dribbble"><a target="_blank" href="{{ request.user.profile.dribbble_url }}" class="fa fa-dribbble"></a></li>
+                        {% endif %}
 					</ul>
 				</div>
 			</div>
@@ -363,7 +367,7 @@
 						<div class="inner-box wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
 							<div class="icon flaticon-homework"></div>
 							<h5>Enrolled Courses</h5>
-							<div class="numbers">02</div>
+							<div class="numbers">{{ enrolled_count }}</div>
 						</div>
 					</div>
 					
@@ -372,25 +376,7 @@
 						<div class="inner-box wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
 							<div class="icon flaticon-calendar"></div>
 							<h5>Active Courses</h5>
-							<div class="numbers">03</div>
-						</div>
-					</div>
-					
-					<!-- Course Block Two -->
-					<div class="course-block-two col-lg-4 col-md-6 col-sm-12">
-						<div class="inner-box wow fadeInRight" data-wow-delay="0ms" data-wow-duration="1500ms">
-							<div class="icon flaticon-customer"></div>
-							<h5>Total Students</h5>
-							<div class="numbers">60</div>
-						</div>
-					</div>
-					
-					<!-- Course Block Two -->
-					<div class="course-block-two offset-lg-2 col-lg-4 col-md-6 col-sm-12">
-						<div class="inner-box wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
-							<div class="icon flaticon-homework"></div>
-							<h5>Total Courses</h5>
-							<div class="numbers">50</div>
+							<div class="numbers">{{ active_count }}</div>
 						</div>
 					</div>
 					
@@ -399,11 +385,48 @@
 						<div class="inner-box wow fadeInRight" data-wow-delay="0ms" data-wow-duration="1500ms">
 							<div class="icon flaticon-file-1"></div>
 							<h5>Completed Courses</h5>
-							<div class="numbers">15</div>
+							<div class="numbers">{{ completed_count }}</div>
 						</div>
 					</div>
 					
 				</div>
+
+                <!-- My Enrolled Courses Section -->
+                <div class="row clearfix" style="margin-top: 50px;">
+                    <div class="col-lg-12">
+                        <div class="sec-title text-center">
+                            <h2>My Courses</h2>
+                            <div class="text">Here are the courses you have enrolled in</div>
+                        </div>
+                    </div>
+                    {% for enrollment in enrollments %}
+                    <div class="course-block col-lg-4 col-md-6 col-sm-12">
+						<div class="inner-box">
+							<div class="image">
+								<a href="{% url 'course_detail' enrollment.course.slug %}"><img src="{{ enrollment.course.image.url }}" alt="{{ enrollment.course.title }}" /></a>
+							</div>
+							<div class="lower-content">
+								<h5><a href="{% url 'course_detail' enrollment.course.slug %}">{{ enrollment.course.title }}</a></h5>
+								<div class="clearfix">
+									<div class="pull-left">
+										<div class="author">
+											Enrolled On: {{ enrollment.enrolled_on|date:"M d, Y" }}
+										</div>
+									</div>
+									<div class="pull-right">
+										<div class="price" style="color: {% if enrollment.status == 'Active' %}#ff8a00{% else %}green{% endif %};">{{ enrollment.status }}</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+                    {% empty %}
+                    <div class="col-lg-12 text-center">
+                        <p>You haven't enrolled in any courses yet.</p>
+                        <a href="{% url 'course_list' %}" class="theme-btn btn-style-two"><span class="txt">Browse Courses</span></a>
+                    </div>
+                    {% endfor %}
+                </div>
 			</div>
 		</div>
 	</section>

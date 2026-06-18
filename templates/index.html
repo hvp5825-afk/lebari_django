@@ -37,7 +37,7 @@
 						<div class="title">Learn the latest skills</div>
 						<h1>Build skills with <br> courses flexible online <br> courses</h1>
 						<div class="btns-box">
-							<a href="about.html" class="theme-btn btn-style-one"><span class="txt">Join For free</span></a>
+							<a href="{% url 'about' %}" class="theme-btn btn-style-one"><span class="txt">Join For free</span></a>
 						</div>
 					</div>
 				</div>
@@ -195,7 +195,7 @@
 							<div class="text">Dolor sit amet, consectetur adipiscing elit, sed do eiusmod but laboris incididunt ut labore et dolore magna <br> aliqua.sed do eiusmod but laboris incididunt ut labore et dolore magna aliqua.</div>
 						</div>
 						<div class="btn-box">
-							<a href="about.html" class="theme-btn btn-style-two"><span class="txt">Short courses</span></a>
+							<a href="{% url 'about' %}" class="theme-btn btn-style-two"><span class="txt">Short courses</span></a>
 						</div>
 					</div>
 				</div>
@@ -258,7 +258,14 @@
 								<strong>{{ course.rating }}</strong>
 								<i>({{ course.reviews_count }} Review)</i>
 							</div>
-							<div class="price">${{ course.price }} {% if course.original_price %}<span>${{ course.original_price }}</span>{% endif %}</div>
+							<div class="price">
+                                {% if course.price == 0 %}
+                                    Free
+                                {% else %}
+                                    ${{ course.price }}
+                                {% endif %}
+                                {% if course.original_price %}<span>${{ course.original_price }}</span>{% endif %}
+                            </div>
 							<div class="clearfix">
 								<div class="pull-left">
 									<div class="hovers">{{ course.duration }} . {{ course.level }}  </div>
@@ -486,7 +493,7 @@
 				<ul class="sponsors-carousel owl-carousel owl-theme">
                     {% if clients %}
                         {% for client in clients %}
-					    <li class="slide-item"><figure class="image-box"><a href="#"><img src="{{ client.image.url }}" alt="{{ client.name }}"></a></figure></li>
+						    <li class="slide-item"><figure class="image-box"><a href="#">{% if client.image %}<img src="{{ client.image.url }}" alt="{{ client.name }}">{% endif %}</a></figure></li>
                         {% endfor %}
                     {% else %}
 					<li class="slide-item"><figure class="image-box"><a href="#"><img src="{% static 'images/clients/1.png' %}" alt=""></a></figure></li>

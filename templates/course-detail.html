@@ -82,149 +82,26 @@
 						<!-- Accordion Box Two -->
 						<ul class="accordion-box-two">
 						
+                            {% for module in course.modules.all %}
 							<!-- Block -->
-							<li class="accordion block">
-								<div class="acc-btn">javascript formula <span class="side-text">5 lectures . 5 video </span> <div class="icon fa fa-angle-down"></div></div>
-								<div class="acc-content">
+							<li class="accordion block {% if forloop.first %}active-block{% endif %}">
+								<div class="acc-btn {% if forloop.first %}active{% endif %}">{{ module.title }} <span class="side-text">{{ module.side_text }}</span> <div class="icon fa fa-angle-down"></div></div>
+								<div class="acc-content {% if forloop.first %}current{% endif %}">
 									<div class="content">
 										<ul class="accordion-list">
-											<li><a href="#"><span class="list-icon fa fa-file-o"></span>Course Assignments <span class="time">05:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Section Intro <span class="time">10:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>A Brief Introduction to JavaScript <span class="time">15:12</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Linking a JavaScript File <span class="time">20:30</span></a></li>
-											<li><a href="#"><span class="list-icon fa fa-file-word-o"></span>Data Types <span class="time">10:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Taking Decisions: if / else Statements <span class="time">11:22</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Truthy and Falsy Values <span class="time">18:44</span></a></li>
+                                            {% for lecture in module.lectures.all %}
+											<li>
+                                                <a {% if lecture.is_lightbox %}class="lightbox-image"{% endif %} href="{{ lecture.link }}">
+                                                    <span class="list-icon fa {{ lecture.icon_class }}"></span>{{ lecture.title }} 
+                                                    {% if lecture.time %}<span class="time">{{ lecture.time }}</span>{% endif %}
+                                                </a>
+                                            </li>
+                                            {% endfor %}
 										</ul>
 									</div>
 								</div>
 							</li>
-							
-							<!--Block-->
-							<li class="accordion block active-block">
-								<div class="acc-btn active">JavaScript Fundamentals – Part 2 <span class="side-text">5 lectures . 5 video </span> <div class="icon fa fa-angle-down"></div></div>
-								<div class="acc-content current">
-									<div class="content">
-										<ul class="accordion-list">
-											<li><a href="#"><span class="list-icon fa fa-file-o"></span>Course Assignments <span class="time">05:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Section Intro <span class="time">10:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>A Brief Introduction to JavaScript <span class="time">15:12</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Linking a JavaScript File <span class="time">20:30</span></a></li>
-											<li><a href="#"><span class="list-icon fa fa-file-word-o"></span>Data Types <span class="time">10:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Taking Decisions: if / else Statements <span class="time">11:22</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Truthy and Falsy Values <span class="time">18:44</span></a></li>
-										</ul>
-									</div>
-								</div>
-							</li>
-							
-							<!-- Block -->
-							<li class="accordion block">
-								<div class="acc-btn">JavaScript Fundamentals – Part 3 <span class="side-text">5 lectures . 5 video </span> <div class="icon fa fa-angle-down"></div></div>
-								<div class="acc-content">
-									<div class="content">
-										<ul class="accordion-list">
-											<li><a href="#"><span class="list-icon fa fa-file-o"></span>Course Assignments <span class="time">05:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Section Intro <span class="time">10:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>A Brief Introduction to JavaScript <span class="time">15:12</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Linking a JavaScript File <span class="time">20:30</span></a></li>
-											<li><a href="#"><span class="list-icon fa fa-file-word-o"></span>Data Types <span class="time">10:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Taking Decisions: if / else Statements <span class="time">11:22</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Truthy and Falsy Values <span class="time">18:44</span></a></li>
-										</ul>
-									</div>
-								</div>
-							</li>
-							
-							<!-- Block -->
-							<li class="accordion block">
-								<div class="acc-btn">How to Navigate This Course <span class="side-text">5 lectures . 5 video </span> <div class="icon fa fa-angle-down"></div></div>
-								<div class="acc-content">
-									<div class="content">
-										<ul class="accordion-list">
-											<li><a href="#"><span class="list-icon fa fa-file-o"></span>Course Assignments <span class="time">05:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Section Intro <span class="time">10:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>A Brief Introduction to JavaScript <span class="time">15:12</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Linking a JavaScript File <span class="time">20:30</span></a></li>
-											<li><a href="#"><span class="list-icon fa fa-file-word-o"></span>Data Types <span class="time">10:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Taking Decisions: if / else Statements <span class="time">11:22</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Truthy and Falsy Values <span class="time">18:44</span></a></li>
-										</ul>
-									</div>
-								</div>
-							</li>
-							
-							<!-- Block -->
-							<li class="accordion block">
-								<div class="acc-btn">JavaScript in the Browser: DOM and Events Fundamentals <span class="side-text">5 lectures . 5 video </span> <div class="icon fa fa-angle-down"></div></div>
-								<div class="acc-content">
-									<div class="content">
-										<ul class="accordion-list">
-											<li><a href="#"><span class="list-icon fa fa-file-o"></span>Course Assignments <span class="time">05:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Section Intro <span class="time">10:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>A Brief Introduction to JavaScript <span class="time">15:12</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Linking a JavaScript File <span class="time">20:30</span></a></li>
-											<li><a href="#"><span class="list-icon fa fa-file-word-o"></span>Data Types <span class="time">10:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Taking Decisions: if / else Statements <span class="time">11:22</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Truthy and Falsy Values <span class="time">18:44</span></a></li>
-										</ul>
-									</div>
-								</div>
-							</li>
-							
-							<!-- Block -->
-							<li class="accordion block">
-								<div class="acc-btn">How JavaScript Works Behind the Scenes <span class="side-text">5 lectures . 5 video </span> <div class="icon fa fa-angle-down"></div></div>
-								<div class="acc-content">
-									<div class="content">
-										<ul class="accordion-list">
-											<li><a href="#"><span class="list-icon fa fa-file-o"></span>Course Assignments <span class="time">05:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Section Intro <span class="time">10:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>A Brief Introduction to JavaScript <span class="time">15:12</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Linking a JavaScript File <span class="time">20:30</span></a></li>
-											<li><a href="#"><span class="list-icon fa fa-file-word-o"></span>Data Types <span class="time">10:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Taking Decisions: if / else Statements <span class="time">11:22</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Truthy and Falsy Values <span class="time">18:44</span></a></li>
-										</ul>
-									</div>
-								</div>
-							</li>
-							
-							<!-- Block -->
-							<li class="accordion block">
-								<div class="acc-btn">A Closer Look at Functions <span class="side-text">5 lectures . 5 video </span> <div class="icon fa fa-angle-down"></div></div>
-								<div class="acc-content">
-									<div class="content">
-										<ul class="accordion-list">
-											<li><a href="#"><span class="list-icon fa fa-file-o"></span>Course Assignments <span class="time">05:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Section Intro <span class="time">10:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>A Brief Introduction to JavaScript <span class="time">15:12</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Linking a JavaScript File <span class="time">20:30</span></a></li>
-											<li><a href="#"><span class="list-icon fa fa-file-word-o"></span>Data Types <span class="time">10:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Taking Decisions: if / else Statements <span class="time">11:22</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Truthy and Falsy Values <span class="time">18:44</span></a></li>
-										</ul>
-									</div>
-								</div>
-							</li>
-							
-							<!-- Block -->
-							<li class="accordion block">
-								<div class="acc-btn">Build 6 beautiful real-world projects <span class="side-text">5 lectures . 5 video </span> <div class="icon fa fa-angle-down"></div></div>
-								<div class="acc-content">
-									<div class="content">
-										<ul class="accordion-list">
-											<li><a href="#"><span class="list-icon fa fa-file-o"></span>Course Assignments <span class="time">05:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Section Intro <span class="time">10:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>A Brief Introduction to JavaScript <span class="time">15:12</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Linking a JavaScript File <span class="time">20:30</span></a></li>
-											<li><a href="#"><span class="list-icon fa fa-file-word-o"></span>Data Types <span class="time">10:25</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Taking Decisions: if / else Statements <span class="time">11:22</span></a></li>
-											<li><a class="lightbox-image" href="https://www.youtube.com/watch?v=kxPCFljwJws"><span class="list-icon fa fa-play-circle-o"></span>Truthy and Falsy Values <span class="time">18:44</span></a></li>
-										</ul>
-									</div>
-								</div>
-							</li>
+                            {% endfor %}
 							
 						</ul>
 						<!-- End Accordion Box -->
@@ -242,7 +119,7 @@
 								<div class="image">
 									<img src="{% static 'images/resource/author-4.jpg' %}" alt="" />
 								</div>
-								<h6>Jonas jashiom <a href="profile.html" class="icon fa fa-plus"></a></h6>
+								<h6>Jonas jashiom <a href="{% url 'profile' %}" class="icon fa fa-plus"></a></h6>
 								<div class="designation">java Developer, Designer, and Teacher</div>
 								<ul class="list">
 									<li><span class="icon fa fa-play-circle-o"></span>44 Course</li>
@@ -363,7 +240,14 @@
 				<!-- Info Column -->
 				<div class="info-column col-lg-4 col-md-12 col-sm-12">
 					<div class="inner-column">
-						<div class="price">$9.99 <i>$129.99</i> <span>92% of</span></div>
+						<div class="price">
+                            {% if course.price == 0 %}
+                                Free
+                            {% else %}
+                                ${{ course.price }}
+                            {% endif %}
+                            {% if course.original_price %}<i>${{ course.original_price }}</i>{% endif %}
+                        </div>
 						<h5>This course includes:</h5>
 						<div class="text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered </div>
 						<ul class="level-list">
@@ -390,7 +274,15 @@
 							</form>
 						</div>
 						<div class="btns-box">
-							<a href="#" class="theme-btn enrol-btn">Enrol Now</a>
+                            {% if request.user.is_authenticated %}
+                                {% if is_enrolled %}
+                                    <a href="{% url 'profile' %}" class="theme-btn enrol-btn">Go to Dashboard</a>
+                                {% else %}
+                                    <a href="{% url 'enroll_course' course.slug %}" class="theme-btn enrol-btn">Enrol Now</a>
+                                {% endif %}
+                            {% else %}
+                                <a href="{% url 'login' %}?next={{ request.path }}" class="theme-btn enrol-btn">Login to Enrol</a>
+                            {% endif %}
 							<a href="#" class="theme-btn wishlist-btn">Add to wishlist</a>
 						</div>
 					</div>

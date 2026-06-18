@@ -215,9 +215,15 @@
 				<!-- Content Column -->
 				<div class="content-column col-lg-6 cl-md-12 col-sm-12">
 					<div class="inner-column">
-						<h1>Best Online <br> Counseling <br> Therapy Coaching</h1>
-						<div class="text">It's easy.Most of our online clients choose to meet with us through secure video rather than meeting for therapy or coaching </div>
-						<a class="theme-btn btn-style-six" href="#"><span class="txt">Fixing Your Problem</span></a>
+						<h1>{% if sections.coaching_banner.title %}{{ sections.coaching_banner.title|safe }}{% else %}Best Online <br> Counseling <br> Therapy Coaching{% endif %}</h1>
+						<div class="text">{% if sections.coaching_banner.text %}{{ sections.coaching_banner.text|safe }}{% else %}It's easy.Most of our online clients choose to meet with us through secure video rather than meeting for therapy or coaching{% endif %}</div>
+						{% if sections.coaching_banner %}
+							{% if sections.coaching_banner.button_text %}
+							<a class="theme-btn btn-style-six" href="{{ sections.coaching_banner.button_link|default:'#' }}"><span class="txt">{{ sections.coaching_banner.button_text }}</span></a>
+							{% endif %}
+						{% else %}
+						<a class="theme-btn btn-style-six" href="{% url 'contact' %}"><span class="txt">Fixing Your Problem</span></a>
+						{% endif %}
 						<div class="phone-box">
 							<div class="box-inner">
 								<span class="icon flaticon-phone-call"></span>
@@ -237,7 +243,7 @@
 						<div class="icon-layer-six" style="background-image:url(images2/icons/icon-3.png)"></div>
 						<div class="icon-layer-seven" style="background-image:url(images2/icons/icon-12.png)"></div>
 						<div class="image">
-							<img src="{% static 'images2/resource/banner-2.png' %}" alt="" />
+							<img src="{% if sections.coaching_banner.image %}{{ sections.coaching_banner.image.url }}{% else %}{% static 'images2/resource/banner-2.png' %}{% endif %}" alt="" />
 						</div>
 					</div>
 				</div>
@@ -626,95 +632,24 @@
 			</div>
 			<div class="testimonial-carousel-three owl-carousel owl-theme">
 				
+				{% for testimonial in testimonials %}
 				<!-- Testimonial Block Three -->
 				<div class="testimonial-block-three">
 					<div class="inner-box">
 						<div class="image-outer">
 							<div class="image">
-								<img src="{% static 'images2/resource/author-1.jpg' %}" alt="" />
+								<img src="{% if testimonial.image %}{{ testimonial.image.url }}{% else %}{% static 'images2/resource/author-1.jpg' %}{% endif %}" alt="{{ testimonial.name }}" />
 							</div>
 							<div class="quote flaticon-left-quote"></div>
 						</div>
-						<h6>Tamim Anj</h6>
-						<div class="designation">Business CTO</div>
-						<div class="text">Very good training, help me to understand the basics. The training contains a lot of practical information</div>
+						<h6>{{ testimonial.name }}</h6>
+						<div class="designation">{{ testimonial.designation }}</div>
+						<div class="text">{{ testimonial.text }}</div>
 					</div>
 				</div>
+				{% endfor %}
 				
-				<!-- Testimonial Block Three -->
-				<div class="testimonial-block-three">
-					<div class="inner-box">
-						<div class="image-outer">
-							<div class="image">
-								<img src="{% static 'images2/resource/author-2.jpg' %}" alt="" />
-							</div>
-							<div class="quote flaticon-left-quote"></div>
-						</div>
-						<h6>Mahfuz Riad</h6>
-						<div class="designation">Ecology Engineer</div>
-						<div class="text">Very good training, help me to understand the basics. The training contains a lot of practical information</div>
-					</div>
-				</div>
-				
-				<!-- Testimonial Block Three -->
-				<div class="testimonial-block-three">
-					<div class="inner-box">
-						<div class="image-outer">
-							<div class="image">
-								<img src="{% static 'images2/resource/author-3.jpg' %}" alt="" />
-							</div>
-							<div class="quote flaticon-left-quote"></div>
-						</div>
-						<h6>Muhibbur Rashid</h6>
-						<div class="designation">Consulting CEO</div>
-						<div class="text">Very good training, help me to understand the basics. The training contains a lot of practical information</div>
-					</div>
-				</div>
-				
-				<!-- Testimonial Block Three -->
-				<div class="testimonial-block-three">
-					<div class="inner-box">
-						<div class="image-outer">
-							<div class="image">
-								<img src="{% static 'images2/resource/author-1.jpg' %}" alt="" />
-							</div>
-							<div class="quote flaticon-left-quote"></div>
-						</div>
-						<h6>Tamim Anj</h6>
-						<div class="designation">Business CTO</div>
-						<div class="text">Very good training, help me to understand the basics. The training contains a lot of practical information</div>
-					</div>
-				</div>
-				
-				<!-- Testimonial Block Three -->
-				<div class="testimonial-block-three">
-					<div class="inner-box">
-						<div class="image-outer">
-							<div class="image">
-								<img src="{% static 'images2/resource/author-2.jpg' %}" alt="" />
-							</div>
-							<div class="quote flaticon-left-quote"></div>
-						</div>
-						<h6>Mahfuz Riad</h6>
-						<div class="designation">Ecology Engineer</div>
-						<div class="text">Very good training, help me to understand the basics. The training contains a lot of practical information</div>
-					</div>
-				</div>
-				
-				<!-- Testimonial Block Three -->
-				<div class="testimonial-block-three">
-					<div class="inner-box">
-						<div class="image-outer">
-							<div class="image">
-								<img src="{% static 'images2/resource/author-3.jpg' %}" alt="" />
-							</div>
-							<div class="quote flaticon-left-quote"></div>
-						</div>
-						<h6>Muhibbur Rashid</h6>
-						<div class="designation">Consulting CEO</div>
-						<div class="text">Very good training, help me to understand the basics. The training contains a lot of practical information</div>
-					</div>
-				</div>
+
 				
 			</div>
 			<div class="lower-text">Click the button for slide</div>
@@ -751,33 +686,39 @@
 						<div class="row clearfix">
 							<!-- Column -->
 							<div class="column col-lg-6 col-md-6 col-sm-12">
+								{% if posts.0 %}
 								<!-- News Block Four -->
 								<div class="news-block-four">
 									<div class="inner-box wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
-										<h5><a href="news-detail.html">How do You Know if You Married the Right Person?</a></h5>
-										<div class="text">During one of my seminars, a woman asked me a question. She said, “How do I know if I married the right person?”I noticed that there was a large man sitting next to her so I said, </div>
-										<a href="news-detail.html" class="arrow"><img src="{% static 'images2/icons/arrow-1.png' %}" alt="" />&ensp; Read More</a>
+										<h5><a href="{% url 'blog_detail' posts.0.slug %}">{{ posts.0.title }}</a></h5>
+										<div class="text">{{ posts.0.content|truncatechars:150|safe }}</div>
+										<a href="{% url 'blog_detail' posts.0.slug %}" class="arrow"><img src="{% static 'images2/icons/arrow-1.png' %}" alt="" />&ensp; Read More</a>
 									</div>
 								</div>
+								{% endif %}
 							</div>
 							<!-- Column -->
 							<div class="column col-lg-6 col-md-6 col-sm-12">
+								{% if posts.1 %}
 								<!-- News Block Four -->
 								<div class="news-block-four">
 									<div class="inner-box wow fadeInUp" data-wow-delay="150ms" data-wow-duration="1500ms">
-										<h5><a href="news-detail.html">Different Types of False Eyelashes <br> Which is Right for You?</a></h5>
-										<div class="text">Demonstrate your new skills by sharing your Course Certificate, Professional Certificate, MasterTrack Certificate, or diploma with</div>
-										<a href="news-detail.html" class="arrow"><img src="{% static 'images2/icons/arrow-1.png' %}" alt="" />&ensp; Read More</a>
+										<h5><a href="{% url 'blog_detail' posts.1.slug %}">{{ posts.1.title }}</a></h5>
+										<div class="text">{{ posts.1.content|truncatechars:100|safe }}</div>
+										<a href="{% url 'blog_detail' posts.1.slug %}" class="arrow"><img src="{% static 'images2/icons/arrow-1.png' %}" alt="" />&ensp; Read More</a>
 									</div>
 								</div>
+								{% endif %}
+								{% if posts.2 %}
 								<!-- News Block Four -->
 								<div class="news-block-four">
 									<div class="inner-box wow fadeInUp" data-wow-delay="300ms" data-wow-duration="1500ms">
-										<h5><a href="news-detail.html">Coursera Comes Together with <br> Disney and Pixar</a></h5>
-										<div class="text">Employees accustomed to working in an office with co-workers, socializing in and out of working hours</div>
-										<a href="news-detail.html" class="arrow"><img src="{% static 'images2/icons/arrow-1.png' %}" alt="" />&ensp; Read More</a>
+										<h5><a href="{% url 'blog_detail' posts.2.slug %}">{{ posts.2.title }}</a></h5>
+										<div class="text">{{ posts.2.content|truncatechars:100|safe }}</div>
+										<a href="{% url 'blog_detail' posts.2.slug %}" class="arrow"><img src="{% static 'images2/icons/arrow-1.png' %}" alt="" />&ensp; Read More</a>
 									</div>
 								</div>
+								{% endif %}
 							</div>
 							
 						</div>
