@@ -14,7 +14,10 @@
 				<li>Event List</li>
 			</ul>
 			<div class="content-box">
-				<h2>Event List</h2>
+				<h2>{% if sections.event_banner %}{{ sections.event_banner.title|safe }}{% else %}Event List{% endif %}</h2>
+                {% if sections.event_banner and sections.event_banner.text %}
+                <div class="text">{{ sections.event_banner.text|safe }}</div>
+                {% endif %}
 			</div>
 		</div>
 	</section>

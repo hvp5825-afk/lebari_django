@@ -11,10 +11,13 @@ class SiteSetting(models.Model):
     email = models.EmailField(blank=True, null=True)
     phone = models.CharField(max_length=20, blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
+    opening_hours = models.CharField(max_length=255, blank=True, null=True, help_text="e.g. Week Days: 09.00 to 18.00 Sunday: Closed")
+    map_url = models.URLField(blank=True, null=True, help_text="Google Maps Embed URL")
     facebook_url = models.URLField(blank=True, null=True)
     twitter_url = models.URLField(blank=True, null=True)
     instagram_url = models.URLField(blank=True, null=True)
     pinterest_url = models.URLField(blank=True, null=True)
+    youtube_url = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return "Site Settings"

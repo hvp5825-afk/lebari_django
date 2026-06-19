@@ -19,35 +19,42 @@
 					<div class="sidebar-info-contents">
 						<div class="content-inner">
 							<div class="logo">
-								<a href="{% url 'index' %}">{% if site_setting and site_setting.logo_type == 'text' %}
-    <h2 style="color: inherit; font-weight: bold; margin: 0; line-height: 1;">{{ site_setting.logo_text }}</h2>
-{% elif site_setting and site_setting.logo_type == 'image' and site_setting.logo %}
-    <img src="{{ site_setting.logo.url }}" alt="Logo" title="">
+								<a href="{% url 'index' %}">{% if settings and settings.logo_type == 'text' %}
+    <h2 style="color: inherit; font-weight: bold; margin: 0; line-height: 1;">{{ settings.logo_text }}</h2>
+{% elif site_setting and settings.logo_type == 'image' and settings.logo %}
+    <img src="{{ settings.logo.url }}" alt="Logo" title="">
 {% else %}
     <img src="{% static 'images/logo-white.png' %}?v=2" alt="Logo" title="">
 {% endif %}</a>
 							</div>
 							<div class="content-box">
-								<h2>About Us</h2>
-								<p class="text">The argument in favor of using filler text goes something like this: If you use real content in the Consulting Process, anytime you reach a review point you’ll end up reviewing and negotiating the content itself and not the design.</p>
-								<a href="#" class="theme-btn btn-style-two"><span class="txt">Consultation</span></a>
+								<h2>{% if sections.sidebar_about %}{{ sections.sidebar_about.title|safe }}{% else %}About Us{% endif %}</h2>
+								<div class="text">{% if sections.sidebar_about %}{{ sections.sidebar_about.text|safe }}{% else %}<p class="text">The argument in favor of using filler text goes something like this: If you use real content in the Consulting Process, anytime you reach a review point you’ll end up reviewing and negotiating the content itself and not the design.</p>{% endif %}</div>
+								<a href="{% if sections.sidebar_about %}{{ sections.sidebar_about.button_link|default:'#' }}{% else %}#{% endif %}" class="theme-btn btn-style-two"><span class="txt">{% if sections.sidebar_about %}{{ sections.sidebar_about.button_text }}{% else %}Consultation{% endif %}</span></a>
 							</div>
-							<div class="contact-info">
+														<div class="contact-info">
 								<h2>Contact Info</h2>
 								<ul class="list-style-two">
-									<li><span class="icon fa fa-location-arrow"></span>Chicago 12, Melborne City, USA</li>
-									<li><span class="icon fa fa-phone"></span>(111) 111-111-1111</li>
-									<li><span class="icon fa fa-envelope"></span>lebari@gmail.com</li>
-									<li><span class="icon fa fa-clock-o"></span>Week Days: 09.00 to 18.00 Sunday: Closed</li>
+									<li><span class="icon fa fa-location-arrow"></span>{{ settings.address|default:'Chicago 12, Melborne City, USA' }}</li>
+									<li><span class="icon fa fa-phone"></span>{{ settings.phone|default:'(111) 111-111-1111' }}</li>
+									<li><span class="icon fa fa-envelope"></span>{{ settings.email|default:'lebari@gmail.com' }}</li>
+									<li><span class="icon fa fa-clock-o"></span>{{ settings.opening_hours|default:'Week Days: 09.00 to 18.00 Sunday: Closed' }}</li>
 								</ul>
 							</div>
 							<!-- Social Box -->
 							<ul class="social-box">
-								<li class="facebook"><a href="#" class="fa fa-facebook-f"></a></li>
-								<li class="twitter"><a href="#" class="fa fa-twitter"></a></li>
-								<li class="linkedin"><a href="#" class="fa fa-linkedin"></a></li>
-								<li class="instagram"><a href="#" class="fa fa-instagram"></a></li>
-								<li class="youtube"><a href="#" class="fa fa-youtube"></a></li>
+								{% if settings and settings.facebook_url %}
+								<li class="facebook"><a href="{{ settings.facebook_url }}" class="fa fa-facebook-f"></a></li>
+								{% endif %}
+								{% if settings and settings.twitter_url %}
+								<li class="twitter"><a href="{{ settings.twitter_url }}" class="fa fa-twitter"></a></li>
+								{% endif %}
+								{% if settings and settings.instagram_url %}
+								<li class="instagram"><a href="{{ settings.instagram_url }}" class="fa fa-instagram"></a></li>
+								{% endif %}
+								{% if settings and settings.youtube_url %}
+								<li class="youtube"><a href="{{ settings.youtube_url }}" class="fa fa-youtube"></a></li>
+								{% endif %}
 							</ul>
 						</div>
 					</div>
@@ -75,7 +82,7 @@
 						<div class="pattern-layer-one" style="background-image: url({% static 'images/main-slider/pattern-1.png' %})"></div>
 						<div class="icon-layer" style="background-image: url({% static 'images/icons/icon-2.png' %})"></div>
 						<div class="icon-layer-two" style="background-image: url({% static 'images/icons/icon-5.png' %})"></div>
-						<h2> Explore <br> Featured Courses</h2>
+						<h2>{% if sections.course_banner %}{{ sections.course_banner.title|safe }}{% else %}Explore <br> Featured Courses{% endif %}</h2>
 					</div>
 				</div>
 				

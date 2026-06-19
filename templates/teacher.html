@@ -18,7 +18,7 @@
 						<div class="pattern-layer-one" style="background-image: url({% static 'images/main-slider/pattern-1.png' %})"></div>
 						<div class="icon-layer" style="background-image: url({% static 'images/icons/icon-2.png' %})"></div>
 						<div class="icon-layer-two" style="background-image: url({% static 'images/icons/icon-5.png' %})"></div>
-						<h2>Lebari <br> Our professional <br> teachers</h2>
+						<h2>{% if sections.teacher_banner %}{{ sections.teacher_banner.title|safe }}{% else %}Lebari <br> Our professional <br> teachers{% endif %}</h2>
 					</div>
 				</div>
 				
@@ -29,10 +29,10 @@
 						<div class="icon-layer-four" style="background-image: url({% static 'images/icons/icon-2.png' %})"></div>
 						<div class="icon-layer-five" style="background-image: url({% static 'images/icons/icon-4.png' %})"></div>
 						<div class="image">
-							<img src="{% static 'images/resource/page-title-3.jpg' %}" alt="" />
+							<img src="{% if sections.teacher_banner and sections.teacher_banner.image %}{{ sections.teacher_banner.image.url }}{% else %}{% static 'images/resource/page-title-3.jpg' %}{% endif %}" alt="" />
 						</div>
 						<div class="image-two">
-							<img src="{% static 'images/resource/page-title-4.jpg' %}" alt="" />
+							<img src="{% if sections.teacher_banner and sections.teacher_banner.image_2 %}{{ sections.teacher_banner.image_2.url }}{% else %}{% static 'images/resource/page-title-4.jpg' %}{% endif %}" alt="" />
 						</div>
 					</div>
 				</div>
@@ -58,7 +58,7 @@
 							<img src="{% if sections.teacher_goal and sections.teacher_goal.image %}{{ sections.teacher_goal.image.url }}{% else %}{% static 'images/resource/goal-1.jpg' %}{% endif %}" alt="" />
 						</div>
 						<div class="image-two">
-							<img src="{% static 'images/resource/goal-2.jpg' %}" alt="" />
+							<img src="{% if sections.teacher_goal and sections.teacher_goal.image_2 %}{{ sections.teacher_goal.image_2.url }}{% else %}{% static 'images/resource/goal-2.jpg' %}{% endif %}" alt="" />
 						</div>
 					</div>
 				</div>
@@ -70,7 +70,7 @@
 						<div class="sec-title">
 							<div class="title">{% if sections.teacher_goal %}{{ sections.teacher_goal.subtitle }}{% else %}Achieve Goals{% endif %}</div>
 							<h2>{% if sections.teacher_goal %}{{ sections.teacher_goal.title|safe }}{% else %}Start To Success{% endif %}</h2>
-							<div class="text">{% if sections.teacher_goal %}{{ sections.teacher_goal.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Duis aute irure dolor in{% endif %}</div>
+							<div class="text">{% if sections.teacher_goal %}{{ sections.teacher_goal.text|safe }}{% else %}{% if sections.teacher_short %}{{ sections.teacher_short.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur{% endif %} Duis aute irure dolor in{% endif %}</div>
 						</div>
 						
 						<!-- Fact Counter -->

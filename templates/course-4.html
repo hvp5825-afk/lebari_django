@@ -37,10 +37,10 @@
         	<div class="outer-container clearfix">
             	
 				<div class="pull-left logo-box">
-					<div class="logo"><a href="{% url 'index' %}">{% if site_setting and site_setting.logo_type == 'text' %}
-    <h2 style="color: inherit; font-weight: bold; margin: 0; line-height: 1;">{{ site_setting.logo_text }}</h2>
-{% elif site_setting and site_setting.logo_type == 'image' and site_setting.logo %}
-    <img src="{{ site_setting.logo.url }}" alt="Logo" title="">
+					<div class="logo"><a href="{% url 'index' %}">{% if settings and settings.logo_type == 'text' %}
+    <h2 style="color: inherit; font-weight: bold; margin: 0; line-height: 1;">{{ settings.logo_text }}</h2>
+{% elif site_setting and settings.logo_type == 'image' and settings.logo %}
+    <img src="{{ settings.logo.url }}" alt="Logo" title="">
 {% else %}
     <img src="{% static 'images/logo-white.png' %}?v=2" alt="Logo" title="">
 {% endif %}</a></div>
@@ -60,89 +60,31 @@
 							</button>
 						</div>
 						
-						<div class="navbar-collapse collapse clearfix" id="navbarSupportedContent">
+												<div class="navbar-collapse collapse clearfix" id="navbarSupportedContent">
 							<ul class="navigation clearfix">
-								<li class="dropdown has-mega-menu"><a href="#"><span>Courses <i class="fa fa-arrow-down"></i></span></a>
-									<div class="mega-menu">
-										<!-- Upper Box -->
-										<div class="upper-box">
-											<div class="page-links-box">
-												<a href="{% url 'course_list' %}" class="link"><span class="icon flaticon-bullhorn"></span>Marketing</a>
-												<a href="{% url 'course_list' %}" class="link"><span class="icon flaticon-cyclist"></span>Lifestyle</a>
-												<a href="{% url 'course_list' %}" class="link"><span class="icon flaticon-bar-chart"></span>Business</a>
-												<a href="{% url 'course_list' %}" class="link"><span class="icon flaticon-software"></span>Software</a>
-												<a href="{% url 'course_list' %}" class="link"><span class="icon flaticon-atom"></span>Science</a>
-												<a href="{% url 'course_list' %}" class="link"><span class="icon flaticon-webpage"></span>IT Management</a>
-												<a href="{% url 'course_list' %}" class="link"><span class="icon flaticon-language"></span>Language</a>
-												<a href="{% url 'course_list' %}" class="link"><span class="icon flaticon-team"></span>Human Resources</a>
-												<a href="{% url 'course_list' %}" class="link"><span class="icon flaticon-healthcare"></span>Health Care</a>
-											</div>
-										</div>
-										<!-- Lower Box -->
-										<div class="lower-box">
-											<h3>Become an Instructor</h3>
-											<div class="text">Top instructors from around the Neque convallis a cras semper auctor. <br> Libero id faucibus nisl tincidunt egetnvallis </div>
-											<div class="btn-box">
-												<a href="#" class="theme-btn btn-style-five">Start teaching today</a>
-											</div>
-											<div class="side-icon">
-												<img src="{% static 'images/resource/mega-menu-icon.png' %}" alt="" />
-											</div>
-										</div>
-									</div>
-								</li>
-								<li class="dropdown"><a href="#">Home</a>
-									<ul>
-										<li><a href="{% url 'online_course_1' %}">online course 1</a></li>
-										<li><a href="{% url 'index' %}">online course 2</a></li>
-										<li><a href="{% url 'coaching' %}">Coaching</a></li>
-										<li><a href="{% url 'kindergarten' %}">Kindergarten</a></li>
-										<li><a href="{% url 'university' %}">University <span class="new-page">New</span></a></li>
-										<li class="dropdown"><a href="#">Header styles</a>
-											<ul>
-												<li><a href="{% url 'online_course_1' %}">Header Style 01</a></li>
-												<li><a href="{% url 'index' %}">Header Style 02</a></li>
-												<li><a href="{% url 'index' %}">Header Style 03</a></li>
-												<li><a href="{% url 'index' %}">Header Style 04</a></li>
-												<li><a href="{% url 'index' %}">Header Style 05 <span class="new-page">New</span></a></li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-								<li class="dropdown"><a href="#">About</a>
+								<li class="{% if request.resolver_match.url_name == 'index' %}current{% endif %}"><a href="{% url 'index' %}">Home</a></li>
+								<li class="dropdown {% if 'about' in request.resolver_match.url_name or 'teacher' in request.resolver_match.url_name %}current{% endif %}"><a href="#">About</a>
 									<ul>
 										<li><a href="{% url 'about' %}">About Us</a></li>
-										<li><a href="#">Faq</a></li>
-										<li><a href="#">Teacher</a></li>
-										<li><a href="{% url 'profile' %}">User Profile</a></li>
+										<li><a href="{% url 'faq' %}">Faq</a></li>
+										<li><a href="{% url 'teacher' %}">Teachers</a></li>
 										<li><a href="{% url 'membership' %}">Membership</a></li>
-										<li class="dropdown"><a href="#">Events</a>
-											<ul>
-												<li><a href="#">Events</a></li>
-												<li><a href="{% url 'event_list' %}">Events Detail</a></li>
-											</ul>
-										</li>
+										<li><a href="{% url 'event_list' %}">Events</a></li>
 									</ul>
 								</li>
-								<li class="current dropdown"><a href="#">Courses</a>
+								<li class="{% if 'course' in request.resolver_match.url_name %}current{% endif %}"><a href="{% url 'course_list' %}">Courses</a></li>
+								<li class="{% if 'blog' in request.resolver_match.url_name %}current{% endif %}"><a href="{% url 'blog_list' %}">Blog</a></li>
+								{% if user.is_authenticated %}
+								<li class="dropdown {% if 'profile' in request.resolver_match.url_name %}current{% endif %}"><a href="#">Profile</a>
 									<ul>
-										<li><a href="{% url 'course_list' %}">Courses</a></li>
-										<li><a href="{% url 'course_list' %}">Courses 02</a></li>
-										<li><a href="{% url 'course_list' %}">Courses 03</a></li>
-										<li><a href="{% url 'course_list' %}">Courses 04</a></li>
-										<li><a href="{% url 'course_list' %}">Courses Detail</a></li>
+										<li><a href="{% url 'profile' %}">Dashboard</a></li>
+										<li><a href="{% url 'logout' %}">Logout</a></li>
 									</ul>
 								</li>
-								<li class="dropdown"><a href="#">Blog</a>
-									<ul>
-										<li><a href="{% url 'blog_list' %}">Our Blog</a></li>
-										<li><a href="{% url 'blog_list' %}">Blog List</a></li>
-										<li><a href="{% url 'blog_list' %}">Blog Detail</a></li>
-										<li><a href="{% url 'not_found' %}">Not Found</a></li>
-									</ul>
-								</li>
-								<li><a href="{% url 'contact' %}">Contact</a></li>
-								<li><a href="{% url 'donation' %}">Donation</a></li>
+								{% else %}
+								<li><a href="{% url 'login' %}">Login / Register</a></li>
+								{% endif %}
+								<li class="{% if request.resolver_match.url_name == 'contact' %}current{% endif %}"><a href="{% url 'contact' %}">Contact</a></li>
 							</ul>
 						</div>
 					</nav>
@@ -210,10 +152,10 @@
             <div class="auto-container clearfix">
                 <!--Logo-->
                 <div class="logo pull-left">
-                    <a href="{% url 'index' %}" title="">{% if site_setting and site_setting.logo_type == 'text' %}
-    <h2 style="color: inherit; font-weight: bold; margin: 0; line-height: 1;">{{ site_setting.logo_text }}</h2>
-{% elif site_setting and site_setting.logo_type == 'image' and site_setting.logo %}
-    <img src="{{ site_setting.logo.url }}" alt="Logo" title="">
+                    <a href="{% url 'index' %}" title="">{% if settings and settings.logo_type == 'text' %}
+    <h2 style="color: inherit; font-weight: bold; margin: 0; line-height: 1;">{{ settings.logo_text }}</h2>
+{% elif site_setting and settings.logo_type == 'image' and settings.logo %}
+    <img src="{{ settings.logo.url }}" alt="Logo" title="">
 {% else %}
     <img src="{% static 'images/logo-white.png' %}?v=2" alt="Logo" title="">
 {% endif %}</a>
@@ -242,10 +184,10 @@
             <div class="close-btn"><span class="icon flaticon-multiply"></span></div>
             
             <nav class="menu-box">
-                <div class="nav-logo"><a href="{% url 'index' %}">{% if site_setting and site_setting.logo_type == 'text' %}
-    <h2 style="color: inherit; font-weight: bold; margin: 0; line-height: 1;">{{ site_setting.logo_text }}</h2>
-{% elif site_setting and site_setting.logo_type == 'image' and site_setting.logo %}
-    <img src="{{ site_setting.logo.url }}" alt="Logo" title="">
+                <div class="nav-logo"><a href="{% url 'index' %}">{% if settings and settings.logo_type == 'text' %}
+    <h2 style="color: inherit; font-weight: bold; margin: 0; line-height: 1;">{{ settings.logo_text }}</h2>
+{% elif site_setting and settings.logo_type == 'image' and settings.logo %}
+    <img src="{{ settings.logo.url }}" alt="Logo" title="">
 {% else %}
     <img src="{% static 'images/logo-white.png' %}?v=2" alt="Logo" title="">
 {% endif %}</a></div>
@@ -272,35 +214,42 @@
 					<div class="sidebar-info-contents">
 						<div class="content-inner">
 							<div class="logo">
-								<a href="{% url 'index' %}">{% if site_setting and site_setting.logo_type == 'text' %}
-    <h2 style="color: inherit; font-weight: bold; margin: 0; line-height: 1;">{{ site_setting.logo_text }}</h2>
-{% elif site_setting and site_setting.logo_type == 'image' and site_setting.logo %}
-    <img src="{{ site_setting.logo.url }}" alt="Logo" title="">
+								<a href="{% url 'index' %}">{% if settings and settings.logo_type == 'text' %}
+    <h2 style="color: inherit; font-weight: bold; margin: 0; line-height: 1;">{{ settings.logo_text }}</h2>
+{% elif site_setting and settings.logo_type == 'image' and settings.logo %}
+    <img src="{{ settings.logo.url }}" alt="Logo" title="">
 {% else %}
     <img src="{% static 'images/logo-white.png' %}?v=2" alt="Logo" title="">
 {% endif %}</a>
 							</div>
 							<div class="content-box">
-								<h2>About Us</h2>
-								<p class="text">The argument in favor of using filler text goes something like this: If you use real content in the Consulting Process, anytime you reach a review point you’ll end up reviewing and negotiating the content itself and not the design.</p>
-								<a href="#" class="theme-btn btn-style-two"><span class="txt">Consultation</span></a>
+								<h2>{% if sections.sidebar_about %}{{ sections.sidebar_about.title|safe }}{% else %}About Us{% endif %}</h2>
+								<div class="text">{% if sections.sidebar_about %}{{ sections.sidebar_about.text|safe }}{% else %}<p class="text">The argument in favor of using filler text goes something like this: If you use real content in the Consulting Process, anytime you reach a review point you’ll end up reviewing and negotiating the content itself and not the design.</p>{% endif %}</div>
+								<a href="{% if sections.sidebar_about %}{{ sections.sidebar_about.button_link|default:'#' }}{% else %}#{% endif %}" class="theme-btn btn-style-two"><span class="txt">{% if sections.sidebar_about %}{{ sections.sidebar_about.button_text }}{% else %}Consultation{% endif %}</span></a>
 							</div>
-							<div class="contact-info">
+														<div class="contact-info">
 								<h2>Contact Info</h2>
 								<ul class="list-style-two">
-									<li><span class="icon fa fa-location-arrow"></span>Chicago 12, Melborne City, USA</li>
-									<li><span class="icon fa fa-phone"></span>(111) 111-111-1111</li>
-									<li><span class="icon fa fa-envelope"></span>lebari@gmail.com</li>
-									<li><span class="icon fa fa-clock-o"></span>Week Days: 09.00 to 18.00 Sunday: Closed</li>
+									<li><span class="icon fa fa-location-arrow"></span>{{ settings.address|default:'Chicago 12, Melborne City, USA' }}</li>
+									<li><span class="icon fa fa-phone"></span>{{ settings.phone|default:'(111) 111-111-1111' }}</li>
+									<li><span class="icon fa fa-envelope"></span>{{ settings.email|default:'lebari@gmail.com' }}</li>
+									<li><span class="icon fa fa-clock-o"></span>{{ settings.opening_hours|default:'Week Days: 09.00 to 18.00 Sunday: Closed' }}</li>
 								</ul>
 							</div>
 							<!-- Social Box -->
 							<ul class="social-box">
-								<li class="facebook"><a href="#" class="fa fa-facebook-f"></a></li>
-								<li class="twitter"><a href="#" class="fa fa-twitter"></a></li>
-								<li class="linkedin"><a href="#" class="fa fa-linkedin"></a></li>
-								<li class="instagram"><a href="#" class="fa fa-instagram"></a></li>
-								<li class="youtube"><a href="#" class="fa fa-youtube"></a></li>
+								{% if settings and settings.facebook_url %}
+								<li class="facebook"><a href="{{ settings.facebook_url }}" class="fa fa-facebook-f"></a></li>
+								{% endif %}
+								{% if settings and settings.twitter_url %}
+								<li class="twitter"><a href="{{ settings.twitter_url }}" class="fa fa-twitter"></a></li>
+								{% endif %}
+								{% if settings and settings.instagram_url %}
+								<li class="instagram"><a href="{{ settings.instagram_url }}" class="fa fa-instagram"></a></li>
+								{% endif %}
+								{% if settings and settings.youtube_url %}
+								<li class="youtube"><a href="{{ settings.youtube_url }}" class="fa fa-youtube"></a></li>
+								{% endif %}
 							</ul>
 						</div>
 					</div>
@@ -1088,67 +1037,69 @@
 					<div class="footer-column col-lg-5 col-md-12 col-sm-12">
 						<div class="footer-widget logo-widget">
 							<div class="logo">
-								<a href="{% url 'index' %}">{% if site_setting and site_setting.logo_type == 'text' %}
-    <h2 style="color: inherit; font-weight: bold; margin: 0; line-height: 1;">{{ site_setting.logo_text }}</h2>
-{% elif site_setting and site_setting.logo_type == 'image' and site_setting.logo %}
-    <img src="{{ site_setting.logo.url }}" alt="Logo" title="">
+								<a href="{% url 'index' %}">{% if settings and settings.logo_type == 'text' %}
+    <h2 style="color: inherit; font-weight: bold; margin: 0; line-height: 1;">{{ settings.logo_text }}</h2>
+{% elif site_setting and settings.logo_type == 'image' and settings.logo %}
+    <img src="{{ settings.logo.url }}" alt="Logo" title="">
 {% else %}
     <img src="{% static 'images/logo-white.png' %}?v=2" alt="Logo" title="">
 {% endif %}</a>
 							</div>
-							<ul class="info-list">
-								<li>Tel:<a href="tel:+0845-371-02-02"> 0845 371 02 02</a></li>
-								<li>Email:<a href="mailto:info@yoursite.co.uk"> info@yoursite.co.uk</a></li>
+														<ul class="info-list">
+								<li>Tel:<a href="tel:{{ settings.phone|default:'+0845-371-02-02' }}"> {{ settings.phone|default:'0845 371 02 02' }}</a></li>
+								<li>Email:<a href="mailto:{{ settings.email|default:'info@yoursite.co.uk' }}"> {{ settings.email|default:'info@yoursite.co.uk' }}</a></li>
 							</ul>
 							<!-- Social Box -->
 							<ul class="social-box">
-								<li class="twitter"><a target="_blank" href="http://twitter.com/" class="fa fa-twitter"></a></li>
-								<li class="pinterest"><a target="_blank" href="http://pinterest.com/" class="fa fa-pinterest-p"></a></li>
-								<li class="facebook"><a target="_blank" href="http://facebook.com/" class="fa fa-facebook-f"></a></li>
-								<li class="dribbble"><a target="_blank" href="http://dribbble.com/" class="fa fa-dribbble"></a></li>
+								{% if settings and settings.twitter_url %}
+								<li class="twitter"><a target="_blank" href="{{ settings.twitter_url }}" class="fa fa-twitter"></a></li>
+								{% endif %}
+								{% if settings and settings.facebook_url %}
+								<li class="facebook"><a target="_blank" href="{{ settings.facebook_url }}" class="fa fa-facebook-f"></a></li>
+								{% endif %}
+								{% if settings and settings.instagram_url %}
+								<li class="instagram"><a target="_blank" href="{{ settings.instagram_url }}" class="fa fa-instagram"></a></li>
+								{% endif %}
+								{% if settings and settings.youtube_url %}
+								<li class="youtube"><a target="_blank" href="{{ settings.youtube_url }}" class="fa fa-youtube-play"></a></li>
+								{% endif %}
 							</ul>
-							<div class="text">Get started now and take advantage of <br> our 30 day free trial today.</div>
+							<div class="text">{% if sections.footer_text %}{{ sections.footer_text.text|safe }}{% else %}Get started now and take advantage of <br> our 30 day free trial today.{% endif %}</div>
 						</div>
 					</div>
 					
 					<!-- Footer Column -->
 					<div class="footer-column col-lg-7 col-md-12 col-sm-12">
 						<div class="row clearfix">
-							<!-- Column -->
 							<div class="column col-lg-4 col-md-4 col-sm-12">
 								<h5>About</h5>
 								<ul class="list">
-									<li><a href="#">About</a></li>
-									<li><a href="#">News</a></li>
-									<li><a href="#">Impact</a></li>
-									<li><a href="#">Our team</a></li>
-									<li><a href="#">Our interns</a></li>
+									<li><a href="{% url 'about' %}">About Us</a></li>
+									<li><a href="{% url 'blog_list' %}">News & Blog</a></li>
+									<li><a href="{% url 'teacher' %}">Our Team</a></li>
+									<li><a href="{% url 'contact' %}">Contact Us</a></li>
 								</ul>
 							</div>
 							<!-- Column -->
 							<div class="column col-lg-4 col-md-4 col-sm-12">
 								<h5>Need some help?</h5>
 								<ul class="list">
-									<li><a href="#">FAQs</a></li>
-									<li><a href="#">Child safety</a></li>
-									<li><a href="#">Help Centre</a></li>
-									<li><a href="#">Contact</a></li>
-									<li><a href="#">Academy</a></li>
+									<li><a href="{% url 'faq' %}">FAQs</a></li>
+									<li><a href="{% url 'contact' %}">Help Centre</a></li>
+									<li><a href="{% url 'register' %}">Create Account</a></li>
+									<li><a href="{% url 'login' %}">Login</a></li>
 								</ul>
 							</div>
 							<!-- Column -->
 							<div class="column col-lg-4 col-md-4 col-sm-12">
-								<h5>Courses</h5>
+								<h5>Links</h5>
 								<ul class="list">
-									<li><a href="#">Khan Kids app</a></li>
-									<li><a href="#">Science & engineering</a></li>
-									<li><a href="#">Computing</a></li>
-									<li><a href="#">Arts & humanities</a></li>
-									<li><a href="#">Economics & finance</a></li>
+									<li><a href="{% url 'course_list' %}">All Courses</a></li>
+									<li><a href="{% url 'membership' %}">Membership</a></li>
+									<li><a href="{% url 'event_list' %}">Events</a></li>
+									<li><a href="{% url 'donation' %}">Donation</a></li>
 								</ul>
 							</div>
-							
-						</div>
 					</div>
 					
 				</div>
@@ -1161,8 +1112,13 @@
 						<!-- Subscribe Form -->
 						<div class="subscribe-form">
 							<h6>Newsletter</h6>
-							<form method="post" action="{% url 'contact' %}">
+							<form method="post" action="{% url 'subscribe' %}">
 {% csrf_token %}
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <div style="color: {% if message.tags == 'success' %}#00C853{% else %}#fff{% endif %}; margin-bottom: 10px;">{{ message }}</div>
+                                    {% endfor %}
+                                {% endif %}
 								<div class="form-group">
 									<input type="email" name="email" value="" placeholder="Your email" required>
 									<button type="submit" class="submit-btn"><span class="icon flaticon-right-arrow-2"></span></button>
@@ -1171,8 +1127,8 @@
 						</div>
 					</div>
 					<div class="col-lg-6 col-lg-6 col-sm-12">
-						<div class="text">Need to train your team? We offer flexible, cost-effective <br> group memberships for your business, school,</div>
-						<a href="#" class="singup">Free Singup</a>
+						<div class="text">{% if sections.footer_cta %}{{ sections.footer_cta.text|safe }}{% else %}Need to train your team? We offer flexible, cost-effective <br> group memberships for your business, school,{% endif %}</div>
+						<a href="{% if sections.footer_cta %}{{ sections.footer_cta.link|default:'#' }}{% else %}#{% endif %}" class="singup">{% if sections.footer_cta %}{{ sections.footer_cta.title }}{% else %}Free Singup{% endif %}</a>
 					</div>
 				</div>
 			</div>
@@ -1183,7 +1139,7 @@
 					
 					<!-- Copyright Column -->
 					<div class="copyright-column col-lg-6 col-md-12 col-sm-12">
-						<div class="copyright">Copyright 2026, All Right Reserved</div>
+						<div class="copyright">{% if sections.footer_copyright %}{{ sections.footer_copyright.title|safe }}{% else %}Copyright 2026, All Right Reserved{% endif %}</div>
 					</div>
 					
 					<!-- Nav Column -->

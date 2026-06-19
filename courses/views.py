@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Course, CourseCategory
 from core.models import SiteSetting
-
+from core.views import get_cms_context
 def course_list(request):
     settings = SiteSetting.objects.first()
     query = request.GET.get('q')
@@ -10,12 +10,14 @@ def course_list(request):
     else:
         courses = Course.objects.all().order_by('-created_at')
     categories = CourseCategory.objects.all()
-    return render(request, 'course.html', {
+    ctx = {
         'settings': settings,
         'courses': courses,
         'categories': categories,
         'query': query,
-    })
+    }
+    ctx.update(get_cms_context('course'))
+    return render(request, 'course.html', ctx)
 
 def course_detail(request, slug):
     settings = SiteSetting.objects.first()
@@ -47,12 +49,14 @@ def course_detail(request, slug):
         
     reviews = course.reviews.all().order_by('-created_at')
 
-    return render(request, 'course-detail.html', {
+    ctx = {
         'settings': settings,
         'course': course,
         'is_enrolled': is_enrolled,
         'reviews': reviews,
-    })
+    }
+    ctx.update(get_cms_context('course_detail'))
+    return render(request, 'course-detail.html', ctx)
 
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages

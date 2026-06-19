@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static course_tags %}
 
 {% block content %}
 
@@ -16,24 +16,24 @@
 				<li>Courses Single</li>
 			</ul>
 			<div class="content-box">
-				<div class="title">5 day left at this price!</div>
-				<h2>The Complete JavaScript Course 2020 <br> From Zero to Expert!</h2>
+				<div class="title">{% if course.original_price %}<del>${{ course.original_price }}</del> {% endif %}{% if course.price == 0 %}Free Course{% else %}${{ course.price }}{% endif %}</div>
+				<h2>{{ course.title }}</h2>
 				<ul class="course-info">
-					<li><span class="icon fa fa-clock-o"></span>Last Update : {{ course.updated_at|date:"M d, Y"|default:"November 23, 2020" }}</li>
+					<li><span class="icon fa fa-clock-o"></span>Last Update : {{ course.created_at|date:"M d, Y" }}</li>
 					<li><span class="icon fa fa-language"></span>English</li>
-					<li><span class="icon fa fa-user"></span>749 students</li>
+					<li><span class="icon fa fa-user"></span>{{ course.enrollments.count }} students</li>
 				</ul>
-				<div class="development">Development courses</div>
+				<div class="development">{{ course.category.name }}</div>
 				<div class="rating">
 					<span class="fa fa-star"></span>
 					<span class="fa fa-star"></span>
 					<span class="fa fa-star"></span>
 					<span class="fa fa-star"></span>
-					<span class="fa fa-star-o"></span>
-					<strong>4.9</strong>
-					<i>(70 Review)</i>
+					<span class="fa fa-star{% if course.rating < 5 %}-half-empty{% endif %}"></span>
+					<strong>{{ course.rating }}</strong>
+					<i>({{ course.reviews_count }} Review)</i>
 				</div>
-				<div class="hovers">11.5 total hours . All Levels  </div>
+				<div class="hovers">{{ course.duration }} . {{ course.level }}</div>
 				
 				<!-- Social Box -->
 				<ul class="social-box">
@@ -62,19 +62,29 @@
 						<div class="learn-box">
 							<h5>What you'll learn</h5>
 							<ul class="learn-list">
+                                {% if course.what_you_will_learn %}
+                                    {% for item in course.what_you_will_learn|split_lines %}
+                                        <li>{{ item }}</li>
+                                    {% endfor %}
+                                {% else %}
 								<li>JavaScript fundamentals: variables, if/else, operators, boolean logic, functions, arrays, objects, loops, strings, etc.</li>
 								<li>Become job-ready by understanding how JavaScript really works behind the scenes</li>
 								<li>Modern ES6+ from the beginning: arrow functions, destructuring, spread operator, optional chaining (ES2020), etc.</li>
 								<li>Modern tools for 2020 and beyond: NPM, Parcel, Babel and ES6 modules</li>
-								<li>Modern ES6+ from the beginning: arrow functions, destructuring, spread operator, optional chaining (ES2020), etc.</li>
-								<li>Modern ES6+ from the beginning: arrow functions, destructuring, spread operator, optional chaining (ES2020), etc.</li>
+                                {% endif %}
 							</ul>
 						</div>
 						<h5>Requirements</h5>
 						<ul class="learn-list-two">
+                            {% if course.requirements %}
+                                {% for item in course.requirements|split_lines %}
+                                    <li>{{ item }}</li>
+                                {% endfor %}
+                            {% else %}
 							<li>Sed consequat justo non mauris pretium at tempor justo sodales. Quisque tincidunt laoreet malesuada Cum sociis natoque penatibus et magnis </li>
 							<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</li>
 							<li>JavaScript fundamentals: variables, if/else, operators, boolean logic, functions, arrays, objects, loops, strings, etc.</li>
+                            {% endif %}
 						</ul>
 						<h5>Course content</h5>
 						<div class="total-lectures">20 sections • 101 lectures • 30h 48m total length</div>
@@ -114,21 +124,23 @@
 						<h5>Instructor</h5>
 						
 						<!-- Author Box -->
+                        {% if course.teacher %}
 						<div class="author-box">
 							<div class="box-inner">
 								<div class="image">
-									<img src="{% static 'images/resource/author-4.jpg' %}" alt="" />
+									<img src="{% if course.teacher.image %}{{ course.teacher.image.url }}{% else %}{% static 'images/resource/author-4.jpg' %}{% endif %}" alt="" />
 								</div>
-								<h6>Jonas jashiom <a href="{% url 'profile' %}" class="icon fa fa-plus"></a></h6>
-								<div class="designation">java Developer, Designer, and Teacher</div>
+								<h6>{{ course.teacher.name }} <a href="{% url 'teacher' %}" class="icon fa fa-plus"></a></h6>
+								<div class="designation">{{ course.teacher.designation }}</div>
 								<ul class="list">
-									<li><span class="icon fa fa-play-circle-o"></span>44 Course</li>
+									<li><span class="icon fa fa-play-circle-o"></span>{{ course.teacher.courses.count }} Course(s)</li>
 									<li><span class="icon fa fa-star-o"></span>4.6 Instructor Rating</li>
-									<li><span class="icon fa fa-user"></span>6,073 Students</li>
+									<li><span class="icon fa fa-user"></span>1,000+ Students</li>
 								</ul>
-								<div class="text">Hi, I'm Riad! I have been identified as one of LebariTop Instructors and all my premium courses have recently earned the best-selling status for outstanding performance and student satisfaction.</div>
+								<div class="text">{{ course.teacher.bio|safe|default:"No bio available." }}</div>
 							</div>
 						</div>
+                        {% endif %}
 						
 						<div class="comments-area">
 							<div class="group-title"><h5>{{ reviews.count }} Reviews</h5></div>
@@ -212,18 +224,17 @@
                             {% if course.original_price %}<i>${{ course.original_price }}</i>{% endif %}
                         </div>
 						<h5>This course includes:</h5>
-						<div class="text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered </div>
-						<ul class="level-list">
-							<li>Level :<span>Beginner</span></li>
-							<li>Topic :<span>Java Script</span></li>
-							<li>Class :<span>32 articles</span></li>
-							<li>Access :<span>Mobile and TV</span></li>
-						</ul>
-						<h5>Other includes:</h5>
+						<div class="text">{% if course.includes %}{% else %}There are many variations of passages of Lorem Ipsum available, but the majority have suffered{% endif %}</div>
 						<ul class="level-list-two">
+                            {% if course.includes %}
+                                {% for item in course.includes|split_lines %}
+                                    <li>{{ item }}</li>
+                                {% endfor %}
+                            {% else %}
 							<li>Full lifetime access</li>
 							<li>19 downloadable resources</li>
 							<li>Certificate of completion</li>
+                            {% endif %}
 						</ul>
 						
 						<!-- Coupon Form -->

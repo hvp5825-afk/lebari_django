@@ -19,10 +19,10 @@
 					<div class="sidebar-info-contents">
 						<div class="content-inner">
 							<div class="logo">
-								<a href="{% url 'index' %}">{% if site_setting and site_setting.logo_type == 'text' %}
-    <h2 style="color: inherit; font-weight: bold; margin: 0; line-height: 1;">{{ site_setting.logo_text }}</h2>
-{% elif site_setting and site_setting.logo_type == 'image' and site_setting.logo %}
-    <img src="{{ site_setting.logo.url }}" alt="Logo" title="">
+								<a href="{% url 'index' %}">{% if settings and settings.logo_type == 'text' %}
+    <h2 style="color: inherit; font-weight: bold; margin: 0; line-height: 1;">{{ settings.logo_text }}</h2>
+{% elif site_setting and settings.logo_type == 'image' and settings.logo %}
+    <img src="{{ settings.logo.url }}" alt="Logo" title="">
 {% else %}
     <img src="{% static 'images/logo-white.png' %}?v=2" alt="Logo" title="">
 {% endif %}</a>
@@ -35,19 +35,25 @@
 							<div class="contact-info">
 								<h2>Contact Info</h2>
 								<ul class="list-style-two">
-									<li><span class="icon fa fa-location-arrow"></span>Chicago 12, Melborne City, USA</li>
-									<li><span class="icon fa fa-phone"></span>(111) 111-111-1111</li>
-									<li><span class="icon fa fa-envelope"></span>lebari@gmail.com</li>
-									<li><span class="icon fa fa-clock-o"></span>Week Days: 09.00 to 18.00 Sunday: Closed</li>
+									<li><span class="icon fa fa-location-arrow"></span>{{ settings.address|default:"Chicago 12, Melborne City, USA" }}</li>
+									<li><span class="icon fa fa-phone"></span>{{ settings.phone|default:"(111) 111-111-1111" }}</li>
+									<li><span class="icon fa fa-envelope"></span>{{ settings.email|default:"lebari@gmail.com" }}</li>
+									<li><span class="icon fa fa-clock-o"></span>{{ settings.opening_hours|default:"Week Days: 09.00 to 18.00 Sunday: Closed" }}</li>
 								</ul>
 							</div>
-							<!-- Social Box -->
 							<ul class="social-box">
-								<li class="facebook"><a href="#" class="fa fa-facebook-f"></a></li>
-								<li class="twitter"><a href="#" class="fa fa-twitter"></a></li>
-								<li class="linkedin"><a href="#" class="fa fa-linkedin"></a></li>
-								<li class="instagram"><a href="#" class="fa fa-instagram"></a></li>
-								<li class="youtube"><a href="#" class="fa fa-youtube"></a></li>
+								{% if settings and settings.facebook_url %}
+								<li class="facebook"><a target="_blank" href="{{ settings.facebook_url }}" class="fa fa-facebook-f"></a></li>
+								{% endif %}
+								{% if settings and settings.twitter_url %}
+								<li class="twitter"><a target="_blank" href="{{ settings.twitter_url }}" class="fa fa-twitter"></a></li>
+								{% endif %}
+								{% if settings and settings.instagram_url %}
+								<li class="instagram"><a target="_blank" href="{{ settings.instagram_url }}" class="fa fa-instagram"></a></li>
+								{% endif %}
+								{% if settings and settings.youtube_url %}
+								<li class="youtube"><a target="_blank" href="{{ settings.youtube_url }}" class="fa fa-youtube-play"></a></li>
+								{% endif %}
 							</ul>
 						</div>
 					</div>
@@ -71,7 +77,7 @@
 			</ul>
 			<div class="content-box">
 				<h2>Contact Now</h2>
-				<div class="text">{% if sections.contact_banner %}{{ sections.contact_banner.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Duis aute irure dolor in reprehenderit in {% endif %}</div>
+				<div class="text">{% if sections.contact_banner %}{{ sections.contact_banner.text|safe }}{% else %}{% if sections.contact_content %}{{ sections.contact_content.text|safe }}{% else %}{% if sections.contact_short %}{{ sections.contact_short.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur{% endif %} Duis aute irure dolor in reprehenderit in {% endif %}{% endif %}</div>
 			</div>
 		</div>
 	</section>
@@ -86,14 +92,14 @@
 				<!-- Info Column -->
 				<div class="info-column col-lg-6 col-md-12 col-sm-12">
 					<div class="inner-column">
-						<div class="title">GET IN TOUCH</div>
-						<h2>Visit one of our agency locations <br> or contact us today</h2>
-						<div class="text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, </div>
+						<div class="title">{% if sections.contact_info %}{{ sections.contact_info.subtitle }}{% else %}GET IN TOUCH{% endif %}</div>
+						<h2>{% if sections.contact_info %}{{ sections.contact_info.title|safe }}{% else %}Visit one of our agency locations <br> or contact us today{% endif %}</h2>
+						<div class="text">{% if sections.contact_info %}{{ sections.contact_info.text|safe }}{% else %}We'd love to hear from you. Whether you have a question about our courses, pricing, or anything else, our team is ready to answer all your questions.{% endif %}</div>
 						<ul>
-							<li><span>Address</span>56 Glassford Street Glasgow G1 1UL New York</li>
-							<li><span>Our Phone</span>Telephone : 028577101<br>Mobile : 01781648101</li>
-							<li><span>Our Email</span>Telephone : 028577101<br>Mobile : 01781648101</li>
-							<li><span>Opening Hours</span>Monday to Saturday: 9.00am to 16.pm</li>
+							<li><span>Address</span>{{ settings.address|default:"56 Glassford Street Glasgow G1 1UL New York" }}</li>
+							<li><span>Our Phone</span>Telephone : {{ settings.phone|default:"028577101" }}</li>
+							<li><span>Our Email</span>{{ settings.email|default:"lebari@gmail.com" }}</li>
+							<li><span>Opening Hours</span>{{ settings.opening_hours|default:"Monday to Saturday: 9.00am to 16.pm" }}</li>
 						</ul>
 					</div>
 				</div>
@@ -104,8 +110,8 @@
 						<div class="circle-layer"></div>
 						<div class="pattern-layer-one" style="background-image: url({% static 'images/icons/icon-7.png' %})"></div>
 						<div class="pattern-layer-two" style="background-image: url({% static 'images/icons/icon-9.png' %})"></div>
-						<h2>Leave a message</h2>
-						<div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut <br> blandit arcu in pretium.</div>
+						<h2>{% if sections.contact_form %}{{ sections.contact_form.title|safe }}{% else %}Leave a message{% endif %}</h2>
+						<div class="text">{% if sections.contact_form %}{{ sections.contact_form.text|safe }}{% else %}Please fill out the form below and we will get back to you as soon as possible.{% endif %}</div>
 						
 						<!-- Contact Form -->
 						<div class="contact-form">
@@ -159,7 +165,7 @@
 			<div class="map-boxed">
 				<!-- Map Outer -->
 				<div class="map-outer">
-					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d805184.6331292129!2d144.49266890254142!3d-37.97123689954809!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad646b5d2ba4df7%3A0x4045675218ccd90!2sMelbourne%20VIC%2C%20Australia!5e0!3m2!1sen!2s!4v1574408946759!5m2!1sen!2s" width="100%" height="500px" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+					<iframe src="{{ settings.map_url|default:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d805184.6331292129!2d144.49266890254142!3d-37.97123689954809!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad646b5d2ba4df7%3A0x4045675218ccd90!2sMelbourne%20VIC%2C%20Australia!5e0!3m2!1sen!2s!4v1574408946759!5m2!1sen!2s' }}" width="100%" height="500px" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
 				</div>
 			</div>
 		</div>

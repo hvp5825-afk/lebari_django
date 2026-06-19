@@ -10,34 +10,18 @@
 				<div class="content-column col-lg-8 col-md-12 col-sm-12">
 					<div class="inner-column">
 						<h5>Event Description</h5>
-						<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum</p>
+						<p>{{ event.description }}</p>
 						<div class="image">
-							<img src="{% static 'images2/resource/event-10.jpg' %}" alt="" />
+							<img src="{% if event.image %}{{ event.image.url }}{% else %}{% static 'images/resource/event-10.jpg' %}{% endif %}" alt="{{ event.title }}" />
 						</div>
-						
-						<div class="learn-box">
-							<h5>During this event, we’ll cover</h5>
-							<ul class="learn-list">
-								<li>JavaScript fundamentals: variables, if/else, operators, boolean logic, functions, arrays, objects, loops, strings, etc.</li>
-								<li>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</li>
-								<li>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</li>
-							</ul>
-						</div>
-						
-						<h5>Requirements</h5>
-						<ul class="learn-list-two">
-							<li>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</li>
-							<li>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly </li>
-							<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud</li>
-						</ul>
 						
 						<!-- Social Box -->
 						<ul class="social-box">
 							<span class="fa fa-share-alt"></span>
-							<li class="twitter"><a target="_blank" href="http://twitter.com/" class="fa fa-twitter"></a></li>
-							<li class="pinterest"><a target="_blank" href="http://pinterest.com/" class="fa fa-pinterest-p"></a></li>
-							<li class="facebook"><a target="_blank" href="http://facebook.com/" class="fa fa-facebook-f"></a></li>
-							<li class="dribbble"><a target="_blank" href="http://dribbble.com/" class="fa fa-dribbble"></a></li>
+							<li class="twitter"><a target="_blank" href="{{ settings.twitter_url|default:'#' }}" class="fa fa-twitter"></a></li>
+							<li class="pinterest"><a target="_blank" href="{{ settings.pinterest_url|default:'#' }}" class="fa fa-pinterest-p"></a></li>
+							<li class="facebook"><a target="_blank" href="{{ settings.facebook_url|default:'#' }}" class="fa fa-facebook-f"></a></li>
+							<li class="dribbble"><a target="_blank" href="{{ settings.dribbble_url|default:'#' }}" class="fa fa-dribbble"></a></li>
 						</ul>
 						
 					</div>
@@ -68,19 +52,16 @@
 								<h5>Tags</h5>
 							</div>
 							<div class="widget-content">
-								<a href="#">seafood</a>
-								<a href="#">gyros</a>
-								<a href="#">chicken</a>
-								<a href="#">pizza</a>
-								<a href="#">ecommerce</a>
-								<a href="#">food</a>
+								<span>{{ event.category|default:"Education" }}</span>
+								<span>Seminar</span>
+								<span>Learning</span>
 							</div>
 						</div>
 						
 						<!-- Event Widget -->
 						<div class="event-widget">
 							<h6>This Event includes:</h6>
-							<div class="text">There are many variations of passages of Lorem Ipsum, but the majority have suffered.</div>
+							<div class="text">{{ event.description|default:"Detailed description of the event will be provided here." }}</div>
 							
 							<!-- Event Organizer -->
 							<div class="event-organizer">
@@ -99,12 +80,8 @@
 								<div class="lecturer">Lecturer:</div>
 								<ul class="organizer-list">
 									<li>
-										<strong>MD Ahad master</strong>
-										Email : sumon@example.com
-									</li>
-									<li>
-										<strong>Tamim Megh</strong>
-										Email : sumon@example.com
+										<strong>{% if sections.event_lecturer %}{{ sections.event_lecturer.title|safe }}{% else %}{{ settings.logo_text|default:"Admin" }}{% endif %}</strong>
+										Email : {{ settings.email|default:'sumon@example.com' }}
 									</li>
 								</ul>
 								
@@ -129,68 +106,28 @@
 			</div>
 			<div class="row clearfix">
 				
+				{% for related_event in recent_events %}
 				<!-- Event Block Two -->
 				<div class="event-block-two col-lg-4 col-md-6 col-sm-12">
 					<div class="inner-box">
 						<div class="image">
-							<a href="#"><img src="{% static 'images2/resource/event-4.jpg' %}" alt="" /></a>
+							<a href="{% url 'event_detail' related_event.slug %}"><img src="{% if related_event.image %}{{ related_event.image.url }}{% else %}{% static 'images/resource/event-4.jpg' %}{% endif %}" alt="" /></a>
 						</div>
 						<div class="lower-content">
-							<div class="category">Online</div>
-							<h4><a href="#">Special Education Leaders Network by West40</a></h4>
+							<div class="category">{{ related_event.location }}</div>
+							<h4><a href="{% url 'event_detail' related_event.slug %}">{{ related_event.title }}</a></h4>
 							<div class="clearfix">
 								<div class="pull-left">
-									<div class="post-date">September 1, 2025</div>
+									<div class="post-date">{{ related_event.date|date:"F j, Y" }}</div>
 								</div>
 								<div class="pull-right">
-									<a href="#" class="attend-link">Attend</a>
+									<a href="{% url 'event_detail' related_event.slug %}" class="attend-link">Attend</a>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				
-				<!-- Event Block Two -->
-				<div class="event-block-two col-lg-4 col-md-6 col-sm-12">
-					<div class="inner-box">
-						<div class="image">
-							<a href="#"><img src="{% static 'images2/resource/event-5.jpg' %}" alt="" /></a>
-						</div>
-						<div class="lower-content">
-							<div class="category">school</div>
-							<h4><a href="#">Salters' Chemistry Club Handbook</a></h4>
-							<div class="clearfix">
-								<div class="pull-left">
-									<div class="post-date">September 1, 2025</div>
-								</div>
-								<div class="pull-right">
-									<a href="#" class="attend-link">Attend</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<!-- Event Block Two -->
-				<div class="event-block-two col-lg-4 col-md-6 col-sm-12">
-					<div class="inner-box">
-						<div class="image">
-							<a href="#"><img src="{% static 'images2/resource/event-6.jpg' %}" alt="" /></a>
-						</div>
-						<div class="lower-content">
-							<div class="category">Online</div>
-							<h4><a href="#">International Day of Peace September 21</a></h4>
-							<div class="clearfix">
-								<div class="pull-left">
-									<div class="post-date">September 1, 2025</div>
-								</div>
-								<div class="pull-right">
-									<a href="#" class="attend-link">Attend</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				{% endfor %}
 				
 			</div>
 		</div>

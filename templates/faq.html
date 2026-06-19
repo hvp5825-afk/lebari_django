@@ -16,8 +16,8 @@
 				<li>faq</li>
 			</ul>
             <div class="content-box">
-				<h2>Get Answers to Your Questions</h2>
-				<div class="text">dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <br> Excepteur sint occaecat cupidatat non proident, </div>
+				<h2>{% if sections.faq_banner %}{{ sections.faq_banner.title|safe }}{% else %}Get Answers to Your Questions{% endif %}</h2>
+				<div class="text">{% if sections.faq_banner %}{{ sections.faq_banner.text|safe }}{% else %}dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <br> Excepteur sint occaecat cupidatat non proident, {% endif %}</div>
 			</div>
 		</div>
 	</section>
@@ -29,14 +29,29 @@
 			<div class="inner-container">
 				<div class="row clearfix">
 					
+                    {% if features %}
+                        {% for feature in features %}
+					<!-- Faq Block -->
+					<div class="faq-block col-lg-4 col-md-6 col-sm-12">
+						<div class="inner-box wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
+							<div class="icon-box">
+								<span class="icon {{ feature.icon_class|default:'flaticon-unity' }}"></span>
+							</div>
+							<h5><a href="{{ feature.link|default:'#' }}">{{ feature.title }}</a></h5>
+							<div class="text">{{ feature.text }}</div>
+							<a href="{{ feature.link|default:'#' }}" class="read-more">Read More</a>
+						</div>
+					</div>
+                        {% endfor %}
+                    {% else %}
 					<!-- Faq Block -->
 					<div class="faq-block col-lg-4 col-md-6 col-sm-12">
 						<div class="inner-box wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
 							<div class="icon-box">
 								<span class="icon flaticon-unity"></span>
 							</div>
-							<h5><a href="#">Become a Partner</a></h5>
-							<div class="text">consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</div>
+							<h5><a href="#">{% if sections.faq_partner %}{{ sections.faq_partner.title|safe }}{% else %}Become a Partner{% endif %}</a></h5>
+							<div class="text">{% if sections.faq_partner %}{{ sections.faq_partner.text|safe }}{% else %}consectetur adipiscing elit.{% endif %}</div>
 							<a href="#" class="read-more">Read More</a>
 						</div>
 					</div>
@@ -47,8 +62,8 @@
 							<div class="icon-box">
 								<span class="icon flaticon-calendar"></span>
 							</div>
-							<h5><a href="#">Become a Courier</a></h5>
-							<div class="text">consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</div>
+							<h5><a href="#">{% if sections.faq_courier %}{{ sections.faq_courier.title|safe }}{% else %}Become a Courier{% endif %}</a></h5>
+							<div class="text">{% if sections.faq_partner %}{{ sections.faq_partner.text|safe }}{% else %}consectetur adipiscing elit.{% endif %}</div>
 							<a href="#" class="read-more">Read More</a>
 						</div>
 					</div>
@@ -60,10 +75,11 @@
 								<span class="icon flaticon-customer"></span>
 							</div>
 							<h5><a href="#">Join Our Team</a></h5>
-							<div class="text">consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</div>
+							<div class="text">{% if sections.faq_partner %}{{ sections.faq_partner.text|safe }}{% else %}consectetur adipiscing elit.{% endif %}</div>
 							<a href="#" class="read-more">Read More</a>
 						</div>
 					</div>
+                    {% endif %}
 					
 				</div>
 			</div>

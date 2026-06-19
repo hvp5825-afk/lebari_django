@@ -112,35 +112,43 @@ def contact(request):
 def teacher_list(request):
     settings = SiteSetting.objects.first()
     teachers = Teacher.objects.all()
-    return render(request, 'teacher.html', {
+    ctx = {
         'settings': settings,
         'teachers': teachers,
-    })
+    }
+    ctx.update(get_cms_context('teacher'))
+    return render(request, 'teacher.html', ctx)
 
 def faq_list(request):
     settings = SiteSetting.objects.first()
     primary_faqs = FAQ.objects.filter(category='primary')
     other_faqs = FAQ.objects.filter(category='other')
-    return render(request, 'faq.html', {
+    ctx = {
         'settings': settings,
         'primary_faqs': primary_faqs,
         'other_faqs': other_faqs,
-    })
+    }
+    ctx.update(get_cms_context('faq'))
+    return render(request, 'faq.html', ctx)
 
 def event_list(request):
     settings = SiteSetting.objects.first()
     events = Event.objects.all().order_by('-date')
-    return render(request, 'event.html', {
+    ctx = {
         'settings': settings,
         'events': events,
-    })
+    }
+    ctx.update(get_cms_context('event'))
+    return render(request, 'event.html', ctx)
 
 def event_detail(request, slug):
     settings = SiteSetting.objects.first()
     event = get_object_or_404(Event, slug=slug)
+    recent_events = Event.objects.exclude(id=event.id).order_by('-date')[:3]
     return render(request, 'event-detail.html', {
         'settings': settings,
         'event': event,
+        'recent_events': recent_events,
     })
 
 from .models import MembershipPlan, Donation
@@ -218,7 +226,7 @@ def profile(request):
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
 
-    return render(request, 'profile.html', {
+    ctx = {
         'settings': settings,
         'enrollments': enrollments,
         'enrolled_count': enrolled_count,
@@ -226,7 +234,9 @@ def profile(request):
         'completed_count': completed_count,
         'u_form': u_form,
         'p_form': p_form,
-    })
+    }
+    ctx.update(get_cms_context('profile'))
+    return render(request, 'profile.html', ctx)
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 

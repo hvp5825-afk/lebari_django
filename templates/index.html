@@ -136,10 +136,10 @@
 							<img src="{% if sections.home1_benefit and sections.home1_benefit.image %}{{ sections.home1_benefit.image.url }}{% else %}{% static 'images/resource/benefit-1.jpg' %}{% endif %}" alt="" />
 						</div>
 						<div class="image-two">
-							<img src="{% static 'images/resource/benefit-3.jpg' %}" alt="" />
+							<img src="{% if sections.home1_benefit and sections.home1_benefit.image_2 %}{{ sections.home1_benefit.image_2.url }}{% else %}{% static 'images/resource/benefit-3.jpg' %}{% endif %}" alt="" />
 						</div>
 						<div class="image-three">
-							<img src="{% static 'images/resource/benefit-2.jpg' %}" alt="" />
+							<img src="{% if sections.home1_benefit and sections.home1_benefit.image_3 %}{{ sections.home1_benefit.image_3.url }}{% else %}{% static 'images/resource/benefit-2.jpg' %}{% endif %}" alt="" />
 						</div>
 					</div>
 				</div>
@@ -190,12 +190,12 @@
 				<div class="content-column col-lg-7 col-md-12 col-sm-12">
 					<div class="inner-column">
 						<div class="sec-title">
-							<div class="title">Explore featured courses</div>
-							<h2>Fundamentals of Digital <br> Health in Hospitals National <br> University</h2>
-							<div class="text">Dolor sit amet, consectetur adipiscing elit, sed do eiusmod but laboris incididunt ut labore et dolore magna <br> aliqua.sed do eiusmod but laboris incididunt ut labore et dolore magna aliqua.</div>
+							<div class="title">{% if sections.home1_feature %}{{ sections.home1_feature.subtitle }}{% else %}Explore featured courses{% endif %}</div>
+							<h2>{% if sections.home1_feature %}{{ sections.home1_feature.title|safe }}{% else %}Fundamentals of Digital <br> Health in Hospitals National <br> University{% endif %}</h2>
+							<div class="text">{% if sections.home1_feature %}{{ sections.home1_feature.text|safe }}{% else %}Dolor sit amet, consectetur adipiscing elit, sed do eiusmod but laboris incididunt ut labore et dolore magna <br> aliqua.sed do eiusmod but laboris incididunt ut labore et dolore magna aliqua.{% endif %}</div>
 						</div>
 						<div class="btn-box">
-							<a href="{% url 'about' %}" class="theme-btn btn-style-two"><span class="txt">Short courses</span></a>
+							<a href="{% if sections.home1_feature %}{{ sections.home1_feature.button_link }}{% else %}{% url 'about' %}{% endif %}" class="theme-btn btn-style-two"><span class="txt">{% if sections.home1_feature %}{{ sections.home1_feature.button_text }}{% else %}Short courses{% endif %}</span></a>
 						</div>
 					</div>
 				</div>
@@ -205,13 +205,12 @@
 					<div class="inner-column">
 						<div class="color-layer"></div>
 						<div class="image wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
-							<img src="{% static 'images/resource/feature.jpg' %}" alt="" />
+							<img src="{% if sections.home1_feature and sections.home1_feature.image %}{{ sections.home1_feature.image.url }}{% else %}{% static 'images/resource/feature.jpg' %}{% endif %}" alt="" />
 							<div class="overlay-box">
 								<div class="content">
-									<h2>How a degree on <br> FutureLearn <br> works</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod but laboris incididunt ut labore et dolore magna </p>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod </p>
-									<a href="#" class="learn">Learn 3 Class</a>
+									<h2>{% if sections.home1_feature_overlay %}{{ sections.home1_feature_overlay.title|safe }}{% else %}How a degree on <br> FutureLearn <br> works{% endif %}</h2>
+									<p>{% if sections.home1_feature_overlay %}{{ sections.home1_feature_overlay.text|safe }}{% else %}Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod but laboris incididunt ut labore et dolore magna<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod{% endif %}</p>
+									<a href="{% if sections.home1_feature_overlay %}{{ sections.home1_feature_overlay.button_link }}{% else %}#{% endif %}" class="learn">{% if sections.home1_feature_overlay %}{{ sections.home1_feature_overlay.button_text }}{% else %}Learn 3 Class{% endif %}</a>
 								</div>
 							</div>
 						</div>
@@ -332,9 +331,9 @@
 					<div class="inner-column">
 						<!-- Sec Title -->
 						<div class="sec-title">
-							<div class="title">Our Status valu</div>
-							<h2>Differentiate your classroom <br> What makes us special?</h2>
-							<div class="text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</div>
+							<div class="title">{% if sections.home1_skills %}{{ sections.home1_skills.subtitle }}{% else %}Our Status valu{% endif %}</div>
+							<h2>{% if sections.home1_skills %}{{ sections.home1_skills.title|safe }}{% else %}Differentiate your classroom <br> What makes us special?{% endif %}</h2>
+							<div class="text">{% if sections.home1_skills %}{{ sections.home1_skills.text|safe }}{% else %}{% if sections.home_short %}{{ sections.home_short.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur{% endif %}{% endif %}</div>
 						</div>
 						
 						<!-- Skills -->
@@ -388,7 +387,7 @@
 						<div class="circle-one"></div>
 						<div class="circle-two"></div>
 						<div class="image titlt" data-tilt data-tilt-max="4">
-							<img src="{% static 'images/resource/skill.png' %}" alt="" />
+							<img src="{% if sections.home1_skills and sections.home1_skills.image %}{{ sections.home1_skills.image.url }}{% else %}{% static 'images/resource/skill.png' %}{% endif %}" alt="" />
 						</div>
 					</div>
 				</div>
@@ -408,9 +407,9 @@
 				<div class="pattern-layer" style="background-image:url({% static 'images/background/pattern-9.png' %})"></div>
 				<!-- Sec Title -->
 				<div class="sec-title centered">
-					<div class="title">Testimonial</div>
-					<h2>Words From Customers</h2>
-					<div class="text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu <br> fugiat nulla pariatur Duis aute irure dolor in reprehenderit in</div>
+					<div class="title">{% if sections.home_testimonials %}{{ sections.home_testimonials.subtitle }}{% else %}Testimonial{% endif %}</div>
+					<h2>{% if sections.home_testimonials %}{{ sections.home_testimonials.title|safe }}{% else %}Words From Customers{% endif %}</h2>
+					<div class="text">{% if sections.home_testimonials %}{{ sections.home_testimonials.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu <br> fugiat nulla pariatur Duis aute irure dolor in reprehenderit in{% endif %}</div>
 				</div>
 				<div class="testimonial-carousel owl-carousel owl-theme">
 					
@@ -444,9 +443,9 @@
 		<div class="auto-container">
 			<!-- Sec Title -->
 			<div class="sec-title centered">
-				<div class="title">Our Blogs</div>
-				<h2>Latest articles & news</h2>
-				<div class="text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu <br> fugiat nulla pariatur Duis aute irure dolor in reprehenderit in</div>
+				<div class="title">{% if sections.home_news %}{{ sections.home_news.subtitle }}{% else %}Our Blogs{% endif %}</div>
+				<h2>{% if sections.home_news %}{{ sections.home_news.title|safe }}{% else %}Latest articles & news{% endif %}</h2>
+				<div class="text">{% if sections.home_news %}{{ sections.home_news.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu <br> fugiat nulla pariatur Duis aute irure dolor in reprehenderit in{% endif %}</div>
 			</div>
 			<div class="inner-container">
 				<div class="icon-layer-one" style="background-image:url({% static 'images/icons/icon-1.png' %})"></div>

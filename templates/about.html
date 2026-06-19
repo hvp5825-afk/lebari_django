@@ -19,35 +19,41 @@
 					<div class="sidebar-info-contents">
 						<div class="content-inner">
 							<div class="logo">
-								<a href="{% url 'index' %}">{% if site_setting and site_setting.logo_type == 'text' %}
-    <h2 style="color: inherit; font-weight: bold; margin: 0; line-height: 1;">{{ site_setting.logo_text }}</h2>
-{% elif site_setting and site_setting.logo_type == 'image' and site_setting.logo %}
-    <img src="{{ site_setting.logo.url }}" alt="Logo" title="">
+								<a href="{% url 'index' %}">{% if settings and settings.logo_type == 'text' %}
+    <h2 style="color: inherit; font-weight: bold; margin: 0; line-height: 1;">{{ settings.logo_text }}</h2>
+{% elif site_setting and settings.logo_type == 'image' and settings.logo %}
+    <img src="{{ settings.logo.url }}" alt="Logo" title="">
 {% else %}
     <img src="{% static 'images/logo-white.png' %}?v=2" alt="Logo" title="">
 {% endif %}</a>
 							</div>
 							<div class="content-box">
-								<h2>About Us</h2>
-								<p class="text">The argument in favor of using filler text goes something like this: If you use real content in the Consulting Process, anytime you reach a review point you’ll end up reviewing and negotiating the content itself and not the design.</p>
-								<a href="#" class="theme-btn btn-style-two"><span class="txt">Consultation</span></a>
+								<h2>{% if sections.sidebar_about %}{{ sections.sidebar_about.title|safe }}{% else %}About Us{% endif %}</h2>
+								<div class="text">{% if sections.sidebar_about %}{{ sections.sidebar_about.text|safe }}{% else %}<p class="text">The argument in favor of using filler text goes something like this: If you use real content in the Consulting Process, anytime you reach a review point you’ll end up reviewing and negotiating the content itself and not the design.</p>{% endif %}</div>
+								<a href="{% if sections.sidebar_about %}{{ sections.sidebar_about.button_link|default:'#' }}{% else %}#{% endif %}" class="theme-btn btn-style-two"><span class="txt">{% if sections.sidebar_about %}{{ sections.sidebar_about.button_text }}{% else %}Consultation{% endif %}</span></a>
 							</div>
 							<div class="contact-info">
 								<h2>Contact Info</h2>
 								<ul class="list-style-two">
-									<li><span class="icon fa fa-location-arrow"></span>Chicago 12, Melborne City, USA</li>
-									<li><span class="icon fa fa-phone"></span>(111) 111-111-1111</li>
-									<li><span class="icon fa fa-envelope"></span>lebari@gmail.com</li>
-									<li><span class="icon fa fa-clock-o"></span>Week Days: 09.00 to 18.00 Sunday: Closed</li>
+									<li><span class="icon fa fa-location-arrow"></span>{{ settings.address|default:"Chicago 12, Melborne City, USA" }}</li>
+									<li><span class="icon fa fa-phone"></span>{{ settings.phone|default:"(111) 111-111-1111" }}</li>
+									<li><span class="icon fa fa-envelope"></span>{{ settings.email|default:"lebari@gmail.com" }}</li>
+									<li><span class="icon fa fa-clock-o"></span>{{ settings.opening_hours|default:"Week Days: 09.00 to 18.00 Sunday: Closed" }}</li>
 								</ul>
 							</div>
-							<!-- Social Box -->
 							<ul class="social-box">
-								<li class="facebook"><a href="#" class="fa fa-facebook-f"></a></li>
-								<li class="twitter"><a href="#" class="fa fa-twitter"></a></li>
-								<li class="linkedin"><a href="#" class="fa fa-linkedin"></a></li>
-								<li class="instagram"><a href="#" class="fa fa-instagram"></a></li>
-								<li class="youtube"><a href="#" class="fa fa-youtube"></a></li>
+								{% if settings and settings.facebook_url %}
+								<li class="facebook"><a target="_blank" href="{{ settings.facebook_url }}" class="fa fa-facebook-f"></a></li>
+								{% endif %}
+								{% if settings and settings.twitter_url %}
+								<li class="twitter"><a target="_blank" href="{{ settings.twitter_url }}" class="fa fa-twitter"></a></li>
+								{% endif %}
+								{% if settings and settings.instagram_url %}
+								<li class="instagram"><a target="_blank" href="{{ settings.instagram_url }}" class="fa fa-instagram"></a></li>
+								{% endif %}
+								{% if settings and settings.youtube_url %}
+								<li class="youtube"><a target="_blank" href="{{ settings.youtube_url }}" class="fa fa-youtube-play"></a></li>
+								{% endif %}
 							</ul>
 						</div>
 					</div>
@@ -65,7 +71,7 @@
 			<!-- Page Breadcrumb -->
 			<ul class="page-breadcrumb">
 				<li><a href="{% url 'index' %}">Home</a></li>
-				<li>About</li>
+				<li>{% if sections.about_banner %}{{ sections.about_banner.subtitle }}{% else %}About{% endif %}</li>
 			</ul>
             <div class="row clearfix">
 				
@@ -75,7 +81,7 @@
 						<div class="pattern-layer-one" style="background-image: url({% static 'images/main-slider/pattern-1.png' %})"></div>
 						<div class="icon-layer" style="background-image: url({% static 'images/icons/icon-2.png' %})"></div>
 						<div class="icon-layer-two" style="background-image: url({% static 'images/icons/icon-5.png' %})"></div>
-						<h2>Our mission is to provide <br> a free Online <br> Courses and Class</h2>
+						<h2>{% if sections.about_banner %}{{ sections.about_banner.title|safe }}{% else %}Our mission is to provide <br> a free Online <br> Courses and Class{% endif %}</h2>
 					</div>
 				</div>
 				
@@ -86,10 +92,10 @@
 						<div class="icon-layer-four" style="background-image: url({% static 'images/icons/icon-2.png' %})"></div>
 						<div class="icon-layer-five" style="background-image: url({% static 'images/icons/icon-4.png' %})"></div>
 						<div class="image">
-							<img src="{% static 'images/resource/page-title-1.jpg' %}" alt="" />
+							<img src="{% if sections.about_banner and sections.about_banner.image %}{{ sections.about_banner.image.url }}{% else %}{% static 'images/resource/page-title-1.jpg' %}{% endif %}" alt="" />
 						</div>
 						<div class="image-two">
-							<img src="{% static 'images/resource/page-title-2.jpg' %}" alt="" />
+							<img src="{% if sections.about_banner and sections.about_banner.image_2 %}{{ sections.about_banner.image_2.url }}{% else %}{% static 'images/resource/page-title-2.jpg' %}{% endif %}" alt="" />
 						</div>
 					</div>
 				</div>
@@ -127,7 +133,7 @@
 						<div class="sec-title">
 							<div class="title">{% if sections.about_goal %}{{ sections.about_goal.subtitle }}{% else %}Achieve Goals{% endif %}</div>
 							<h2>{% if sections.about_goal %}{{ sections.about_goal.title|safe }}{% else %}Start To Success{% endif %}</h2>
-							<div class="text">{% if sections.about_goal %}{{ sections.about_goal.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Duis aute irure dolor in{% endif %}</div>
+							<div class="text">{% if sections.about_goal %}{{ sections.about_goal.text|safe }}{% else %}{% if sections.about_short %}{{ sections.about_short.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur{% endif %} Duis aute irure dolor in{% endif %}</div>
 						</div>
 						
 						<!-- Fact Counter -->
@@ -197,7 +203,7 @@
 						<div class="sec-title">
 							<div class="title">{% if sections.about_skill %}{{ sections.about_skill.subtitle }}{% else %}Our Status valu{% endif %}</div>
 							<h2>{% if sections.about_skill %}{{ sections.about_skill.title|safe }}{% else %}Differentiate your classroom <br> What makes us special?{% endif %}</h2>
-							<div class="text">{% if sections.about_skill %}{{ sections.about_skill.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur{% endif %}</div>
+							<div class="text">{% if sections.about_skill %}{{ sections.about_skill.text|safe }}{% else %}{% if sections.about_short %}{{ sections.about_short.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur{% endif %}{% endif %}</div>
 						</div>
 						
 						<!-- Skills -->
@@ -309,10 +315,11 @@
 			<div class="inner-container">
 				<div class="pattern-layer" style="background-image:url({% static 'images/background/pattern-9.png' %})"></div>
 				<!-- Sec Title -->
+				<!-- Sec Title -->
 				<div class="sec-title centered">
-					<div class="title">Testimonial</div>
-					<h2>Words From Customers</h2>
-					<div class="text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu <br> fugiat nulla pariatur Duis aute irure dolor in reprehenderit in</div>
+					<div class="title">{% if sections.about_testimonials %}{{ sections.about_testimonials.subtitle }}{% else %}Testimonial{% endif %}</div>
+					<h2>{% if sections.about_testimonials %}{{ sections.about_testimonials.title|safe }}{% else %}Words From Customers{% endif %}</h2>
+					<div class="text">{% if sections.about_testimonials %}{{ sections.about_testimonials.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu <br> fugiat nulla pariatur Duis aute irure dolor in reprehenderit in{% endif %}</div>
 				</div>
 				<div class="testimonial-carousel-two owl-carousel owl-theme">
 				
@@ -411,7 +418,7 @@
 							<div class="sec-title">
 								<div class="title">Teacher</div>
 								<h2>Our best online Techer</h2>
-								<div class="text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</div>
+								<div class="text">{% if sections.about_short %}{{ sections.about_short.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur{% endif %}</div>
 							</div>
 							<a href="#" class="theme-btn btn-style-one"><span class="txt">View More</span></a>
 						</div>
@@ -520,8 +527,8 @@
 						<div class="image">
 							<img src="{% static 'images/resource/contact.png' %}" alt="" />
 						</div>
-						<h5>Contact us</h5>
-						<p>It is a long established fact that a reader will be distracted by the readable content of a page </p>
+						<h5>{% if sections.about_contact_info %}{{ sections.about_contact_info.title }}{% else %}Contact us{% endif %}</h5>
+						<p>{% if sections.about_contact_info %}{{ sections.about_contact_info.text|safe }}{% else %}It is a long established fact that a reader will be distracted by the readable content of a page{% endif %}</p>
 						<ul class="contact-list">
 							<li>
 								<strong>Phone:</strong>
@@ -541,8 +548,8 @@
 						<div class="color-layer"></div>
 						<!-- Sec Title -->
 						<div class="sec-title">
-							<h2> Visit us <br> for Free Resources</h2>
-							<div class="text">These leading universities are currently offering online degree courses on FutureLearn:</div>
+							<h2>{% if sections.about_contact_form %}{{ sections.about_contact_form.title|safe }}{% else %}Visit us <br> for Free Resources{% endif %}</h2>
+							<div class="text">{% if sections.about_contact_form %}{{ sections.about_contact_form.text|safe }}{% else %}These leading universities are currently offering online degree courses on FutureLearn:{% endif %}</div>
 						</div>
 						
 						<!-- Default Form -->
