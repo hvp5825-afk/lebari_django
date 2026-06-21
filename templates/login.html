@@ -27,7 +27,7 @@
 						<div class="circle-layer"></div>
 						<div class="pattern-layer-one" style="background-image: url({% static 'images/icons/icon-7.png' %})"></div>
 						<div class="pattern-layer-two" style="background-image: url({% static 'images/icons/icon-9.png' %})"></div>
-						<h2>Login to your account</h2>
+						<h2>{{ labels.login_form_title|default:'Login to your account' }}</h2>
 						
 						<div class="contact-form">
                             {% if messages %}
@@ -50,7 +50,7 @@
 									<button class="theme-btn btn-style-five" type="submit">{{ buttons.login|default:'Login' }}</button>
 								</div>
                                 <div class="form-group mt-3">
-                                    <p>Don't have an account? <a href="{% url 'register' %}">Register here</a>.</p>
+                                    <p>{{ labels.login_no_account_text|default:"Don't have an account?" }} <a href="{% url 'register' %}">{{ labels.login_register_link|default:'Register here' }}</a>.</p>
                                 </div>
 							</form>
 						</div>

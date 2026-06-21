@@ -3876,6 +3876,8 @@ img{
 
 .news-block .inner-box .image img{
 	position:relative;
+	width:100%;
+	display:block;
 	transition:all 500ms ease;
 	-moz-transition:all 500ms ease;
 	-webkit-transition:all 500ms ease;
@@ -17371,3 +17373,103 @@ body {
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05) !important;
     border-radius: 15px;
 }
+
+/* --- Modern Layout Animations & Effects --- */
+
+/* 1. Cards Hover Elevate Effect */
+.course-block .inner-box,
+.news-block-two .inner-box,
+.news-block .inner-box,
+.event-block-two .inner-box,
+.event-block .inner-box {
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform: translateY(0);
+}
+
+.course-block .inner-box:hover,
+.news-block-two .inner-box:hover,
+.news-block .inner-box:hover,
+.event-block-two .inner-box:hover,
+.event-block .inner-box:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* 2. Image Zoom Effect within Cards */
+.course-block .inner-box .image img,
+.news-block-two .inner-box .image img,
+.event-block-two .inner-box .image img {
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.course-block .inner-box:hover .image img,
+.news-block-two .inner-box:hover .image img,
+.event-block-two .inner-box:hover .image img {
+    transform: scale(1.05);
+}
+
+/* 3. Modern Button Hover Effects, Sizes, and Fonts */
+.theme-btn,
+.attend-link,
+.read-more,
+.learn-more {
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    padding: 16px 45px; /* Increased button size */
+    font-size: 18px;    /* Increased font size */
+    font-weight: 600;
+    border-radius: 8px; /* Modern rounded corners */
+    z-index: 1;         /* Keep text above before element */
+}
+
+/* Specific padding overrides for smaller links to avoid breaking layout */
+.attend-link, .read-more, .learn-more {
+    padding: 10px 25px;
+    font-size: 16px;
+    display: inline-block;
+}
+
+/* Override the default hover background pseudo-elements */
+.theme-btn::before,
+.attend-link::before,
+.read-more::before,
+.learn-more::before {
+    background: linear-gradient(135deg, #2563eb, #9333ea) !important;
+    border-radius: 8px;
+}
+
+.theme-btn:hover,
+.attend-link:hover,
+.read-more:hover,
+.learn-more:hover {
+    transform: translateY(-4px) scale(1.03); 
+    box-shadow: 0 15px 25px rgba(37, 99, 235, 0.3); /* Blue tinted shadow */
+    color: #ffffff !important;
+    border-color: transparent !important;
+    background: linear-gradient(135deg, #2563eb, #9333ea) !important;
+}
+
+/* 4. Sticky Header Smooth Transition & Glassmorphism */
+.main-header {
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.main-header.fixed-header {
+    animation: smoothSlideDown 0.5s ease forwards;
+    background: rgba(255, 255, 255, 0.92) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+@keyframes smoothSlideDown {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(0); }
+}
+
+/* 5. Custom Smooth Reveal WOW Override */
+.wow.animated {
+    animation-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+}
+
+

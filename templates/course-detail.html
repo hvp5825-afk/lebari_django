@@ -57,10 +57,10 @@
 				<!-- Content Column -->
 				<div class="content-column col-lg-8 col-md-12 col-sm-12">
 					<div class="inner-column">
-						<h5>Courses Description</h5>
+						<h5>{{ labels.course_tab_description|default:"Courses Description" }}</h5>
 						<p>{{ course.description|safe|default:"We offer a broad range of..." }}</p>
 						<div class="learn-box">
-							<h5>What you'll learn</h5>
+							<h5>{{ labels.course_what_learn|default:'What you\'ll learn' }}</h5>
 							<ul class="learn-list">
                                 {% if course.what_you_will_learn %}
                                     {% for item in course.what_you_will_learn|split_lines %}
@@ -74,7 +74,7 @@
                                 {% endif %}
 							</ul>
 						</div>
-						<h5>Requirements</h5>
+						<h5>{{ labels.course_requirements|default:"Requirements" }}</h5>
 						<ul class="learn-list-two">
                             {% if course.requirements %}
                                 {% for item in course.requirements|split_lines %}
@@ -86,7 +86,7 @@
 							<li>JavaScript fundamentals: variables, if/else, operators, boolean logic, functions, arrays, objects, loops, strings, etc.</li>
                             {% endif %}
 						</ul>
-						<h5>Course content</h5>
+						<h5>{{ labels.course_content|default:"Course content" }}</h5>
 						<div class="total-lectures">20 sections • 101 lectures • 30h 48m total length</div>
 						
 						<!-- Accordion Box Two -->
@@ -121,7 +121,7 @@
 							<a href="#">Show more</a>
 						</div>
 						
-						<h5>Instructor</h5>
+						<h5>{{ labels.course_instructor_title|default:"Instructor" }}</h5>
 						
 						<!-- Author Box -->
                         {% if course.teacher %}

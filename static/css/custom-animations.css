@@ -1,0 +1,164 @@
+/* Modern Custom Animations and Hover Effects for LeBari */
+
+/* 1. Global / Core Transition Overrides for Premium feel */
+.course-block .inner-box,
+.news-block .inner-box,
+.service-block .inner-box,
+.team-block .inner-box,
+.event-block-two .inner-box,
+.scroll-to-top,
+.theme-btn,
+.social-icon-one li a,
+.nav-column ul li a,
+.click-here,
+.attend-link,
+.enroll-now {
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+}
+
+/* 2. Interactive Card Lift & Depth (Modern Box-Shadow) */
+.course-block .inner-box,
+.news-block .inner-box,
+.service-block .inner-box,
+.team-block .inner-box,
+.event-block-two .inner-box {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02) !important;
+    border-radius: 8px !important;
+    overflow: hidden;
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.04) !important;
+}
+
+.course-block .inner-box:hover,
+.news-block .inner-box:hover,
+.service-block .inner-box:hover,
+.team-block .inner-box:hover,
+.event-block-two .inner-box:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 20px 40px rgba(6, 9, 45, 0.12) !important;
+    border-color: rgba(67, 185, 126, 0.2) !important;
+}
+
+/* Card image smooth zoom & overlay refinement */
+.course-block .inner-box .image img,
+.news-block .inner-box .image img,
+.team-block .inner-box .image img,
+.event-block-two .inner-box .image img {
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+}
+
+.course-block .inner-box:hover .image img,
+.news-block .inner-box:hover .image img,
+.team-block .inner-box:hover .image img,
+.event-block-two .inner-box:hover .image img {
+    transform: scale(1.08) !important;
+    opacity: 0.85 !important;
+}
+
+/* 3. Magnetic Hover & Cast Shadows for Buttons */
+.theme-btn {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.theme-btn:hover {
+    transform: translateY(-3px) scale(1.02) !important;
+}
+
+.btn-style-one:hover {
+    box-shadow: 0 10px 20px rgba(67, 185, 126, 0.3) !important;
+}
+
+.btn-style-two:hover {
+    box-shadow: 0 10px 20px rgba(67, 185, 126, 0.25) !important;
+}
+
+.btn-style-three:hover {
+    box-shadow: 0 10px 20px rgba(67, 185, 126, 0.2) !important;
+}
+
+.btn-style-four:hover {
+    box-shadow: 0 10px 20px rgba(67, 185, 126, 0.2) !important;
+}
+
+.btn-style-five:hover {
+    box-shadow: 0 10px 20px rgba(255, 224, 12, 0.4) !important;
+}
+
+/* 4. Elegant Dynamic Underline for Navigation Header */
+.main-menu .navigation > li > a {
+    position: relative !important;
+}
+
+.main-menu .navigation > li > a::after {
+    content: '' !important;
+    position: absolute !important;
+    width: 0 !important;
+    height: 3px !important;
+    bottom: 12px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background-color: #43b97e !important;
+    transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    border-radius: 2px !important;
+}
+
+.main-menu .navigation > li:hover > a::after,
+.main-menu .navigation > li.current > a::after {
+    width: 25px !important; /* Elegant line underline dynamic width */
+}
+
+/* 5. Fluid Ambient Floating Keyframes for Abstract Shapes */
+@keyframes verticalFloat {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(2deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes horizontalFloat {
+    0% { transform: translateX(0px) translateY(0px); }
+    50% { transform: translateX(10px) translateY(-5px); }
+    100% { transform: translateX(0px) translateY(0px); }
+}
+
+.banner-section .pattern-layer-three,
+.banner-section .pattern-layer-five,
+.banner-section .pattern-layer-eight,
+.instructor-section .background-layer-one,
+.instructor-section .background-layer-two {
+    animation: verticalFloat 7s ease-in-out infinite !important;
+}
+
+.banner-section .pattern-layer-six,
+.banner-section .pattern-layer-seven,
+.benefit-section .background-layer-one,
+.benefit-section .background-layer-two {
+    animation: horizontalFloat 9s ease-in-out infinite !important;
+}
+
+/* 6. Refined Scroll-to-Top Interaction */
+.scroll-to-top:hover {
+    background-color: #ffe00c !important;
+    color: #222222 !important;
+    transform: scale(1.15) translateY(-5px) !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* 7. Footer / Sitemap Hover Slides */
+.nav-column col-lg-6 col-md-12 col-sm-12 ul li a,
+.nav-column ul li a,
+.footer-links li a {
+    transition: all 0.3s ease !important;
+}
+
+.nav-column ul li a:hover,
+.footer-links li a:hover {
+    padding-left: 8px !important;
+    color: #43b97e !important;
+}
+
+.social-icon-one li a:hover {
+    transform: translateY(-4px) scale(1.2) !important;
+    color: #ffe00c !important;
+}

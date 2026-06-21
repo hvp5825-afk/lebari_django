@@ -39,7 +39,7 @@
 							</div>
 							<h5><a href="{{ feature.link|default:'#' }}">{{ feature.title }}</a></h5>
 							<div class="text">{{ feature.text }}</div>
-							<a href="{{ feature.link|default:'#' }}" class="read-more">Read More</a>
+							<a href="{{ feature.link|default:'#' }}" class="read-more">{{ labels.faq_read_more_button|default:'Read More' }}</a>
 						</div>
 					</div>
                         {% endfor %}
@@ -95,7 +95,7 @@
 				<!-- Column -->
 				<div class="column col-lg-6 col-md-12 col-sm-12">
 					<div class="title-box">
-						<h4>Primary FAQ</h4>
+						<h4>{{ labels.faq_primary_title|default:'Primary FAQ' }}</h4>
 					</div>
 					
 					<ul class="accordion-box">
@@ -119,7 +119,7 @@
 				<!-- Column -->
 				<div class="column col-lg-6 col-md-12 col-sm-12">
 					<div class="title-box">
-						<h4>Other questions</h4>
+						<h4>{{ labels.faq_other_title|default:'Other questions' }}</h4>
 					</div>
 					
 					<ul class="accordion-box">

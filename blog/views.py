@@ -10,15 +10,20 @@ def blog_list(request):
     if category_slug:
         posts = posts.filter(category__slug=category_slug)
         
+    query = request.GET.get('q')
+    if query:
+        posts = posts.filter(title__icontains=query)
+        
     categories = BlogCategory.objects.all()
     ctx = {
         'settings': settings,
         'posts': posts,
         'categories': categories,
         'current_category': category_slug,
+        'query': query,
     }
     ctx.update(get_cms_context('blog_list'))
-    return render(request, 'blog-list.html', ctx)
+    return render(request, 'blog.html', ctx)
 
 def blog_detail(request, slug):
     from .models import Comment
@@ -56,4 +61,6 @@ def default_blog_detail(request):
     post = Post.objects.first()
     if not post:
         return redirect('blog_list')
-    return render(request, 'blog-detail.html', {'settings': settings, 'post': post})
+    ctx = {'settings': settings, 'post': post}
+    ctx.update(get_cms_context('blog_detail'))
+    return render(request, 'blog-detail.html', ctx)

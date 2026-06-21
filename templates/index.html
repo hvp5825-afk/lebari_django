@@ -338,7 +338,24 @@
 						
 						<!-- Skills -->
 						<div class="skills">
-
+                            {% if skill_bars %}
+                                {% for skill in skill_bars %}
+                                <!-- Skill Item -->
+                                <div class="skill-item">
+                                    <div class="skill-header clearfix">
+                                        <div class="skill-title">{{ skill.title }}</div>
+                                        <div class="skill-percentage">
+                                            <div class="count-box">
+                                                <span class="count-text" data-speed="2000" data-stop="{{ skill.percentage }}">0</span>%
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="bar-inner"><div class="bar progress-line" data-width="{{ skill.percentage }}"></div></div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% else %}
 							<!-- Skill Item -->
 							<div class="skill-item">
 								<div class="skill-header clearfix">
@@ -375,6 +392,7 @@
 									<div class="bar-inner"><div class="bar progress-line" data-width="75"></div></div>
 								</div>
 							</div>
+                            {% endif %}
 
 						</div>
 						

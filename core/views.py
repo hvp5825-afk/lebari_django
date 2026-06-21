@@ -1,6 +1,31 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .models import SiteSetting, Banner, Testimonial, Teacher, FAQ, Event, FrontendSection, FeatureItem, CounterItem, ClientLogo
+from .models import SiteSetting, Banner, Testimonial, Teacher, FAQ, Event, FrontendSection, FeatureItem, CounterItem, ClientLogo, HomePageSetting, AboutPageSetting, ContactPageSetting, CoursesPageSetting, BlogPageSetting, BlogPageSetting
+from courses.models import Course, CourseCategory
+from blog.models import Post
+
+def get_cms_context(page_name=None):
+    ctx = {
+        'site_setting': SiteSetting.objects.first(),
+        'sections': {s.key: s for s in FrontendSection.objects.all()},
+        'testimonials': Testimonial.objects.filter(is_active=True).order_by('-created_at')
+    }
+    
+    if page_name == 'home':
+        ctx['home_page'] = HomePageSetting.objects.first()
+    if page_name == 'about':
+        ctx['about_page'] = AboutPageSetting.objects.first()
+    if page_name == 'contact':
+        ctx['contact_page'] = ContactPageSetting.objects.first()
+    if page_name == 'course':
+        ctx['course_page'] = CoursesPageSetting.objects.first()
+    if page_name in ['blog_list', 'blog_detail']:
+        ctx['blog_page'] = BlogPageSetting.objects.first()
+    return ctx
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from .models import SiteSetting, Banner, Testimonial, Teacher, FAQ, Event, FrontendSection, FeatureItem, CounterItem, ClientLogo, HomePageSetting, AboutPageSetting, ContactPageSetting, CoursesPageSetting, BlogPageSetting
 from courses.models import Course, CourseCategory
 from blog.models import Post
 
@@ -11,10 +36,13 @@ def get_cms_context(page_name):
     clients = ClientLogo.objects.all()
     posts = Post.objects.all().order_by('-created_at')[:3]
     testimonials = Testimonial.objects.all()
-    return {'sections': sections, 'features': features, 'counters': counters, 'clients': clients, 'posts': posts, 'testimonials': testimonials}
+    coursespage = CoursesPageSetting.objects.first()
+    blogpage = BlogPageSetting.objects.first()
+    return {'sections': sections, 'features': features, 'counters': counters, 'clients': clients, 'posts': posts, 'testimonials': testimonials, 'coursespage': coursespage, 'blogpage': blogpage}
 
 def index(request):
     settings = SiteSetting.objects.first()
+    homepage = HomePageSetting.objects.first()
     banners = Banner.objects.all()
     testimonials = Testimonial.objects.all()
     courses = Course.objects.all().order_by('-created_at')[:3]
@@ -22,6 +50,7 @@ def index(request):
     
     ctx = {
         'settings': settings,
+        'homepage': homepage,
         'banners': banners,
         'testimonials': testimonials,
         'courses': courses,
@@ -73,10 +102,12 @@ def university(request):
 
 def about(request):
     settings = SiteSetting.objects.first()
+    aboutpage = AboutPageSetting.objects.first()
     from courses.models import Teacher
     from core.models import Testimonial
     ctx = {
         'settings': settings,
+        'aboutpage': aboutpage,
         'teachers': Teacher.objects.all()[:4],
         'testimonials': Testimonial.objects.all(),
     }
@@ -85,6 +116,7 @@ def about(request):
 
 def contact(request):
     settings = SiteSetting.objects.first()
+    contactpage = ContactPageSetting.objects.first()
     if request.method == 'POST':
         # Simple processing for contact form
         name = request.POST.get('username')
@@ -107,6 +139,7 @@ def contact(request):
         
     return render(request, 'contact.html', {
         'settings': settings,
+        'contactpage': contactpage,
     })
 
 def teacher_list(request):

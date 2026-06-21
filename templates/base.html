@@ -3,11 +3,12 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>LeBari Education HTML-5 Template | Homepage 01</title>
+<title>{{ labels.site_title|default:"LeBari Education HTML-5 Template | Homepage 01" }}</title>
 <!-- Stylesheets -->
 <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
 <link href="{% static 'css/style.css' %}?v=2" rel="stylesheet">
 <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+<link href="{% static 'css/custom-animations.css' %}?v=1.0" rel="stylesheet">
 
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 
@@ -62,41 +63,42 @@
 						
 												<div class="navbar-collapse collapse clearfix" id="navbarSupportedContent">
 							<ul class="navigation clearfix">
-								<li class="{% if request.resolver_match.url_name == 'index' %}current{% endif %}"><a href="{% url 'index' %}">Home</a></li>
-								<li class="dropdown {% if 'about' in request.resolver_match.url_name or 'teacher' in request.resolver_match.url_name %}current{% endif %}"><a href="#">About</a>
-									<ul>
-										<li><a href="{% url 'about' %}">About Us</a></li>
-										<li><a href="{% url 'faq' %}">Faq</a></li>
-										<li><a href="{% url 'teacher' %}">Teachers</a></li>
-										<li><a href="{% url 'membership' %}">Membership</a></li>
-										<li><a href="{% url 'event_list' %}">Events</a></li>
-									</ul>
-								</li>
-								<li class="{% if 'course' in request.resolver_match.url_name %}current{% endif %}"><a href="{% url 'course_list' %}">Courses</a></li>
-								<li class="{% if 'blog' in request.resolver_match.url_name %}current{% endif %}"><a href="{% url 'blog_list' %}">Blog</a></li>
-								{% if user.is_authenticated %}
-								<li class="dropdown {% if 'profile' in request.resolver_match.url_name %}current{% endif %}"><a href="#">Profile</a>
-									<ul>
-										<li><a href="{% url 'profile' %}">Dashboard</a></li>
-										<li><a href="{% url 'logout' %}">Logout</a></li>
-									</ul>
-								</li>
-								{% else %}
-								<li><a href="{% url 'login' %}">Login / Register</a></li>
-								{% endif %}
-								<li class="{% if request.resolver_match.url_name == 'contact' %}current{% endif %}"><a href="{% url 'contact' %}">Contact</a></li>
+                                {% for item in menu_items %}
+                                    {% if item.is_auth_required and not request.user.is_authenticated %}
+                                        <!-- Skip -->
+                                    {% elif item.is_guest_only and request.user.is_authenticated %}
+                                        <!-- Skip -->
+                                    {% else %}
+                                        {% if item.children.all %}
+                                            <li class="dropdown {% if item.is_active %}current{% endif %}"><a href="{{ item.url|default:'#' }}">{{ item.title }}</a>
+                                                <ul>
+                                                    {% for child in item.children.all %}
+                                                        {% if child.is_auth_required and not request.user.is_authenticated %}
+                                                            <!-- Skip -->
+                                                        {% elif child.is_guest_only and request.user.is_authenticated %}
+                                                            <!-- Skip -->
+                                                        {% else %}
+                                                            <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </ul>
+                                            </li>
+                                        {% else %}
+                                            <li class="{% if item.is_active %}current{% endif %}"><a href="{{ item.url }}">{{ item.title }}</a></li>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
 							</ul>
-						</div>
-					</nav>
-					
-					<!-- Main Menu End-->
+							</div>
+						</nav>
+						<!-- Main Menu End-->
 					<div class="outer-box clearfix">
 						
 						<!-- Search -->
 						<div class="search-box">
 							<form method="get" action="{% url 'course_list' %}">
 								<div class="form-group">
-									<input type="search" name="q" value="{{ request.GET.q|default:'' }}" placeholder="What do we want learn" required>
+									<input type="search" name="q" value="{{ request.GET.q|default:'' }}" placeholder="What do you want to learn?" required>
 									<button type="submit"><span class="icon fa fa-search"></span></button>
 								</div>
 							</form>
@@ -104,10 +106,18 @@
 						
 						<!-- Social Box -->
 						<ul class="social-box">
-							<li class="instagram"><a target="_blank" href="http://instagram.com/" class="fa fa-instagram"></a></li>
-							<li class="facebook"><a target="_blank" href="http://facebook.com/" class="fa fa-facebook-f"></a></li>
-							<li class="twitter"><a target="_blank" href="http://twitter.com/" class="fa fa-twitter"></a></li>
-							<li class="pinterest"><a target="_blank" href="http://pinterest.com/" class="fa fa-pinterest-p"></a></li>
+                            {% if settings and settings.instagram_url %}
+							<li class="instagram"><a target="_blank" href="{{ settings.instagram_url }}" class="fa fa-instagram"></a></li>
+                            {% endif %}
+                            {% if settings and settings.facebook_url %}
+							<li class="facebook"><a target="_blank" href="{{ settings.facebook_url }}" class="fa fa-facebook-f"></a></li>
+                            {% endif %}
+                            {% if settings and settings.twitter_url %}
+							<li class="twitter"><a target="_blank" href="{{ settings.twitter_url }}" class="fa fa-twitter"></a></li>
+                            {% endif %}
+                            {% if settings and settings.youtube_url %}
+							<li class="youtube"><a target="_blank" href="{{ settings.youtube_url }}" class="fa fa-youtube-play"></a></li>
+                            {% endif %}
 						</ul>
 							
 					</div>
@@ -194,8 +204,8 @@
 {% endif %}</a>
 							</div>
 														<ul class="info-list">
-								<li>Tel:<a href="tel:{{ settings.phone|default:'+0845-371-02-02' }}"> {{ settings.phone|default:'0845 371 02 02' }}</a></li>
-								<li>Email:<a href="mailto:{{ settings.email|default:'info@yoursite.co.uk' }}"> {{ settings.email|default:'info@yoursite.co.uk' }}</a></li>
+								<li>{{ labels.footer_tel_label|default:"Tel:" }}<a href="tel:{{ settings.phone|default:'+0845-371-02-02' }}"> {{ settings.phone|default:'0845 371 02 02' }}</a></li>
+								<li>{{ labels.footer_email_label|default:"Email:" }}<a href="mailto:{{ settings.email|default:'info@yoursite.co.uk' }}"> {{ settings.email|default:'info@yoursite.co.uk' }}</a></li>
 							</ul>
 							<!-- Social Box -->
 							<ul class="social-box">
@@ -218,38 +228,48 @@
 					
 					<!-- Footer Column -->
 					<div class="footer-column col-lg-7 col-md-12 col-sm-12">
-						<div class="row clearfix">
-							<div class="column col-lg-4 col-md-4 col-sm-12">
-								<h5>About</h5>
-								<ul class="list">
-									<li><a href="{% url 'about' %}">About Us</a></li>
-									<li><a href="{% url 'blog_list' %}">News & Blog</a></li>
-									<li><a href="{% url 'teacher' %}">Our Team</a></li>
-									<li><a href="{% url 'contact' %}">Contact Us</a></li>
-								</ul>
-							</div>
-							<!-- Column -->
-							<div class="column col-lg-4 col-md-4 col-sm-12">
-								<h5>Need some help?</h5>
-								<ul class="list">
-									<li><a href="{% url 'faq' %}">FAQs</a></li>
-									<li><a href="{% url 'contact' %}">Help Centre</a></li>
-									<li><a href="{% url 'register' %}">Create Account</a></li>
-									<li><a href="{% url 'login' %}">Login</a></li>
-								</ul>
-							</div>
-							<!-- Column -->
-							<div class="column col-lg-4 col-md-4 col-sm-12">
-								<h5>Links</h5>
-								<ul class="list">
-									<li><a href="{% url 'course_list' %}">All Courses</a></li>
-									<li><a href="{% url 'membership' %}">Membership</a></li>
-									<li><a href="{% url 'event_list' %}">Events</a></li>
-									<li><a href="{% url 'donation' %}">Donation</a></li>
-								</ul>
-							</div>
+					<div class="row clearfix">
+                        {% if footer_columns %}
+                            {% for col in footer_columns %}
+						<div class="column col-lg-4 col-md-4 col-sm-12">
+							<h5>{{ col.title }}</h5>
+							<ul class="list">
+                                {% for link in col.links.all %}
+								<li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                                {% endfor %}
+							</ul>
+						</div>
+                            {% endfor %}
+                        {% else %}
+						<div class="column col-lg-4 col-md-4 col-sm-12">
+							<h5>About</h5>
+							<ul class="list">
+								<li><a href="/about.html">About Us</a></li>
+								<li><a href="/blog/">News &amp; Blog</a></li>
+								<li><a href="/teacher.html">Our Team</a></li>
+								<li><a href="/contact.html">Contact Us</a></li>
+							</ul>
+						</div>
+						<div class="column col-lg-4 col-md-4 col-sm-12">
+							<h5>Need some help?</h5>
+							<ul class="list">
+								<li><a href="/faq.html">FAQs</a></li>
+								<li><a href="/contact.html">Help Centre</a></li>
+								<li><a href="/register/">Create Account</a></li>
+								<li><a href="/login/">Login</a></li>
+							</ul>
+						</div>
+						<div class="column col-lg-4 col-md-4 col-sm-12">
+							<h5>Links</h5>
+							<ul class="list">
+								<li><a href="/courses/">All Courses</a></li>
+								<li><a href="/membership/">Membership</a></li>
+								<li><a href="/events/">Events</a></li>
+								<li><a href="/donation/">Donation</a></li>
+							</ul>
+						</div>
+                        {% endif %}
 					</div>
-					
 				</div>
 			</div>
 			
@@ -259,7 +279,7 @@
 					<div class="col-lg-6 col-lg-6 col-sm-12">
 						<!-- Subscribe Form -->
 						<div class="subscribe-form">
-							<h6>Newsletter</h6>
+							<h6>{{ labels.footer_newsletter_heading|default:"Newsletter" }}</h6>
 							<form method="post" action="{% url 'subscribe' %}">
 {% csrf_token %}
                                 {% if messages %}
@@ -268,7 +288,7 @@
                                     {% endfor %}
                                 {% endif %}
 								<div class="form-group">
-									<input type="email" name="email" value="" placeholder="Your email" required>
+									<input type="email" name="email" value="" placeholder="{{ labels.footer_email_placeholder|default:'Your email' }}" required>
 									<button type="submit" class="submit-btn"><span class="icon flaticon-right-arrow-2"></span></button>
 								</div>
 							</form>
@@ -293,8 +313,8 @@
 					<!-- Nav Column -->
 					<div class="nav-column col-lg-6 col-md-12 col-sm-12">
 						<ul>
-							<li><a href="{% url 'about' %}">SiteMap</a></li>
-							<li><a href="{% url 'about' %}">Privacy Policy</a></li>
+							<li><a href="{{ labels.footer_sitemap_url|default:'/about.html' }}">{{ labels.footer_sitemap_text|default:"SiteMap" }}</a></li>
+							<li><a href="{{ labels.footer_privacy_url|default:'/about.html' }}">{{ labels.footer_privacy_text|default:"Privacy Policy" }}</a></li>
 						</ul>
 					</div>
 					

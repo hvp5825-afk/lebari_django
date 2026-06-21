@@ -71,7 +71,7 @@
 			<!-- Page Breadcrumb -->
 			<ul class="page-breadcrumb">
 				<li><a href="{% url 'index' %}">Home</a></li>
-				<li>{% if sections.about_banner %}{{ sections.about_banner.subtitle }}{% else %}About{% endif %}</li>
+				<li>{{ aboutpage.banner_subtitle }}</li>
 			</ul>
             <div class="row clearfix">
 				
@@ -81,7 +81,7 @@
 						<div class="pattern-layer-one" style="background-image: url({% static 'images/main-slider/pattern-1.png' %})"></div>
 						<div class="icon-layer" style="background-image: url({% static 'images/icons/icon-2.png' %})"></div>
 						<div class="icon-layer-two" style="background-image: url({% static 'images/icons/icon-5.png' %})"></div>
-						<h2>{% if sections.about_banner %}{{ sections.about_banner.title|safe }}{% else %}Our mission is to provide <br> a free Online <br> Courses and Class{% endif %}</h2>
+						<h2>{{ aboutpage.banner_title|safe }}</h2>
 					</div>
 				</div>
 				
@@ -92,10 +92,10 @@
 						<div class="icon-layer-four" style="background-image: url({% static 'images/icons/icon-2.png' %})"></div>
 						<div class="icon-layer-five" style="background-image: url({% static 'images/icons/icon-4.png' %})"></div>
 						<div class="image">
-							<img src="{% if sections.about_banner and sections.about_banner.image %}{{ sections.about_banner.image.url }}{% else %}{% static 'images/resource/page-title-1.jpg' %}{% endif %}" alt="" />
+							<img src="{% if aboutpage and aboutpage.banner_image %}{{ aboutpage.banner_image.url }}{% else %}{% static 'images/resource/page-title-1.jpg' %}{% endif %}" alt="" />
 						</div>
 						<div class="image-two">
-							<img src="{% if sections.about_banner and sections.about_banner.image_2 %}{{ sections.about_banner.image_2.url }}{% else %}{% static 'images/resource/page-title-2.jpg' %}{% endif %}" alt="" />
+							<img src="{% if aboutpage and aboutpage.banner_image_2 %}{{ aboutpage.banner_image_2.url }}{% else %}{% static 'images/resource/page-title-2.jpg' %}{% endif %}" alt="" />
 						</div>
 					</div>
 				</div>
@@ -118,10 +118,10 @@
 						<div class="pattern-layer" style="background-image:url({% static 'images/background/pattern-4.png' %})"></div>
 						<div class="pattern-layer-two" style="background-image:url({% static 'images/background/pattern-17.png' %})"></div>
 						<div class="image">
-							<img src="{% if sections.about_goal and sections.about_goal.image %}{{ sections.about_goal.image.url }}{% else %}{% static 'images/resource/goal-1.jpg' %}{% endif %}" alt="" />
+							<img src="{% if aboutpage and aboutpage.goal_image %}{{ aboutpage.goal_image.url }}{% else %}{% static 'images/resource/goal-1.jpg' %}{% endif %}" alt="" />
 						</div>
 						<div class="image-two">
-							<img src="{% static 'images/resource/goal-2.jpg' %}" alt="" />
+							<img src="{% if aboutpage and aboutpage.goal_image_2 %}{{ aboutpage.goal_image_2.url }}{% else %}{% static 'images/resource/goal-2.jpg' %}{% endif %}" alt="" />
 						</div>
 					</div>
 				</div>
@@ -131,9 +131,9 @@
 					<div class="inner-column">
 						<div class="pattern-layer-three" style="background-image:url({% static 'images/background/pattern-13.png' %})"></div>
 						<div class="sec-title">
-							<div class="title">{% if sections.about_goal %}{{ sections.about_goal.subtitle }}{% else %}Achieve Goals{% endif %}</div>
-							<h2>{% if sections.about_goal %}{{ sections.about_goal.title|safe }}{% else %}Start To Success{% endif %}</h2>
-							<div class="text">{% if sections.about_goal %}{{ sections.about_goal.text|safe }}{% else %}{% if sections.about_short %}{{ sections.about_short.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur{% endif %} Duis aute irure dolor in{% endif %}</div>
+							<div class="title">{{ aboutpage.goal_subtitle }}</div>
+							<h2>{{ aboutpage.goal_title|safe }}</h2>
+							<div class="text">{{ aboutpage.goal_text|safe }}</div>
 						</div>
 						
 						<!-- Fact Counter -->
@@ -201,9 +201,9 @@
 					<div class="inner-column">
 						<!-- Sec Title -->
 						<div class="sec-title">
-							<div class="title">{% if sections.about_skill %}{{ sections.about_skill.subtitle }}{% else %}Our Status valu{% endif %}</div>
-							<h2>{% if sections.about_skill %}{{ sections.about_skill.title|safe }}{% else %}Differentiate your classroom <br> What makes us special?{% endif %}</h2>
-							<div class="text">{% if sections.about_skill %}{{ sections.about_skill.text|safe }}{% else %}{% if sections.about_short %}{{ sections.about_short.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur{% endif %}{% endif %}</div>
+							<div class="title">{{ aboutpage.skill_subtitle }}</div>
+							<h2>{{ aboutpage.skill_title|safe }}</h2>
+							<div class="text">{{ aboutpage.skill_text|safe }}</div>
 						</div>
 						
 						<!-- Skills -->
@@ -256,7 +256,7 @@
 						<div class="circle-one"></div>
 						<div class="circle-two"></div>
 						<div class="image titlt" data-tilt data-tilt-max="4">
-							<img src="{% if sections.about_skill and sections.about_skill.image %}{{ sections.about_skill.image.url }}{% else %}{% static 'images/resource/skill.png' %}{% endif %}" alt="" />
+							<img src="{% if aboutpage and aboutpage.skill_image %}{{ aboutpage.skill_image.url }}{% else %}{% static 'images/resource/skill.png' %}{% endif %}" alt="" />
 						</div>
 					</div>
 				</div>
@@ -280,7 +280,7 @@
 						<div class="color-layer"></div>
 						<div class="color-layer-two"></div>
 						<div class="image wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
-							<img src="{% if sections.about_professional and sections.about_professional.image %}{{ sections.about_professional.image.url }}{% else %}{% static 'images/resource/professional.jpg' %}{% endif %}" alt="" />
+							<img src="{% if aboutpage and aboutpage.professional_image %}{{ aboutpage.professional_image.url }}{% else %}{% static 'images/resource/professional.jpg' %}{% endif %}" alt="" />
 						</div>
 					</div>
 				</div>
@@ -290,12 +290,12 @@
 					<div class="inner-column">
 						<div class="pattern-layer-three" style="background-image:url({% static 'images/background/pattern-16.png' %})"></div>
 						<div class="sec-title">
-							<div class="title">{% if sections.about_professional %}{{ sections.about_professional.subtitle }}{% else %}Learn anything{% endif %}</div>
-							<h2>{% if sections.about_professional %}{{ sections.about_professional.title|safe }}{% else %}Take online courses Earn <br> professional{% endif %}</h2>
+							<div class="title">{{ aboutpage.professional_subtitle }}</div>
+							<h2>{{ aboutpage.professional_title|safe }}</h2>
 						</div>
-						<div class="bold-text">{% if sections.about_professional %}{{ sections.about_professional.text|safe }}{% else %}Position yourself for success with a variety of collegeclasses including general education courses{% endif %}</div>
+						<div class="bold-text">{{ aboutpage.professional_text|safe }}</div>
 						<div class="btn-box">
-							<a href="{% if sections.about_professional %}{{ sections.about_professional.button_link }}{% else %}#{% endif %}" class="theme-btn btn-style-four"><span class="txt">{% if sections.about_professional %}{{ sections.about_professional.button_text }}{% else %}Short courses{% endif %}</span></a>
+							<a href="{{ aboutpage.professional_button_link }}" class="theme-btn btn-style-four"><span class="txt">{{ aboutpage.professional_button_text }}</span></a>
 						</div>
 					</div>
 				</div>
@@ -317,9 +317,9 @@
 				<!-- Sec Title -->
 				<!-- Sec Title -->
 				<div class="sec-title centered">
-					<div class="title">{% if sections.about_testimonials %}{{ sections.about_testimonials.subtitle }}{% else %}Testimonial{% endif %}</div>
-					<h2>{% if sections.about_testimonials %}{{ sections.about_testimonials.title|safe }}{% else %}Words From Customers{% endif %}</h2>
-					<div class="text">{% if sections.about_testimonials %}{{ sections.about_testimonials.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu <br> fugiat nulla pariatur Duis aute irure dolor in reprehenderit in{% endif %}</div>
+					<div class="title">{{ aboutpage.testimonials_subtitle }}</div>
+					<h2>{{ aboutpage.testimonials_title|safe }}</h2>
+					<div class="text">{{ aboutpage.testimonials_text|safe }}</div>
 				</div>
 				<div class="testimonial-carousel-two owl-carousel owl-theme">
 				
@@ -417,10 +417,10 @@
 						<div class="inner-column">
 							<div class="sec-title">
 								<div class="title">Teacher</div>
-								<h2>Our best online Techer</h2>
-								<div class="text">{% if sections.about_short %}{{ sections.about_short.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur{% endif %}</div>
+								<h2>{{ aboutpage.team_title }}</h2>
+								<div class="text">{{ aboutpage.team_text|safe }}</div>
 							</div>
-							<a href="#" class="theme-btn btn-style-one"><span class="txt">View More</span></a>
+							<a href="{{ aboutpage.team_button_link|default:'#' }}" class="theme-btn btn-style-one"><span class="txt">{{ aboutpage.team_button_text|default:'View More' }}</span></a>
 						</div>
 					</div>
 					
@@ -486,8 +486,8 @@
 		<div class="auto-container">
 			<!-- Sec Title -->
 			<div class="sec-title centered">
-				<h2>{% if sections.about_clients %}{{ sections.about_clients.title }}{% else %}Key supporters{% endif %}</h2>
-				<div class="text">{% if sections.about_clients %}{{ sections.about_clients.text|safe }}{% else %}These leading universities are currently offering online degree <br> courses on FutureLearn:{% endif %}</div>
+				<h2>{{ aboutpage.clients_title }}</h2>
+				<div class="text">{{ aboutpage.clients_text|safe }}</div>
 			</div>
 			
 			<div class="sponsors-outer">
@@ -527,16 +527,16 @@
 						<div class="image">
 							<img src="{% static 'images/resource/contact.png' %}" alt="" />
 						</div>
-						<h5>{% if sections.about_contact_info %}{{ sections.about_contact_info.title }}{% else %}Contact us{% endif %}</h5>
-						<p>{% if sections.about_contact_info %}{{ sections.about_contact_info.text|safe }}{% else %}It is a long established fact that a reader will be distracted by the readable content of a page{% endif %}</p>
+						<h5>{{ aboutpage.contact_info_title }}</h5>
+						<p>{{ aboutpage.contact_info_text|safe }}</p>
 						<ul class="contact-list">
 							<li>
 								<strong>Phone:</strong>
-								<a href="tel:+88-01682648101">+88 01682648101</a>
+								<a href="tel:{{ settings.phone|default:'+88-01682648101' }}">{{ settings.phone|default:'+88-01682648101' }}</a>
 							</li>
 							<li>
 								<strong>Email:</strong>
-								<a href="mailo:hello@lebari.com">hello@lebari.com</a>
+								<a href="mailto:{{ settings.email|default:'hello@lebari.com' }}">{{ settings.email|default:'hello@lebari.com' }}</a>
 							</li>
 						</ul>
 					</div>
@@ -548,8 +548,8 @@
 						<div class="color-layer"></div>
 						<!-- Sec Title -->
 						<div class="sec-title">
-							<h2>{% if sections.about_contact_form %}{{ sections.about_contact_form.title|safe }}{% else %}Visit us <br> for Free Resources{% endif %}</h2>
-							<div class="text">{% if sections.about_contact_form %}{{ sections.about_contact_form.text|safe }}{% else %}These leading universities are currently offering online degree courses on FutureLearn:{% endif %}</div>
+							<h2>{{ aboutpage.contact_form_title|safe }}</h2>
+							<div class="text">{{ aboutpage.contact_form_text|safe }}</div>
 						</div>
 						
 						<!-- Default Form -->
@@ -575,12 +575,16 @@
 									
 									<!-- Form Group -->
 									<div class="form-group col-lg-12 col-md-12 col-sm-12">
-										<select name="country" class="custom-select-box">
-											<option>When you want to start courses</option>
-											<option>courses 01</option>
-											<option>courses 02</option>
-											<option>courses 03</option>
-											<option>courses 04</option>
+										<select name="subject" class="custom-select-box">
+											<option value="">{{ labels.about_form_subject_placeholder|default:'When you want to start courses' }}</option>
+                                            {% for subject in contact_subjects %}
+											<option value="{{ subject.title }}">{{ subject.title }}</option>
+                                            {% empty %}
+											<option value="courses 01">courses 01</option>
+											<option value="courses 02">courses 02</option>
+											<option value="courses 03">courses 03</option>
+											<option value="courses 04">courses 04</option>
+                                            {% endfor %}
 										</select>
 									</div>
 									

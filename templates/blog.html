@@ -74,11 +74,11 @@
 			<!-- Page Breadcrumb -->
 			<ul class="page-breadcrumb">
 				<li><a href="{% url 'index' %}">Home</a></li>
-				<li>Blog default</li>
+				<li>{{ blog_page.banner_subtitle|default:"Blog default" }}</li>
 			</ul>
 			<div class="content-box">
-				<h2>Latest articles & news</h2>
-				<div class="text">{% if sections.blog_content %}{{ sections.blog_content.text|safe }}{% else %}{% if sections.blog_short %}{{ sections.blog_short.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur{% endif %} Duis aute irure dolor in reprehenderit in {% endif %}</div>
+				<h2>{{ blog_page.banner_title|safe|default:"Latest articles & news" }}</h2>
+				<div class="text">{{ blog_page.banner_text|safe|default:"Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Duis aute irure dolor in reprehenderit in" }}</div>
 			</div>
 		</div>
 		<div class="outer-container">
@@ -91,6 +91,8 @@
 							<a href="{{ post.get_absolute_url }}">
 								{% if post.image %}
 								<img src="{{ post.image.url }}" alt="{{ post.title }}" />
+								{% elif blog_page.default_post_image %}
+								<img src="{{ blog_page.default_post_image.url }}" alt="{{ post.title }}" />
 								{% else %}
 								<img src="{% static 'images/resource/news-6.jpg' %}" alt="{{ post.title }}" />
 								{% endif %}
@@ -114,7 +116,7 @@
 			
 			<!-- Button Box -->
 			<div class="btn-box text-center">
-				<a href="#" class="theme-btn btn-style-five">View More Artical</a>
+				<a href="{% if blog_page.button_link %}{{ blog_page.button_link }}{% else %}{% url 'default_blog_detail' %}{% endif %}" class="theme-btn btn-style-five">{{ blog_page.button_text|default:"View More Artical" }}</a>
 			</div>
 			
 		</div>

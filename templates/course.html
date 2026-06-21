@@ -72,7 +72,7 @@
 			<!-- Page Breadcrumb -->
 			<ul class="page-breadcrumb">
 				<li><a href="{% url 'index' %}">Home</a></li>
-				<li>Courses v1</li>
+				<li>{% if coursespage %}{{ coursespage.banner_subtitle }}{% else %}Courses v1{% endif %}</li>
 			</ul>
             <div class="row clearfix">
 				
@@ -82,7 +82,7 @@
 						<div class="pattern-layer-one" style="background-image: url({% static 'images/main-slider/pattern-1.png' %})"></div>
 						<div class="icon-layer" style="background-image: url({% static 'images/icons/icon-2.png' %})"></div>
 						<div class="icon-layer-two" style="background-image: url({% static 'images/icons/icon-5.png' %})"></div>
-						<h2>{% if sections.course_banner %}{{ sections.course_banner.title|safe }}{% else %}Explore <br> Featured Courses{% endif %}</h2>
+						<h2>{% if coursespage %}{{ coursespage.banner_title|safe }}{% else %}Explore <br> Featured Courses{% endif %}</h2>
 					</div>
 				</div>
 				
@@ -93,10 +93,10 @@
 						<div class="icon-layer-four" style="background-image: url({% static 'images/icons/icon-2.png' %})"></div>
 						<div class="icon-layer-five" style="background-image: url({% static 'images/icons/icon-4.png' %})"></div>
 						<div class="image">
-							<img src="{% static 'images/resource/page-title-3.jpg' %}" alt="" />
+							<img src="{% if coursespage and coursespage.banner_image_1 %}{{ coursespage.banner_image_1.url }}{% else %}{% static 'images/resource/page-title-3.jpg' %}{% endif %}" alt="" />
 						</div>
 						<div class="image-two">
-							<img src="{% static 'images/resource/page-title-4.jpg' %}" alt="" />
+							<img src="{% if coursespage and coursespage.banner_image_2 %}{{ coursespage.banner_image_2.url }}{% else %}{% static 'images/resource/page-title-4.jpg' %}{% endif %}" alt="" />
 						</div>
 					</div>
 				</div>
@@ -124,399 +124,79 @@
 									<span class="icon flaticon-filter-filled-tool-symbol"></span> Filter <span class="arrow fa fa-angle-down"></span>
 									
 									<!-- Filter Categories -->
-									<div class="filter-categories">
-										<div class="clearfix">
-											
-											<!-- Column -->
-											<div class="column">
-												<h6>Categories</h6>
+									<div class="filter-categories" style="width: 800px; padding: 20px;">
+										<form method="GET" action="{% url 'course_list' %}">
+											<div class="row clearfix">
 												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-one">
-														<label for="radio-one">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															Digital Marketing
-														</label>
+												<!-- Column -->
+												<div class="column col-lg-3 col-md-6 col-sm-12">
+													<h6>Categories</h6>
+													{% for cat in categories %}
+													<div class="form-group">
+														<div class="select-box">
+															<input type="checkbox" name="category" value="{{ cat.id }}" id="cat-{{ cat.id }}" {% if cat.id in selected_categories %}checked{% endif %}>
+															<label for="cat-{{ cat.id }}">
+																<span class="default-check"></span>
+																<span class="check-icon fa fa-check"></span>
+																{{ cat.name }}
+															</label>
+														</div>
+													</div>
+													{% endfor %}
+												</div>
+												
+												<!-- Column -->
+												<div class="column col-lg-3 col-md-6 col-sm-12">
+													<h6>Instructor</h6>
+													{% for teacher in teachers %}
+													<div class="form-group">
+														<div class="select-box">
+															<input type="checkbox" name="teacher" value="{{ teacher.id }}" id="tea-{{ teacher.id }}" {% if teacher.id in selected_teachers %}checked{% endif %}>
+															<label for="tea-{{ teacher.id }}">
+																<span class="default-check"></span>
+																<span class="check-icon fa fa-check"></span>
+																{{ teacher.name }}
+															</label>
+														</div>
+													</div>
+													{% endfor %}
+												</div>
+												
+												<!-- Column -->
+												<div class="column col-lg-3 col-md-6 col-sm-12">
+													<h6>Sort by</h6>
+													<div class="form-group">
+														<div class="select-box">
+															<input type="radio" name="sort" value="new" id="sort-new" {% if selected_sort == 'new' %}checked{% endif %}>
+															<label for="sort-new"><span class="default-check"></span><span class="check-icon fa fa-circle"></span>New Courses</label>
+														</div>
+													</div>
+													<div class="form-group">
+														<div class="select-box">
+															<input type="radio" name="sort" value="old" id="sort-old" {% if selected_sort == 'old' %}checked{% endif %}>
+															<label for="sort-old"><span class="default-check"></span><span class="check-icon fa fa-circle"></span>Old Courses</label>
+														</div>
 													</div>
 												</div>
 												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-two">
-														<label for="radio-two">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															Business
-														</label>
-													</div>
+												<!-- Column -->
+												<div class="column col-lg-3 col-md-6 col-sm-12">
+													<h6>Price</h6>
+													<div class="form-group"><div class="select-box"><input type="checkbox" name="price" value="paid" id="price-paid" {% if 'paid' in selected_prices %}checked{% endif %}><label for="price-paid"><span class="default-check"></span><span class="check-icon fa fa-check"></span>Paid</label></div></div>
+													<div class="form-group"><div class="select-box"><input type="checkbox" name="price" value="free" id="price-free" {% if 'free' in selected_prices %}checked{% endif %}><label for="price-free"><span class="default-check"></span><span class="check-icon fa fa-check"></span>Free</label></div></div>
+													
+													<br>
+													<h6>Level</h6>
+													<div class="form-group"><div class="select-box"><input type="checkbox" name="level" value="Beginner" id="level-beg" {% if 'Beginner' in selected_levels %}checked{% endif %}><label for="level-beg"><span class="default-check"></span><span class="check-icon fa fa-check"></span>Beginner</label></div></div>
+													<div class="form-group"><div class="select-box"><input type="checkbox" name="level" value="Intermediate" id="level-int" {% if 'Intermediate' in selected_levels %}checked{% endif %}><label for="level-int"><span class="default-check"></span><span class="check-icon fa fa-check"></span>Intermediate</label></div></div>
+													<div class="form-group"><div class="select-box"><input type="checkbox" name="level" value="Expert" id="level-exp" {% if 'Expert' in selected_levels %}checked{% endif %}><label for="level-exp"><span class="default-check"></span><span class="check-icon fa fa-check"></span>Expert</label></div></div>
 												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-three">
-														<label for="radio-three">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															Social Media Marketing
-														</label>
-													</div>
-												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-four">
-														<label for="radio-four">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															Design
-														</label>
-													</div>
-												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-five">
-														<label for="radio-five">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															User experience
-														</label>
-													</div>
-												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-six">
-														<label for="radio-six">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															User interface
-														</label>
-													</div>
-												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-seven">
-														<label for="radio-seven">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															IT & Software Courses
-														</label>
-													</div>
-												</div>
-												
 											</div>
-											
-											<!-- Column -->
-											<div class="column">
-												<h6>Instructor</h6>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-eight">
-														<label for="radio-eight">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															Mahfuz Riad (15)
-														</label>
-													</div>
-												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-nine">
-														<label for="radio-nine">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															Siful islam
-														</label>
-													</div>
-												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-ten">
-														<label for="radio-ten">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															Foqrul Munna (12)
-														</label>
-													</div>
-												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-eleven">
-														<label for="radio-eleven">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															Mahadi Shopnil (16)
-														</label>
-													</div>
-												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-twelve">
-														<label for="radio-twelve">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															Instructor (8)
-														</label>
-													</div>
-												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-thirteen">
-														<label for="radio-thirteen">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															Alex Saim (04)
-														</label>
-													</div>
-												</div>
-												
+											<div class="form-group" style="margin-top:20px;">
+												<button type="submit" class="theme-btn btn-style-two"><span class="txt">Apply Filters</span></button>
 											</div>
-											
-											<!-- Column -->
-											<div class="column">
-												<h6>Sort by</h6>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-fourteen">
-														<label for="radio-fourteen">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															New Courses
-														</label>
-													</div>
-												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-fifteen">
-														<label for="radio-fifteen">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															Old Courses 
-														</label>
-													</div>
-												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-sixteen">
-														<label for="radio-sixteen">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															Course 2019
-														</label>
-													</div>
-												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-seventeen">
-														<label for="radio-seventeen">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															Course 2018
-														</label>
-													</div>
-												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-eighteen">
-														<label for="radio-eighteen">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															Course 2017
-														</label>
-													</div>
-												</div>
-												
-											</div>
-											
-											<!-- Column -->
-											<div class="column">
-												<h6>Language</h6>
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-nineteen">
-														<label for="radio-nineteen">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															English (10)
-														</label>
-													</div>
-												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-twenty">
-														<label for="radio-twenty">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															French (4)
-														</label>
-													</div>
-												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-twentyone">
-														<label for="radio-twentyone">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															German (5)
-														</label>
-													</div>
-												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-twentytwo">
-														<label for="radio-twentytwo">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															Japanese (4)
-														</label>
-													</div>
-												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-twentythree">
-														<label for="radio-twentythree">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															Russian (1)
-														</label>
-													</div>
-												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-twentyfour">
-														<label for="radio-twentyfour">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															Spanish (6)
-														</label>
-													</div>
-												</div>
-												
-											</div>
-											
-											<!-- Column -->
-											<div class="column">
-												<h6>Price</h6>
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-twentyfive">
-														<label for="radio-twentyfive">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															All (90)
-														</label>
-													</div>
-												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-twentysix">
-														<label for="radio-twentysix">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															Paid (70)
-														</label>
-													</div>
-												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-twentyseven">
-														<label for="radio-twentyseven">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															Free (12)
-														</label>
-													</div>
-												</div>
-												<br>
-												<h6>Level</h6>
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-twentyeight">
-														<label for="radio-twentyeight">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															Beginner (21)
-														</label>
-													</div>
-												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-twentynine">
-														<label for="radio-twentynine">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															Intermediate (10)
-														</label>
-													</div>
-												</div>
-												
-												<!-- Form Group -->
-												<div class="form-group">
-													<div class="select-box">
-														<input type="checkbox" name="payment-group" id="radio-thirty">
-														<label for="radio-thirty">
-															<span class="default-check"></span>
-															<span class="check-icon fa fa-check"></span>
-															Expert (4)
-														</label>
-													</div>
-												</div>
-												
-											</div>
-										</div>
-									</div>
+										</form>
+</div>
 									
 								</div>				
 							</div>

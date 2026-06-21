@@ -212,16 +212,16 @@
 						<div class="image">
 							<img src="{% static 'images/resource/contact.png' %}" alt="" />
 						</div>
-						<h5>Contact us</h5>
-						<p>It is a long established fact that a reader will be distracted by the readable content of a page </p>
+						<h5>{{ labels.teacher_contact_info_title|default:'Contact us' }}</h5>
+						<p>{{ labels.teacher_contact_info_text|default:'It is a long established fact that a reader will be distracted by the readable content of a page' }}</p>
 						<ul class="contact-list">
 							<li>
 								<strong>Phone:</strong>
-								<a href="tel:+88-01682648101">+88 01682648101</a>
+								<a href="tel:{{ settings.phone|default:'+88-01682648101' }}">{{ settings.phone|default:'+88 01682648101' }}</a>
 							</li>
 							<li>
 								<strong>Email:</strong>
-								<a href="mailo:hello@lebari.com">hello@lebari.com</a>
+								<a href="mailto:{{ settings.email|default:'hello@lebari.com' }}">{{ settings.email|default:'hello@lebari.com' }}</a>
 							</li>
 						</ul>
 					</div>
@@ -233,8 +233,8 @@
 						<div class="color-layer"></div>
 						<!-- Sec Title -->
 						<div class="sec-title">
-							<h2> Visit us <br> for Free Resources</h2>
-							<div class="text">These leading universities are currently offering online degree courses on FutureLearn:</div>
+							<h2>{{ labels.teacher_contact_form_title|safe|default:'Visit us <br> for Free Resources' }}</h2>
+							<div class="text">{{ labels.teacher_contact_form_text|default:'These leading universities are currently offering online degree courses on FutureLearn:' }}</div>
 						</div>
 						
 						<!-- Default Form -->
@@ -245,47 +245,51 @@
 								
 									<!-- Form Group -->
 									<div class="form-group col-lg-6 col-md-6 col-sm-12">
-										<input type="text" name="username" value="" placeholder="First Name" required>
+										<input type="text" name="username" value="" placeholder="{{ labels.contact_form_firstname|default:'First Name' }}" required>
 									</div>
 									
 									<!-- Form Group -->
 									<div class="form-group col-lg-6 col-md-6 col-sm-12">
-										<input type="text" name="lastname" value="" placeholder="Last Name" required>
+										<input type="text" name="lastname" value="" placeholder="{{ labels.contact_form_lastname|default:'Last Name' }}" required>
 									</div>
 									
 									<!-- Form Group -->
 									<div class="form-group col-lg-12 col-md-12 col-sm-12">
-										<input type="email" name="email" value="" placeholder="Email" required>
+										<input type="email" name="email" value="" placeholder="{{ labels.contact_form_email|default:'Email' }}" required>
 									</div>
 									
 									<!-- Form Group -->
 									<div class="form-group col-lg-12 col-md-12 col-sm-12">
-										<select name="country" class="custom-select-box">
-											<option>When you want to start courses</option>
-											<option>courses 01</option>
-											<option>courses 02</option>
-											<option>courses 03</option>
-											<option>courses 04</option>
+										<select name="subject" class="custom-select-box">
+											<option value="">{{ labels.about_form_subject_placeholder|default:'When you want to start courses' }}</option>
+                                            {% for subject in contact_subjects %}
+											<option value="{{ subject.title }}">{{ subject.title }}</option>
+                                            {% empty %}
+											<option value="courses 01">courses 01</option>
+											<option value="courses 02">courses 02</option>
+											<option value="courses 03">courses 03</option>
+											<option value="courses 04">courses 04</option>
+                                            {% endfor %}
 										</select>
 									</div>
 									
 									<!-- Form Group -->
 									<div class="form-group col-lg-6 col-md-6 col-sm-12">
-										<input type="text" name="date" value="" placeholder="Date" required>
+										<input type="text" name="date" value="" placeholder="{{ labels.contact_form_date|default:'Date' }}" required>
 									</div>
 									
 									<!-- Form Group -->
 									<div class="form-group col-lg-6 col-md-6 col-sm-12">
-										<input type="text" name="time" value="" placeholder="Time" required>
+										<input type="text" name="time" value="" placeholder="{{ labels.contact_form_time|default:'Time' }}" required>
 									</div>
 									
 									<!-- Form Group -->
 									<div class="form-group col-lg-12 col-md-12 col-sm-12">
-										<textarea placeholder="Type you comment here"></textarea>
+										<textarea placeholder="{{ labels.contact_form_comment|default:'Type you comment here' }}"></textarea>
 									</div>
 									
 									<div class="form-group col-lg-12 col-md-12 col-sm-12">
-										<button type="submit" class="theme-btn btn-style-one"><span class="txt">Submit</span></button>
+										<button type="submit" class="theme-btn btn-style-one"><span class="txt">{{ labels.contact_form_submit|default:'Submit' }}</span></button>
 									</div>
                                 </div>
                             </form>

@@ -8,6 +8,7 @@
 <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
 <link href="{% static 'css/style.css' %}?v=2" rel="stylesheet">
 <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+<link href="{% static 'css/custom-animations.css' %}?v=1.0" rel="stylesheet">
 
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 
@@ -94,10 +95,9 @@
 						
 						<!-- Search -->
 						<div class="search-box">
-							<form method="post" action="{% url 'contact' %}">
-{% csrf_token %}
+							<form method="GET" action="{% url 'course_list' %}">
 								<div class="form-group">
-									<input type="search" name="search-field" value="" placeholder="Online course" required>
+									<input type="search" name="q" value="" placeholder="Online course" required>
 									<button type="submit"><span class="icon fa fa-search"></span></button>
 								</div>
 							</form>
@@ -315,7 +315,7 @@
 					<div class="course-block-two col-lg-4 col-md-6 col-sm-12">
 						<div class="inner-box wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
 							<div class="icon flaticon-homework"></div>
-							<h5>Enrolled Courses</h5>
+							<h5>{{ labels.profile_enrolled_courses|default:'Enrolled Courses' }}</h5>
 							<div class="numbers">{{ enrolled_count }}</div>
 						</div>
 					</div>
@@ -324,7 +324,7 @@
 					<div class="course-block-two col-lg-4 col-md-6 col-sm-12">
 						<div class="inner-box wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
 							<div class="icon flaticon-calendar"></div>
-							<h5>Active Courses</h5>
+							<h5>{{ labels.profile_active_courses|default:'Active Courses' }}</h5>
 							<div class="numbers">{{ active_count }}</div>
 						</div>
 					</div>
@@ -333,7 +333,7 @@
 					<div class="course-block-two col-lg-4 col-md-6 col-sm-12">
 						<div class="inner-box wow fadeInRight" data-wow-delay="0ms" data-wow-duration="1500ms">
 							<div class="icon flaticon-file-1"></div>
-							<h5>Completed Courses</h5>
+							<h5>{{ labels.profile_completed_courses|default:'Completed Courses' }}</h5>
 							<div class="numbers">{{ completed_count }}</div>
 						</div>
 					</div>
@@ -344,8 +344,8 @@
                 <div class="row clearfix" style="margin-top: 50px;">
                     <div class="col-lg-12">
                         <div class="sec-title text-center">
-                            <h2>My Courses</h2>
-                            <div class="text">Here are the courses you have enrolled in</div>
+                            <h2>{{ labels.profile_my_courses_title|default:'My Courses' }}</h2>
+                            <div class="text">{{ labels.profile_my_courses_text|default:'Here are the courses you have enrolled in' }}</div>
                         </div>
                     </div>
                     {% for enrollment in enrollments %}
@@ -371,8 +371,8 @@
 					</div>
                     {% empty %}
                     <div class="col-lg-12 text-center mb-5">
-                        <p>You haven't enrolled in any courses yet.</p>
-                        <a href="{% url 'course_list' %}" class="theme-btn btn-style-two"><span class="txt">Browse Courses</span></a>
+                        <p>{{ labels.profile_no_courses|default:"You haven't enrolled in any courses yet." }}</p>
+                        <a href="{% url 'course_list' %}" class="theme-btn btn-style-two"><span class="txt">{{ labels.profile_browse_courses|default:'Browse Courses' }}</span></a>
                     </div>
                     {% endfor %}
                 </div>
@@ -547,7 +547,7 @@
                                     {% endfor %}
                                 {% endif %}
 								<div class="form-group">
-									<input type="email" name="email" value="" placeholder="Your email" required>
+									<input type="email" name="email" value="" placeholder="{{ labels.footer_email_placeholder|default:'Your email' }}" required>
 									<button type="submit" class="submit-btn"><span class="icon flaticon-right-arrow-2"></span></button>
 								</div>
 							</form>

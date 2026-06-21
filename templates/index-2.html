@@ -8,6 +8,7 @@
 <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
 <link href="{% static 'css/style.css' %}?v=2" rel="stylesheet">
 <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+<link href="{% static 'css/custom-animations.css' %}?v=1.0" rel="stylesheet">
 
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 
@@ -86,55 +87,19 @@
 								{% endif %}
 								<li class="{% if request.resolver_match.url_name == 'contact' %}current{% endif %}"><a href="{% url 'contact' %}">Contact</a></li>
 							</ul>
-						</div>
-					</nav>
-					
-					<!-- Main Menu End-->
+							</div>
+						</nav>
+						<!-- Main Menu End-->
 					<div class="outer-box clearfix">
 						
 						<!-- Search -->
 						<div class="search-box">
-							<form method="post" action="{% url 'contact' %}">
-{% csrf_token %}
+							<form method="GET" action="{% url 'course_list' %}">
 								<div class="form-group">
-									<input type="search" name="search-field" value="" placeholder="Online course" required>
+									<input type="search" name="q" value="" placeholder="Online course" required>
 									<button type="submit"><span class="icon fa fa-search"></span></button>
 								</div>
 							</form>
-						</div>
-						
-						<!-- Cart Box -->
-						<div class="cart-box">
-							<div class="dropdown">
-								<button class="cart-box-btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="flaticon-shopping-bag-1"></span><span class="total-cart">2</span></button>
-								<div class="dropdown-menu pull-right cart-panel" aria-labelledby="dropdownMenu1">
-
-									<div class="cart-product">
-										<div class="inner">
-											<div class="cross-icon"><span class="icon fa fa-remove"></span></div>
-											<div class="image"><img src="{% static 'images/resource/post-thumb-1.jpg' %}" alt="" /></div>
-											<h3><a href="shop-single.html">Product 01</a></h3>
-											<div class="quantity-text">Quantity 1</div>
-											<div class="price">$99.00</div>
-										</div>
-									</div>
-									<div class="cart-product">
-										<div class="inner">
-											<div class="cross-icon"><span class="icon fa fa-remove"></span></div>
-											<div class="image"><img src="{% static 'images/resource/post-thumb-2.jpg' %}" alt="" /></div>
-											<h3><a href="shop-single.html">Product 02</a></h3>
-											<div class="quantity-text">Quantity 1</div>
-											<div class="price">$99.00</div>
-										</div>
-									</div>
-									<div class="cart-total">Sub Total: <span>$198</span></div>
-									<ul class="btns-boxed">
-										<li><a href="shoping-cart.html">View Cart</a></li>
-										<li><a href="checkout.html">CheckOut</a></li>
-									</ul>
-
-								</div>
-							</div>
 						</div>
 						
 						<!-- Nav Btn -->
@@ -276,10 +241,10 @@
 					<div class="icon-layer-four" style="background-image: url({% static 'images/icons/icon-3.png' %})"></div>
 					<div class="icon-layer-five" style="background-image: url({% static 'images/icons/icon-4.png' %})"></div>
 					<div class="inner-column">
-						<div class="title">{% if sections.home_hero_banner %}{{ sections.home_hero_banner.subtitle }}{% else %}Learn latest skills{% endif %}</div>
-						<h1>{% if sections.home_hero_banner %}{{ sections.home_hero_banner.title|safe }}{% else %}Build skills with <br> courses flexible online <br> courses{% endif %}</h1>
+						<div class="title">{{ homepage.hero_subtitle }}</div>
+						<h1>{{ homepage.hero_title|safe }}</h1>
 						<div class="btns-box">
-							<a href="{% if sections.home_hero_banner %}{{ sections.home_hero_banner.button_link }}{% else %}{% url 'about' %}{% endif %}" class="theme-btn btn-style-one"><span class="txt">{% if sections.home_hero_banner %}{{ sections.home_hero_banner.button_text }}{% else %}Join For free{% endif %}</span></a>
+							<a href="{{ homepage.hero_button_link }}" class="theme-btn btn-style-one"><span class="txt">{{ homepage.hero_button_text }}</span></a>
 						</div>
 					</div>
 				</div>
@@ -288,7 +253,7 @@
 				<div class="image-column col-lg-6 col-md-12 col-sm-12">
 					<div class="inner-column">
 						<div class="image titlt" data-tilt data-tilt-max="4">
-							<img src="{% if sections.home_hero_banner and sections.home_hero_banner.image %}{{ sections.home_hero_banner.image.url }}{% else %}{% static 'images/main-slider/image-5.png' %}{% endif %}" alt="" />
+							<img src="{% if homepage and homepage.hero_image %}{{ homepage.hero_image.url }}{% else %}{% static 'images/main-slider/image-5.png' %}{% endif %}" alt="" />
 						</div>
 					</div>
 				</div>
@@ -356,11 +321,11 @@
 				<!-- Instructor Column -->
 				<div class="instructor-column col-lg-4 col-md-12 col-sm-12">
 					<div class="inner-column wow fadeInRight" data-wow-delay="0ms" data-wow-duration="1500ms">
-						<h4>{% if sections.home1_instructor %}{{ sections.home1_instructor.title }}{% else %}Become an instructor{% endif %}</h4>
-						<p>{% if sections.home1_instructor %}{{ sections.home1_instructor.text|safe }}{% else %}Top instructors from around the world teach millions of students Duis aute irure dolor in <br> voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non{% endif %}</p>
-						<a class="click-here" href="{% if sections.home1_instructor %}{{ sections.home1_instructor.button_link }}{% else %}{% url 'membership' %}{% endif %}">{% if sections.home1_instructor %}{{ sections.home1_instructor.button_text }}{% else %}Click here for apply{% endif %}</a>
+						<h4>{{ homepage.instructor_title }}</h4>
+						<p>{{ homepage.instructor_text|safe }}</p>
+						<a class="click-here" href="{{ homepage.instructor_button_link }}">{{ homepage.instructor_button_text }}</a>
 						<div class="image titlt" data-tilt data-tilt-max="4">
-							<img src="{% if sections.home1_instructor and sections.home1_instructor.image %}{{ sections.home1_instructor.image.url }}{% else %}{% static 'images/resource/instructor.png' %}{% endif %}" alt="" />
+							<img src="{% if homepage and homepage.instructor_image %}{{ homepage.instructor_image.url }}{% else %}{% static 'images/resource/instructor.png' %}{% endif %}" alt="" />
 						</div>
 					</div>
 				</div>
@@ -384,7 +349,7 @@
 						<div class="color-layer"></div>
 						<div class="color-layer-two"></div>
 						<div class="image wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
-							<img src="{% if sections.home2_professional and sections.home2_professional.image %}{{ sections.home2_professional.image.url }}{% else %}{% static 'images/resource/professional.jpg' %}{% endif %}" alt="" />
+							<img src="{% if homepage and homepage.professional_image %}{{ homepage.professional_image.url }}{% else %}{% static 'images/resource/professional.jpg' %}{% endif %}" alt="" />
 						</div>
 					</div>
 				</div>
@@ -394,12 +359,12 @@
 					<div class="inner-column">
 						<div class="pattern-layer-three" style="background-image:url({% static 'images/background/pattern-16.png' %})"></div>
 						<div class="sec-title">
-							<div class="title">{% if sections.home2_professional %}{{ sections.home2_professional.subtitle }}{% else %}Learn anything{% endif %}</div>
-							<h2>{% if sections.home2_professional %}{{ sections.home2_professional.title|safe }}{% else %}Take online courses Earn <br> professional{% endif %}</h2>
+							<div class="title">{{ homepage.professional_subtitle }}</div>
+							<h2>{{ homepage.professional_title|safe }}</h2>
 						</div>
-						<div class="bold-text">{% if sections.home2_professional %}{{ sections.home2_professional.text|safe }}{% else %}Position yourself for success with a variety of collegeclasses including general education courses{% endif %}</div>
+						<div class="bold-text">{{ homepage.professional_text|safe }}</div>
 						<div class="btn-box">
-							<a href="{% if sections.home2_professional %}{{ sections.home2_professional.button_link }}{% else %}#{% endif %}" class="theme-btn btn-style-four"><span class="txt">{% if sections.home2_professional %}{{ sections.home2_professional.button_text }}{% else %}Short courses{% endif %}</span></a>
+							<a href="{{ homepage.professional_button_link }}" class="theme-btn btn-style-four"><span class="txt">{{ homepage.professional_button_text }}</span></a>
 						</div>
 					</div>
 				</div>
@@ -417,8 +382,8 @@
 		<div class="circle-two"></div>
 		<div class="auto-container">
 			<div class="sec-title centered">
-				<h2>{% if sections.home_explore_courses %}{{ sections.home_explore_courses.title|safe }}{% else %}You can learn anything, Explore <br> featured courses{% endif %}</h2>
-				<div class="text">{% if sections.home_explore_courses %}{{ sections.home_explore_courses.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat <br> nulla pariatur Duis aute irure dolor in reprehenderit in{% endif %}</div>
+				<h2>{{ homepage.explore_courses_title|safe }}</h2>
+				<div class="text">{{ homepage.explore_courses_text|safe }}</div>
 			</div>
 			<div class="row clearfix">
 				
@@ -471,8 +436,8 @@
 				<div class="content-column col-lg-6 col-md-12 col-sm-12">
 					<div class="inner-column">
 						<div class="sec-title">
-							<div class="title">{% if sections.home_events_section %}{{ sections.home_events_section.subtitle }}{% else %}Explore Event{% endif %}</div>
-							<h2>{% if event %}{{ event.title }}{% elif sections.home_events_section %}{{ sections.home_events_section.title|safe }}{% else %}Our Upcoming Events{% endif %}</h2>
+							<div class="title">{{ homepage.events_subtitle }}</div>
+							<h2>{% if event %}{{ event.title }}{% else %}{{ homepage.events_title|safe }}{% endif %}</h2>
 						</div>
 						<div class="bold-text">{% if event %}{{ event.location }} - {{ event.date|date:"d M, Y" }} at {{ event.time_start|time:"g:i A" }}{% else %}Sed do eiusmod but laboris incididunt ut labore et dolore magna aliqua.sed do eiusmod{% endif %}</div>
 						<p>{% if event %}{{ event.description|truncatechars:150 }}{% else %}aboris incididunt ut labore et dolore magna aliqua.sed do eiusmod but laboris incididunt ut labore et dolore magna aliqua.but laboris incididunt ut labore et dolore magna aliqua.{% endif %}</p>
@@ -509,9 +474,9 @@
 				<!-- Sec Title -->
 				<!-- Sec Title -->
 				<div class="sec-title centered">
-					<div class="title">{% if sections.index_2_testimonials %}{{ sections.index_2_testimonials.subtitle }}{% else %}Testimonial{% endif %}</div>
-					<h2>{% if sections.index_2_testimonials %}{{ sections.index_2_testimonials.title|safe }}{% else %}Words From Customers{% endif %}</h2>
-					<div class="text">{% if sections.index_2_testimonials %}{{ sections.index_2_testimonials.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu <br> fugiat nulla pariatur Duis aute irure dolor in reprehenderit in{% endif %}</div>
+					<div class="title">{{ homepage.testimonials_subtitle }}</div>
+					<h2>{{ homepage.testimonials_title|safe }}</h2>
+					<div class="text">{{ homepage.testimonials_text|safe }}</div>
 				</div>
 				<div class="testimonial-carousel-two owl-carousel owl-theme">
 				
@@ -552,10 +517,10 @@
 						<div class="pattern-layer" style="background-image:url({% static 'images/background/pattern-4.png' %})"></div>
 						<div class="pattern-layer-two" style="background-image:url({% static 'images/background/pattern-17.png' %})"></div>
 						<div class="image">
-							<img src="{% if sections.home2_goal and sections.home2_goal.image %}{{ sections.home2_goal.image.url }}{% else %}{% static 'images/resource/goal-1.jpg' %}{% endif %}" alt="" />
+							<img src="{% if homepage and homepage.goal_image_1 %}{{ homepage.goal_image_1.url }}{% else %}{% static 'images/resource/goal-1.jpg' %}{% endif %}" alt="" />
 						</div>
 						<div class="image-two">
-							<img src="{% if sections.home2_goal and sections.home2_goal.image_2 %}{{ sections.home2_goal.image_2.url }}{% else %}{% static 'images/resource/goal-2.jpg' %}{% endif %}" alt="" />
+							<img src="{% if homepage and homepage.goal_image_2 %}{{ homepage.goal_image_2.url }}{% else %}{% static 'images/resource/goal-2.jpg' %}{% endif %}" alt="" />
 						</div>
 					</div>
 				</div>
@@ -565,9 +530,9 @@
 					<div class="inner-column">
 						<div class="pattern-layer-three" style="background-image:url({% static 'images/background/pattern-13.png' %})"></div>
 						<div class="sec-title">
-							<div class="title">{% if sections.home2_goal %}{{ sections.home2_goal.subtitle }}{% else %}Achieve Goals{% endif %}</div>
-							<h2>{% if sections.home2_goal %}{{ sections.home2_goal.title|safe }}{% else %}Start To Success{% endif %}</h2>
-							<div class="text">{% if sections.home2_goal %}{{ sections.home2_goal.text|safe }}{% else %}{% if sections.index_2_short %}{{ sections.index_2_short.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur{% endif %} Duis aute irure dolor in{% endif %}</div>
+							<div class="title">{{ homepage.goal_subtitle }}</div>
+							<h2>{{ homepage.goal_title|safe }}</h2>
+							<div class="text">{{ homepage.goal_text|safe }}</div>
 						</div>
 						
 						<!-- Fact Counter -->
@@ -722,7 +687,7 @@
 					<div class="news-block style-two col-lg-4 col-md-6 col-sm-12">
 						<div class="inner-box">
 							<div class="image">
-								<a href="{% url 'blog_detail' post.slug %}"><img src="{% if post.image %}{{ post.image.url }}{% else %}{% static 'images/resource/news-3.jpg' %}{% endif %}" alt="" /></a>
+								<a href="{% url 'blog_detail' post.slug %}"><img src="{% if post.image %}{{ post.image.url }}{% elif blogpage and blogpage.default_post_image %}{{ blogpage.default_post_image.url }}{% else %}{% static 'images/resource/news-3.jpg' %}{% endif %}" alt="" /></a>
 							</div>
 							<div class="lower-content">
 								<div class="border-layer"></div>
@@ -952,8 +917,8 @@
 									<li><a href="{% url 'donation' %}">Donation</a></li>
 								</ul>
 							</div>
+						</div>
 					</div>
-					
 				</div>
 			</div>
 			
@@ -972,7 +937,7 @@
                                     {% endfor %}
                                 {% endif %}
 								<div class="form-group">
-									<input type="email" name="email" value="" placeholder="Your email" required>
+									<input type="email" name="email" value="" placeholder="{{ labels.footer_email_placeholder|default:'Your email' }}" required>
 									<button type="submit" class="submit-btn"><span class="icon flaticon-right-arrow-2"></span></button>
 								</div>
 							</form>

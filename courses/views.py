@@ -1,20 +1,58 @@
+
 from django.shortcuts import render, get_object_or_404
-from .models import Course, CourseCategory
+from .models import Course, CourseCategory, Teacher
 from core.models import SiteSetting
 from core.views import get_cms_context
+
 def course_list(request):
     settings = SiteSetting.objects.first()
+    courses = Course.objects.all().order_by('-created_at')
+    
     query = request.GET.get('q')
     if query:
-        courses = Course.objects.filter(title__icontains=query).order_by('-created_at')
-    else:
-        courses = Course.objects.all().order_by('-created_at')
-    categories = CourseCategory.objects.all()
+        courses = courses.filter(title__icontains=query)
+        
+    categories = request.GET.getlist('category')
+    if categories:
+        courses = courses.filter(category__id__in=categories)
+        
+    teachers = request.GET.getlist('teacher')
+    if teachers:
+        courses = courses.filter(teacher__id__in=teachers)
+        
+    prices = request.GET.getlist('price')
+    if prices:
+        if 'free' in prices and 'paid' in prices:
+            pass # Show all
+        elif 'free' in prices:
+            courses = courses.filter(price=0)
+        elif 'paid' in prices:
+            courses = courses.filter(price__gt=0)
+            
+    levels = request.GET.getlist('level')
+    if levels:
+        courses = courses.filter(level__in=levels)
+        
+    sort = request.GET.get('sort')
+    if sort == 'old':
+        courses = courses.order_by('created_at')
+    elif sort == 'new':
+        courses = courses.order_by('-created_at')
+
+    all_categories = CourseCategory.objects.all()
+    all_teachers = Teacher.objects.all()
+    
     ctx = {
         'settings': settings,
         'courses': courses,
-        'categories': categories,
+        'categories': all_categories,
+        'teachers': all_teachers,
         'query': query,
+        'selected_categories': [int(c) for c in categories] if categories else [],
+        'selected_teachers': [int(t) for t in teachers] if teachers else [],
+        'selected_prices': prices,
+        'selected_levels': levels,
+        'selected_sort': sort,
     }
     ctx.update(get_cms_context('course'))
     return render(request, 'course.html', ctx)

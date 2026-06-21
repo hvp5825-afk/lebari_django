@@ -73,11 +73,11 @@
 			<!-- Page Breadcrumb -->
 			<ul class="page-breadcrumb">
 				<li><a href="{% url 'index' %}">Home</a></li>
-				<li>{% if sections.contact_banner %}{{ sections.contact_banner.subtitle }}{% else %}Contact us{% endif %}</li>
+				<li>{{ contactpage.banner_subtitle }}</li>
 			</ul>
 			<div class="content-box">
-				<h2>Contact Now</h2>
-				<div class="text">{% if sections.contact_banner %}{{ sections.contact_banner.text|safe }}{% else %}{% if sections.contact_content %}{{ sections.contact_content.text|safe }}{% else %}{% if sections.contact_short %}{{ sections.contact_short.text|safe }}{% else %}Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur{% endif %} Duis aute irure dolor in reprehenderit in {% endif %}{% endif %}</div>
+				<h2>{{ contactpage.banner_title }}</h2>
+				<div class="text">{{ contactpage.banner_text|safe }}</div>
 			</div>
 		</div>
 	</section>
@@ -92,9 +92,9 @@
 				<!-- Info Column -->
 				<div class="info-column col-lg-6 col-md-12 col-sm-12">
 					<div class="inner-column">
-						<div class="title">{% if sections.contact_info %}{{ sections.contact_info.subtitle }}{% else %}GET IN TOUCH{% endif %}</div>
-						<h2>{% if sections.contact_info %}{{ sections.contact_info.title|safe }}{% else %}Visit one of our agency locations <br> or contact us today{% endif %}</h2>
-						<div class="text">{% if sections.contact_info %}{{ sections.contact_info.text|safe }}{% else %}We'd love to hear from you. Whether you have a question about our courses, pricing, or anything else, our team is ready to answer all your questions.{% endif %}</div>
+						<div class="title">{{ contactpage.info_subtitle }}</div>
+						<h2>{{ contactpage.info_title|safe }}</h2>
+						<div class="text">{{ contactpage.info_text|safe }}</div>
 						<ul>
 							<li><span>Address</span>{{ settings.address|default:"56 Glassford Street Glasgow G1 1UL New York" }}</li>
 							<li><span>Our Phone</span>Telephone : {{ settings.phone|default:"028577101" }}</li>
@@ -110,8 +110,8 @@
 						<div class="circle-layer"></div>
 						<div class="pattern-layer-one" style="background-image: url({% static 'images/icons/icon-7.png' %})"></div>
 						<div class="pattern-layer-two" style="background-image: url({% static 'images/icons/icon-9.png' %})"></div>
-						<h2>{% if sections.contact_form %}{{ sections.contact_form.title|safe }}{% else %}Leave a message{% endif %}</h2>
-						<div class="text">{% if sections.contact_form %}{{ sections.contact_form.text|safe }}{% else %}Please fill out the form below and we will get back to you as soon as possible.{% endif %}</div>
+						<h2>{{ contactpage.form_title|safe }}</h2>
+						<div class="text">{{ contactpage.form_text|safe }}</div>
 						
 						<!-- Contact Form -->
 						<div class="contact-form">
@@ -126,23 +126,23 @@
 
 								
 								<div class="form-group">
-									<input type="text" name="username" placeholder="Name" required="">
+									<input type="text" name="username" placeholder="{{ labels.contact_form_name_placeholder|default:'Name' }}" required="">
 								</div>
 								
 								<div class="form-group">
-									<input type="email" name="email" placeholder="Email" required="">
+									<input type="email" name="email" placeholder="{{ labels.contact_form_email_placeholder|default:'Email' }}" required="">
 								</div>
 								
 								<div class="form-group">
-									<input type="text" name="subject" placeholder="Subject" required="">
+									<input type="text" name="subject" placeholder="{{ labels.contact_form_subject_placeholder|default:'Subject' }}" required="">
 								</div>
 								
 								<div class="form-group">
-									<textarea class="" name="message" placeholder="Comment"></textarea>
+									<textarea class="" name="message" placeholder="{{ labels.contact_form_message_placeholder|default:'Comment' }}"></textarea>
 								</div>
 								
 								<div class="form-group">
-									<button class="theme-btn btn-style-five" type="submit" name="submit-form">{{ buttons.send_message|default:'Send Message' }}</button>
+									<button class="theme-btn btn-style-five" type="submit" name="submit-form">{{ contactpage.form_button_text }}</button>
 								</div>
 								
 							</form>

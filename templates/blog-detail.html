@@ -75,7 +75,7 @@
 			<!-- Page Breadcrumb -->
 			<ul class="page-breadcrumb">
 				<li><a href="{% url 'index' %}">Home</a></li>
-				<li>Blog Single</li>
+				<li>{{ blog_page.banner_subtitle|default:"Blog Single" }}</li>
 			</ul>
 			<div class="content-box">
 				<div class="title">{{ post.category.name }}</div>
@@ -86,8 +86,8 @@
 							<div class="author-image">
 								<img src="{% static 'images/resource/author-8.jpg' %}" alt="" />
 							</div>
-							<strong>Post By {{ post.author.username|default:"Admin" }}</strong>
-							{{ post.created_at|date:"d F , Y" }} &ensp; Category: {{ post.category.name }}
+							<strong>{{ labels.blog_post_by|default:"Post By" }} {{ post.author.username|default:"Admin" }}</strong>
+							{{ post.created_at|date:"d F , Y" }} &ensp; {{ labels.blog_category_label|default:"Category:" }} {{ post.category.name }}
 						</div>
 					</div>
 					<div class="pull-right">
@@ -144,7 +144,7 @@
 									<div class="news-block-three col-lg-4 col-md-4 col-sm-12">
 										<div class="inner-box">
 											<div class="image">
-												<a href="{% url 'blog_detail' rel_post.slug %}"><img src="{% if rel_post.image %}{{ rel_post.image.url }}{% else %}{% static 'images/resource/news-22.jpg' %}{% endif %}" alt="" /></a>
+												<a href="{% url 'blog_detail' rel_post.slug %}"><img src="{% if rel_post.image %}{{ rel_post.image.url }}{% elif blog_page.default_post_image %}{{ blog_page.default_post_image.url }}{% else %}{% static 'images/resource/news-22.jpg' %}{% endif %}" alt="" /></a>
 											</div>
 											<div class="lower-content">
 												<h6><a href="{% url 'blog_detail' rel_post.slug %}">{{ rel_post.title|truncatechars:45 }}</a></h6>
@@ -158,7 +158,7 @@
 							</div>
 							
 							<div class="comments-area" style="margin-top: 40px; margin-bottom: 40px;">
-								<div class="group-title"><h4>{{ comments|length }} Comments</h4></div>
+								<div class="group-title"><h4>{{ comments|length }} {{ labels.blog_comments|default:"Comments" }}</h4></div>
 								{% for comment in comments %}
 								<div class="comment-box" style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #eee;">
 									<div class="comment">
@@ -170,13 +170,13 @@
 									</div>
 								</div>
 								{% empty %}
-								<p>No comments yet. Be the first to comment!</p>
+								<p>{{ labels.blog_no_comments|default:"No comments yet. Be the first to comment!" }}</p>
 								{% endfor %}
 							</div>
 
 							<div class="comment-form">
 									
-								<div class="group-title"><h4>Leave A Comment</h4></div>
+								<div class="group-title"><h4>{{ labels.blog_leave_comment|default:"Leave A Comment" }}</h4></div>
 								
                                 {% if messages %}
                                     {% for message in messages %}
@@ -189,15 +189,15 @@
 {% csrf_token %}
 									
 									<div class="form-group">
-										<input type="text" name="username" placeholder="Your Name" required="" value="{% if request.user.is_authenticated %}{{ request.user.get_full_name|default:request.user.username }}{% endif %}">
+										<input type="text" name="username" placeholder="{{ labels.blog_placeholder_name|default:'Your Name' }}" required="" value="{% if request.user.is_authenticated %}{{ request.user.get_full_name|default:request.user.username }}{% endif %}">
 									</div>
 									
 									<div class="form-group">
-										<input type="email" name="email" placeholder="Email" required="" value="{% if request.user.is_authenticated %}{{ request.user.email }}{% endif %}">
+										<input type="email" name="email" placeholder="{{ labels.blog_placeholder_email|default:'Email' }}" required="" value="{% if request.user.is_authenticated %}{{ request.user.email }}{% endif %}">
 									</div>
 									
 									<div class="form-group">
-										<textarea class="" name="message" placeholder="Type your comment" required></textarea>
+										<textarea class="" name="message" placeholder="{{ labels.blog_placeholder_comment|default:'Type your comment' }}" required></textarea>
 									</div>
 									
 									<div class="form-group">
@@ -218,10 +218,9 @@
 						
 						<!-- Search -->
 						<div class="sidebar-widget search-box">
-							<form method="post" action="{% url 'contact' %}">
-{% csrf_token %}
+							<form method="GET" action="{% url 'blog_list' %}">
 								<div class="form-group">
-									<input type="search" name="search-field" value="" placeholder="Search" required>
+									<input type="search" name="q" value="" placeholder="{{ labels.blog_placeholder_search|default:'Search' }}" required>
 									<button type="submit"><span class="icon fa fa-search"></span></button>
 								</div>
 							</form>
@@ -230,13 +229,13 @@
 						<!-- Popular Post Widget -->
 						<div class="sidebar-widget popular-posts">
 							<div class="sidebar-title">
-								<h4>Recent Post</h4>
+								<h4>{{ labels.blog_recent_post|default:"Recent Post" }}</h4>
 							</div>
 							<div class="widget-content">
                                 {% for recent_post in related_posts %}
 								<article class="post">
 									<figure class="post-thumb">
-                                        <img src="{% if recent_post.image %}{{ recent_post.image.url }}{% else %}{% static 'images/resource/post-thumb-3.jpg' %}{% endif %}" alt="{{ recent_post.title }}">
+                                        <img src="{% if recent_post.image %}{{ recent_post.image.url }}{% elif blog_page.default_post_image %}{{ blog_page.default_post_image.url }}{% else %}{% static 'images/resource/post-thumb-3.jpg' %}{% endif %}" alt="{{ recent_post.title }}">
                                         <a href="{% url 'blog_detail' recent_post.slug %}" class="overlay-box"><span class="icon fa fa-link"></span></a>
                                     </figure>
 									<div class="post-info">{{ recent_post.created_at|date:"F d, Y" }}</div>
@@ -251,11 +250,11 @@
 						<!-- Links Widget -->
 						<div class="sidebar-widget links-widget">
 							<div class="sidebar-title">
-								<h4>Categories</h4>
+								<h4>{{ labels.blog_categories|default:"Categories" }}</h4>
 							</div>
 							<div class="widget-content">
 								<ul class="blog-cat">
-									<li><a href="{% url 'blog_list' %}">All Categories</a></li>
+									<li><a href="{% url 'blog_list' %}">{{ labels.blog_all_categories|default:"All Categories" }}</a></li>
 									{% for category in categories %}
 									<li><a href="{% url 'blog_list' %}?category={{ category.slug }}">{{ category.name }} ({{ category.posts.count }})</a></li>
 									{% endfor %}
@@ -263,50 +262,7 @@
 							</div>
 						</div>
 						
-						<!-- Archive Widget -->
-						<div class="sidebar-widget archive-widget">
-							<div class="sidebar-title">
-								<h4>Archives Post</h4>
-							</div>
-							<div class="widget-content">
-								<!-- Form Group -->
-								<div class="form-group">
-									<select name="country" class="custom-select-box">
-										<option>February 2020</option>
-										<option>February 2019</option>
-										<option>February 2018</option>
-										<option>February 2017</option>
-										<option>February 2016</option>
-									</select>
-								</div>
-								<!-- Form Group -->
-								<div class="form-group">
-									<select name="country" class="custom-select-box">
-										<option>February 2019</option>
-										<option>February 2018</option>
-										<option>February 2017</option>
-										<option>February 2016</option>
-									</select>
-								</div>
-							</div>
-						</div>
-						
-						<!-- Popular Posts -->
-						<div class="sidebar-widget popular-tags">
-							<div class="sidebar-title">
-								<h4>Tags</h4>
-							</div>
-							<div class="widget-content">
-								<a href="#">seafood</a>
-								<a href="#">gyros</a>
-								<a href="#">chicken</a>
-								<a href="#">pizza</a>
-								<a href="#">ecommerce</a>
-								<a href="#">food</a>
-							</div>
-						</div>
-						
-					</aside>
+						</aside>
 				</div>
 				
 			</div>
