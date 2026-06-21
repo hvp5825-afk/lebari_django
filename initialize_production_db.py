@@ -80,8 +80,8 @@ def main():
         ContactPageSetting.objects.create(
             banner_title="Get In Touch With Us",
             banner_text="Have questions? Reach out to our support team and we will get back to you.",
-            form_section_title="Send Us a Message",
-            form_section_text="Fill out the contact form below and let us know how we can help you."
+            form_title="Send Us a Message",
+            form_text="Fill out the contact form below and let us know how we can help you."
         )
         print("[OK] Created default ContactPageSetting.")
     else:
@@ -91,7 +91,7 @@ def main():
     if not CoursesPageSetting.objects.exists():
         CoursesPageSetting.objects.create(
             banner_title="Explore Our Courses",
-            banner_text="Choose from our wide selection of professional courses."
+            banner_subtitle="Choose from our wide selection of professional courses."
         )
         print("[OK] Created default CoursesPageSetting.")
     else:
