@@ -81,8 +81,8 @@ def populate():
     CoreTeacher.objects.get_or_create(name="Michael Brown", defaults={'designation': "Cyber Security Expert"})
 
     # 8. Populate Blog Categories and Posts
-    bcat1, _ = BlogCategory.objects.get_or_create(name="Technology", slug="technology")
-    bcat2, _ = BlogCategory.objects.get_or_create(name="Education", slug="education")
+    bcat1, _ = BlogCategory.objects.get_or_create(slug="technology", defaults={'name': "Technology"})
+    bcat2, _ = BlogCategory.objects.get_or_create(slug="education", defaults={'name': "Education"})
 
     Post.objects.get_or_create(
         title="The Future of AI in Education",
@@ -106,7 +106,7 @@ def populate():
     )
 
     # 9. Additional Courses (to make it look full)
-    CourseCategory.objects.get_or_create(name="Business", slug="business")
+    CourseCategory.objects.get_or_create(slug="business", defaults={'name': "Business"})
     c_teacher, _ = CourseTeacher.objects.get_or_create(name="David Clark", defaults={'designation': "Marketing Director", 'bio': "15 years of digital marketing experience."})
     c_cat = CourseCategory.objects.get(slug="business")
 
