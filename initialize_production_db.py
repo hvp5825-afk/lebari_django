@@ -67,17 +67,9 @@ def main():
         AboutPageSetting.objects.create(
             banner_title="About Our Platform",
             banner_subtitle="Empowering learners worldwide through quality education.",
-            who_we_are_title="Who We Are",
-            who_we_are_subtitle="Learn about our mission, vision, and core values.",
-            who_we_are_text="We offer flexible, cost-effective courses fully taught by professionals.",
-            who_we_are_button_text="Learn More",
-            who_we_are_button_link="/contact.html",
-            teachers_section_title="Meet Our Instructors",
-            teachers_section_subtitle="Expert Teachers",
-            teachers_section_text="Learn from certified industry professionals.",
-            goal_section_title="Start to Success",
-            goal_section_subtitle="Achieve Goals",
-            goal_section_text="We help you build the skills you need to achieve your career objectives."
+            goal_title="Start to Success",
+            goal_subtitle="Achieve Goals",
+            goal_text="We help you build the skills you need to achieve your career objectives."
         )
         print("[OK] Created default AboutPageSetting.")
     else:
